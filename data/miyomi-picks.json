@@ -1,0 +1,101 @@
+[
+  {
+    "id": "pick-1757629938293-pgni6e0m6",
+    "timestamp": "2025-09-11T22:32:18.293Z",
+    "marketId": "poly-2",
+    "platform": "Polymarket",
+    "question": "Will Bitcoin reach $100k by end of 2025?",
+    "position": "NO",
+    "entryPrice": 0.27,
+    "confidence": 66,
+    "edge": 15,
+    "score": 65,
+    "reasoning": "High volatility (22%) suggests the market is uncertain despite consensus. Taking the NO position offers 15% expected edge",
+    "status": "PENDING",
+    "category": "Crypto",
+    "risks": [],
+    "trainerApproved": false,
+    "affiliateLinks": {
+      "polymarket": "https://polymarket.com/market/poly-2?ref=miyomi&utm_source=eden&utm_medium=pick"
+    }
+  },
+  {
+    "id": "pick-1757630556107-34v93xaqe",
+    "timestamp": "2025-09-11T22:42:36.107Z",
+    "marketId": "poly-2",
+    "platform": "Polymarket",
+    "question": "Will Bitcoin reach $100k by end of 2025?",
+    "position": "NO",
+    "entryPrice": 0.27,
+    "confidence": 66,
+    "edge": 15,
+    "score": 65,
+    "reasoning": "High volatility (22%) suggests the market is uncertain despite consensus. Taking the NO position offers 15% expected edge",
+    "status": "PENDING",
+    "category": "Crypto",
+    "risks": [],
+    "trainerApproved": false,
+    "affiliateLinks": {
+      "polymarket": "https://polymarket.com/market/poly-2?ref=miyomi&utm_source=eden&utm_medium=pick"
+    }
+  },
+  {
+    "id": "pick-1757630556108-a55agnby6",
+    "timestamp": "2025-09-11T22:42:36.108Z",
+    "marketId": "poly-1",
+    "platform": "Polymarket",
+    "question": "Will Trump win the 2024 Republican nomination?",
+    "position": "NO",
+    "entryPrice": 0.08,
+    "confidence": 73,
+    "edge": 250,
+    "score": 61,
+    "reasoning": "92% of traders are betting YES, creating a classic overcrowding situation. Taking the NO position offers 250% expected edge",
+    "status": "LIVE",
+    "category": "Politics",
+    "risks": [
+      "Near expiration - limited time for correction",
+      "Extreme consensus - crowd might have inside info",
+      "Political market - subject to rapid sentiment shifts"
+    ],
+    "trainerApproved": true,
+    "affiliateLinks": {
+      "polymarket": "https://polymarket.com/market/poly-1?ref=miyomi&utm_source=eden&utm_medium=pick"
+    },
+    "approvedAt": "2025-09-11T22:42:45.634Z",
+    "approvedBy": "trainer",
+    "socialPosts": {
+      "twitter": "*clears throat* Alright, let me break it down for you in 280 characters or less:\n\nTrump winning the 2024 GOP nom? Fat chance. His MAGA mojo is fizzling out faster than a flat soda. DeSantis is the new shiny toy and the party is ready to move on. 92% of you might be buying what Trump's selling, but I'm not. Time to wake up and smell the covfefe, folks. 😉☕️🇺🇸",
+      "youtube": "🚨 Contrarian Alert: Why Trump WON'T Win the 2024 GOP Nomination 🚨\n\nEveryone and their MAGA hat seems to think Trump has the 2024 Republican nomination in the bag. But I'm here to tell you why the 92% of traders betting on the Orange Man are dead wrong. \n\n0:00 - Intro: Why the crowd is overconfident on Trump 2024\n1:15 - The DeSantis Factor: Why Ron is the new GOP darling\n3:30 - Trump's legal troubles: A looming obstacle \n5:45 - The fatigue factor: Are voters tired of Trump's antics?\n7:20 - Crunching the numbers: Why a 250% expected edge on NO is juicy\n9:00 - Closing thoughts & how to play this contrarian bet\n\nThe stars are aligning for a classic overcrowding situation, creating a golden opportunity to fade the MAGA hype. If you're ready to bet against the herd and potentially 3.5x your money, check out my exclusive edge calculator & prediction market guide: www.miyomitrades.com/trump2024 🔥\n\n(Disclaimer: This is not financial advice. Only bet what you can afford to lose. Past performance does not guarantee future results. Click my affiliate link to support the channel!)\n\n#Trump2024 #ContrarianbBets #PredictionMarkets #MAGA #Politics"
+    }
+  },
+  {
+    "id": "pick-1757630556108-ue23x6bmi",
+    "timestamp": "2025-09-11T22:42:36.108Z",
+    "marketId": "kalshi-1",
+    "platform": "Kalshi",
+    "question": "Will the Fed raise rates in March 2025?",
+    "position": "NO",
+    "entryPrice": 0.15,
+    "confidence": 71,
+    "edge": 133,
+    "score": 61,
+    "reasoning": "85% of traders are betting YES, creating a classic overcrowding situation. Taking the NO position offers 133% expected edge",
+    "status": "LIVE",
+    "category": "Finance",
+    "risks": [
+      "Near expiration - limited time for correction"
+    ],
+    "trainerApproved": true,
+    "affiliateLinks": {
+      "kalshi": "https://kalshi.com/markets/kalshi-1?ref=MIYOMI&utm_source=eden&utm_medium=pick&utm_campaign=contrarian"
+    },
+    "approvedAt": "2025-09-11T22:46:18.730Z",
+    "approvedBy": "trainer",
+    "socialPosts": {
+      "twitter": "Forget the hawkish hype, folks. The Fed won't be touching rates with a ten-foot pole come March 2025. 🦅🙅‍♂️ While the crowd's buying into the tightening talk, I'm calling their bluff. Easing is the only path forward in this economy. 85% of you might disagree, but I've never been one to follow the herd. 😏🐑 #FedWatch #RatesOnIce #ContrarianCall",
+      "youtube": "🚨 Contrarian Call: Why the Fed WON'T Raise Rates in March 2025 🚨\n\nThe market is convinced that the Fed will hike rates come March 2025, with a whopping 85% of traders piling into the hawkish camp. But I'm here to tell you why they're all dead wrong. \n\n0:00 - Intro: Why the crowd is misreading the Fed's signals\n1:30 - The economic reality: Why growth concerns will tie the Fed's hands\n3:45 - Analyzing the dot plot: Reading between the lines\n5:30 - Historical precedent: When has the Fed surprised to the dovish side?\n7:15 - Crunching the numbers: Why a 133% expected edge on NO is a gift\n9:30 - Closing thoughts & how to structure this contrarian trade\n\nThe stars are aligning for a classic overcrowding scenario, creating a golden opportunity to fade the hawkish hype. If you're ready to bet against the herd and potentially more than double your money, check out my exclusive edge calculator & Fed watching guide: www.miyomitrades.com/fed2025 🔥\n\n(Disclaimer: This is not financial advice. Only bet what you can afford to lose. Past performance does not guarantee future results. Click my affiliate link to support the channel!)\n\n#FedWatch #RateBets #ContrarianTrades #EconomicOutlook #TradingPsychology"
+    },
+    "videoUrl": "https://eden.art/mock-video.mp4"
+  }
+]

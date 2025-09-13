@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miyomi Trainer Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: black;
+      color: white;
+      font-family: 'Courier New', monospace;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      border-bottom: 1px solid white;
+      padding: 20px 0;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      text-transform: uppercase;
+    }
+    
+    .revenue-today {
+      text-align: right;
+    }
+    
+    .revenue-label {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      text-transform: uppercase;
+    }
+    
+    .revenue-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #4ade80;
+    }
+    
+    .progress-bar {
+      border-bottom: 1px solid white;
+      padding: 15px 0;
+    }
+    
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    
+    .step {
+      opacity: 0.6;
+    }
+    
+    .step.active {
+      color: #4ade80;
+      opacity: 1;
+      font-weight: bold;
+    }
+    
+    .main-content {
+      padding: 40px 0;
+    }
+    
+    .pick-review {
+      border: 1px solid white;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .pick-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+    
+    .platform-badge {
+      background: white;
+      color: black;
+      padding: 5px 10px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+    
+    .pick-question {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .pick-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .metric {
+      text-align: center;
+    }
+    
+    .metric-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+    
+    .metric-value {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    
+    .reasoning {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      margin: 20px 0;
+      font-size: 0.875rem;
+    }
+    
+    .risks {
+      margin: 20px 0;
+    }
+    
+    .risks-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 10px;
+    }
+    
+    .risk-item {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .btn {
+      flex: 1;
+      padding: 15px 30px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+    }
+    
+    .btn-approve {
+      background: #4ade80;
+      color: black;
+    }
+    
+    .btn-approve:hover {
+      background: #22c55e;
+    }
+    
+    .btn-skip {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+    
+    .btn-skip:hover {
+      background: white;
+      color: black;
+    }
+    
+    .generate-section {
+      text-align: center;
+      padding: 60px 0;
+      border: 1px solid white;
+    }
+    
+    .generate-count {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #4ade80;
+      margin: 20px 0;
+    }
+    
+    .btn-generate {
+      padding: 20px 40px;
+      font-size: 1.25rem;
+      background: #4ade80;
+      color: black;
+      border: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .btn-generate:hover {
+      background: #22c55e;
+    }
+    
+    .revenue-dashboard {
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid white;
+    }
+    
+    .revenue-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .revenue-card {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .success-message {
+      text-align: center;
+      padding: 60px 0;
+    }
+    
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div>
+          <h1>Miyomi Trainer Dashboard</h1>
+          <p style="font-size: 0.875rem; opacity: 0.6;">Daily Workflow - 5 Minutes to Launch</p>
+        </div>
+        <div class="revenue-today">
+          <div class="revenue-label">Today's Revenue</div>
+          <div class="revenue-value">$127.50</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="progress-bar">
+    <div class="container">
+      <div class="progress-steps">
+        <div class="step active" id="step1">1. Review Picks</div>
+        <div class="step" id="step2">2. Generate Content</div>
+        <div class="step" id="step3">3. Schedule</div>
+        <div class="step" id="step4">4. Complete</div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container main-content">
+    <!-- Step 1: Review Picks -->
+    <div id="review-section">
+      <h2 style="font-size: 2rem; margin-bottom: 10px; text-transform: uppercase;">
+        Step 1: Review AI-Suggested Picks
+      </h2>
+      <p style="font-size: 0.875rem; opacity: 0.6; margin-bottom: 30px;">
+        AI analyzed 20+ markets overnight. Here are the top opportunities:
+      </p>
+
+      <div class="pick-review">
+        <div class="pick-header">
+          <div>
+            <span class="platform-badge">POLYMARKET</span>
+            <h3 class="pick-question">Will Bitcoin reach $100k by end of 2025?</h3>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 2rem; font-weight: bold; color: #4ade80;">78/100</div>
+            <div style="font-size: 0.75rem; text-transform: uppercase; opacity: 0.6;">Score</div>
+          </div>
+        </div>
+
+        <div class="pick-metrics">
+          <div class="metric">
+            <div class="metric-label">Crowd on YES</div>
+            <div class="metric-value">73%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Miyomi Says</div>
+            <div class="metric-value" style="color: #4ade80;">NO</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Confidence</div>
+            <div class="metric-value">71%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Edge</div>
+            <div class="metric-value" style="color: #4ade80;">+15%</div>
+          </div>
+        </div>
+
+        <div class="reasoning">
+          73% of traders are bullish, but macro headwinds suggest otherwise. The crowd is chasing the hype while ignoring fundamental weaknesses in the crypto market structure.
+        </div>
+
+        <div class="risks">
+          <div class="risks-label">Risks:</div>
+          <div class="risk-item">• High volatility in crypto markets</div>
+          <div class="risk-item">• Sentiment can shift rapidly</div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-approve" onclick="approvePick(1)">Approve Pick</button>
+          <button class="btn btn-skip" onclick="skipPick(1)">Skip</button>
+        </div>
+      </div>
+
+      <div class="pick-review" id="pick2">
+        <div class="pick-header">
+          <div>
+            <span class="platform-badge">KALSHI</span>
+            <h3 class="pick-question">Will the Fed raise rates in March 2025?</h3>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 2rem; font-weight: bold; color: #4ade80;">82/100</div>
+            <div style="font-size: 0.75rem; text-transform: uppercase; opacity: 0.6;">Score</div>
+          </div>
+        </div>
+
+        <div class="pick-metrics">
+          <div class="metric">
+            <div class="metric-label">Crowd on YES</div>
+            <div class="metric-value">85%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Miyomi Says</div>
+            <div class="metric-value" style="color: #4ade80;">NO</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Confidence</div>
+            <div class="metric-value">68%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Edge</div>
+            <div class="metric-value" style="color: #4ade80;">+18%</div>
+          </div>
+        </div>
+
+        <div class="reasoning">
+          85% expect a hike, but economic data suggests pause. Recent inflation data and employment figures point to a more dovish Fed than the market expects.
+        </div>
+
+        <div class="risks">
+          <div class="risks-label">Risks:</div>
+          <div class="risk-item">• Near expiration date</div>
+          <div class="risk-item">• Fed communication could change</div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-approve" onclick="approvePick(2)">Approve Pick</button>
+          <button class="btn btn-skip" onclick="skipPick(2)">Skip</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Generate Content -->
+    <div id="generate-section" class="hidden">
+      <h2 style="font-size: 2rem; margin-bottom: 10px; text-transform: uppercase;">
+        Step 2: Generate Content
+      </h2>
+      <p style="font-size: 0.875rem; opacity: 0.6; margin-bottom: 30px;">
+        One click generates everything for today
+      </p>
+
+      <div class="generate-section">
+        <p style="font-size: 1.25rem;">Ready to generate content for:</p>
+        <div class="generate-count"><span id="approved-count">0</span> Approved Picks</div>
+        
+        <div style="font-size: 0.875rem; opacity: 0.6; margin-bottom: 30px;">
+          <p>This will create:</p>
+          <ul style="list-style: none; margin-top: 10px;">
+            <li>• <span id="video-count">0</span> video scripts (Claude API)</li>
+            <li>• <span id="video-count2">0</span> videos (Eden API)</li>
+            <li>• <span id="social-count">0</span> social posts</li>
+            <li>• Affiliate links for all picks</li>
+          </ul>
+        </div>
+        
+        <button class="btn-generate" onclick="generateContent()">Generate All Content</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Schedule -->
+    <div id="schedule-section" class="hidden">
+      <h2 style="font-size: 2rem; margin-bottom: 10px; text-transform: uppercase;">
+        Step 3: Schedule Posts
+      </h2>
+      <p style="font-size: 0.875rem; opacity: 0.6; margin-bottom: 30px;">
+        Choose when to go live
+      </p>
+
+      <div style="border: 1px solid white; padding: 40px;">
+        <p style="font-size: 1.25rem; margin-bottom: 20px;">✅ Content Generated Successfully!</p>
+        
+        <div style="border-top: 1px solid white; padding-top: 30px; margin-top: 30px;">
+          <p style="font-size: 1.125rem; margin-bottom: 20px;">Publishing Schedule:</p>
+          <div style="margin-bottom: 30px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+              <span>Twitter/X</span>
+              <span style="color: #4ade80;">9:00 AM ET</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+              <span>YouTube</span>
+              <span style="color: #4ade80;">9:15 AM ET</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>Farcaster</span>
+              <span style="color: #4ade80;">9:30 AM ET</span>
+            </div>
+          </div>
+          
+          <button class="btn btn-approve" style="width: 100%;" onclick="schedulePosts()">
+            Schedule & Go Live
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Complete -->
+    <div id="complete-section" class="hidden">
+      <div class="success-message">
+        <div class="success-icon">🎯</div>
+        <h2 style="font-size: 2.5rem; margin-bottom: 20px; text-transform: uppercase;">
+          Daily Workflow Complete!
+        </h2>
+        <p style="font-size: 1.25rem; opacity: 0.8; margin-bottom: 40px;">
+          Your picks are scheduled and will go live at 9:00 AM ET
+        </p>
+        
+        <div style="border: 1px solid white; padding: 30px; max-width: 600px; margin: 0 auto;">
+          <h3 style="font-size: 1.25rem; margin-bottom: 20px;">Today's Summary</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left;">
+            <div>
+              <span style="opacity: 0.6;">Picks Approved:</span>
+              <span style="margin-left: 10px; font-weight: bold;" id="final-picks">0</span>
+            </div>
+            <div>
+              <span style="opacity: 0.6;">Content Created:</span>
+              <span style="margin-left: 10px; font-weight: bold;" id="final-content">0 pieces</span>
+            </div>
+            <div>
+              <span style="opacity: 0.6;">Expected Revenue:</span>
+              <span style="margin-left: 10px; font-weight: bold; color: #4ade80;">$50-200</span>
+            </div>
+            <div>
+              <span style="opacity: 0.6;">Time Spent:</span>
+              <span style="margin-left: 10px; font-weight: bold;">~5 minutes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue Dashboard -->
+    <div class="revenue-dashboard">
+      <h3 style="font-size: 1.25rem; margin-bottom: 20px; text-transform: uppercase;">Revenue Metrics</h3>
+      <div class="revenue-grid">
+        <div class="revenue-card">
+          <div class="revenue-label">Today</div>
+          <div style="font-size: 1.25rem; font-weight: bold; color: #4ade80;">$127.50</div>
+        </div>
+        <div class="revenue-card">
+          <div class="revenue-label">This Week</div>
+          <div style="font-size: 1.25rem; font-weight: bold;">$892.30</div>
+        </div>
+        <div class="revenue-card">
+          <div class="revenue-label">This Month</div>
+          <div style="font-size: 1.25rem; font-weight: bold;">$4,250.00</div>
+        </div>
+        <div class="revenue-card">
+          <div class="revenue-label">Affiliates</div>
+          <div style="font-size: 1.25rem; font-weight: bold; color: #4ade80;">$3,100.00</div>
+        </div>
+        <div class="revenue-card">
+          <div class="revenue-label">Subscriptions</div>
+          <div style="font-size: 1.25rem; font-weight: bold;">$1,150.00</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let approvedPicks = 0;
+    
+    function approvePick(pickId) {
+      approvedPicks++;
+      document.getElementById('pick' + pickId)?.remove();
+      
+      // Check if all picks reviewed
+      if (document.querySelectorAll('.pick-review').length === 1) {
+        setTimeout(() => {
+          showGenerateSection();
+        }, 500);
+      }
+    }
+    
+    function skipPick(pickId) {
+      document.getElementById('pick' + pickId)?.remove();
+      
+      // Check if all picks reviewed
+      if (document.querySelectorAll('.pick-review').length === 1) {
+        setTimeout(() => {
+          showGenerateSection();
+        }, 500);
+      }
+    }
+    
+    function showGenerateSection() {
+      document.getElementById('review-section').classList.add('hidden');
+      document.getElementById('generate-section').classList.remove('hidden');
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+      
+      // Update counts
+      document.getElementById('approved-count').textContent = approvedPicks;
+      document.getElementById('video-count').textContent = approvedPicks;
+      document.getElementById('video-count2').textContent = approvedPicks;
+      document.getElementById('social-count').textContent = approvedPicks * 3;
+    }
+    
+    function generateContent() {
+      const btn = document.querySelector('.btn-generate');
+      btn.textContent = '⚡ Generating Content...';
+      btn.disabled = true;
+      
+      setTimeout(() => {
+        document.getElementById('generate-section').classList.add('hidden');
+        document.getElementById('schedule-section').classList.remove('hidden');
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('step3').classList.add('active');
+      }, 2000);
+    }
+    
+    function schedulePosts() {
+      document.getElementById('schedule-section').classList.add('hidden');
+      document.getElementById('complete-section').classList.remove('hidden');
+      document.getElementById('step3').classList.remove('active');
+      document.getElementById('step4').classList.add('active');
+      
+      // Update final counts
+      document.getElementById('final-picks').textContent = approvedPicks;
+      document.getElementById('final-content').textContent = (approvedPicks * 4) + ' pieces';
+    }
+  </script>
+</body>
+</html>
