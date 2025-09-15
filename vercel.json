@@ -1,40 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/eden-images/(.*)",
-      "dest": "/public/eden-images/$1"
-    },
-    {
-      "src": "/gallery",
-      "dest": "/public/media-gallery.html"
-    },
-    {
-      "src": "/personality",
-      "dest": "/public/personality.html"
-    },
-    {
-      "src": "/trainer",
-      "dest": "/public/trainer.html"
-    },
-    {
-      "src": "/",
-      "dest": "/public/index.html"
-    }
-  ],
-  "functions": {
-    "api/*.js": {
-      "maxDuration": 10
-    }
-  }
+  "rewrites": [
+    { "source": "/dashboard", "destination": "/miyomi-app.html" },
+    { "source": "/app", "destination": "/miyomi-app.html" },
+    { "source": "/gallery", "destination": "/media-gallery.html" },
+    { "source": "/personality", "destination": "/personality.html" },
+    { "source": "/trainer", "destination": "/miyomi-app.html" },
+    { "source": "/", "destination": "/miyomi-dashboard.html" }
+  ]
 }

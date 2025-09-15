@@ -14,26 +14,27 @@
     body {
       background: #000;
       color: #fff;
-      font-family: 'Courier New', monospace;
+      font-family: 'Helvetica Neue', 'Arial', sans-serif;
+      font-weight: bold;
       line-height: 1.6;
       overflow-x: hidden;
     }
     
     .header {
-      background: linear-gradient(135deg, #000 0%, #111 100%);
+      background: #000;
       padding: 40px 20px;
       text-align: center;
-      border-bottom: 2px solid #4ade80;
+      border-bottom: 2px solid #ffffff;
     }
     
     h1 {
       font-size: 3rem;
+      font-weight: bold;
+      font-family: 'Helvetica Neue', 'Arial', sans-serif;
       margin-bottom: 10px;
       text-transform: uppercase;
       letter-spacing: -1px;
-      background: linear-gradient(45deg, #4ade80, #22c55e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #ffffff;
     }
     
     .tagline {
@@ -64,7 +65,7 @@
       background: #111;
       padding: 20px;
       margin-bottom: 40px;
-      border: 1px solid #4ade80;
+      border: 1px solid #ffffff;
     }
     
     .stats-grid {
@@ -75,7 +76,7 @@
     }
     
     .stat-item {
-      color: #4ade80;
+      color: #ffffff;
       font-size: 1.5rem;
       font-weight: bold;
     }
@@ -103,9 +104,9 @@
     }
     
     .media-card:hover {
-      border-color: #4ade80;
+      border-color: #ffffff;
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.1);
+      /* removed shadow */
     }
     
     .media-image {
@@ -118,11 +119,11 @@
     }
     
     .media-card:hover .media-image {
-      border-color: #4ade80;
+      border-color: #ffffff;
     }
     
     .media-title {
-      color: #4ade80;
+      color: #ffffff;
       font-size: 1.2rem;
       margin-bottom: 10px;
       text-transform: uppercase;
@@ -144,8 +145,8 @@
     
     .mood-tag {
       display: inline-block;
-      background: rgba(74, 222, 128, 0.1);
-      border: 1px solid #4ade80;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #ffffff;
       padding: 2px 8px;
       margin: 2px;
       font-size: 0.8rem;
@@ -190,21 +191,21 @@
       width: 90%;
       max-width: 800px;
       background: #111;
-      border: 2px solid #4ade80;
+      border: 2px solid #ffffff;
     }
     
     .close {
       position: absolute;
       top: 10px;
       right: 20px;
-      color: #4ade80;
+      color: #ffffff;
       font-size: 2rem;
       font-weight: bold;
       cursor: pointer;
     }
     
     .close:hover {
-      color: #22c55e;
+      color: #ffffff;
     }
     
     .modal-image {
@@ -221,8 +222,8 @@
     
     .filter-button {
       background: #111;
-      color: #4ade80;
-      border: 1px solid #4ade80;
+      color: #ffffff;
+      border: 1px solid #ffffff;
       padding: 8px 16px;
       margin: 0 5px;
       cursor: pointer;
@@ -233,13 +234,13 @@
     
     .filter-button:hover,
     .filter-button.active {
-      background: #4ade80;
+      background: #ffffff;
       color: #000;
     }
     
     .loading {
       text-align: center;
-      color: #4ade80;
+      color: #ffffff;
       font-size: 1.2rem;
       margin: 40px 0;
     }

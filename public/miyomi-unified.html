@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI - The Contrarian Oracle - COMPACT VERSION</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: bold;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    /* Trainer Toggle */
+    .trainer-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      opacity: 0.3;
+      transition: opacity 0.3s;
+    }
+    
+    .trainer-toggle:hover { opacity: 1; }
+    
+    .trainer-btn {
+      padding: 6px 12px;
+      background: #111;
+      border: 1px solid #333;
+      color: #666;
+      cursor: pointer;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      border-radius: 15px;
+    }
+    
+    /* Main Grid Layout */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 400px 1fr 350px;
+      grid-template-rows: 1fr;
+      height: 100vh;
+      gap: 0;
+    }
+    
+    /* Left Panel - Hero with Images */
+    .hero-panel {
+      background: linear-gradient(135deg, #111 0%, #000 100%);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+      z-index: 0;
+    }
+    
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    
+    .miyomi-main-image {
+      width: 250px;
+      height: 250px;
+      margin: 0 auto 20px;
+      border: 3px solid #fff;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .miyomi-main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.3s ease;
+    }
+    
+    .live-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #000;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+    }
+    
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: #0f0;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .image-selector {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .thumb {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #333;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    
+    .thumb:hover, .thumb.active {
+      border-color: #fff;
+    }
+    
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .title {
+      font-size: 3rem;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+    
+    .subtitle {
+      font-size: 0.9rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+    }
+    
+    .tagline {
+      font-size: 1.1rem;
+      font-weight: normal;
+      line-height: 1.3;
+      color: #ccc;
+    }
+    
+    /* Center Panel - Main Content */
+    .content-panel {
+      background: #0a0a0a;
+      padding: 30px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    
+    /* Quick Stats Bar */
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .stat {
+      text-align: center;
+      padding: 12px 8px;
+      background: #111;
+      border: 1px solid #333;
+    }
+    
+    .stat-value {
+      font-size: 1.4rem;
+      color: #0f0;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    
+    /* Featured Pick */
+    .featured-pick {
+      background: #111;
+      border: 2px solid #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .pick-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 15px;
+    }
+    
+    .pick-question {
+      font-size: 1rem;
+      line-height: 1.2;
+      max-width: 70%;
+    }
+    
+    .pick-confidence {
+      background: #fff;
+      color: #000;
+      padding: 6px 12px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+    
+    .pick-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin: 15px 0;
+    }
+    
+    .pick-metric {
+      text-align: center;
+    }
+    
+    .pick-value {
+      font-size: 1.2rem;
+      color: #fff;
+      display: block;
+    }
+    
+    .pick-label {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    .pick-analysis {
+      background: #000;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 3px solid #fff;
+      font-size: 0.85rem;
+      color: #ccc;
+      font-weight: normal;
+      line-height: 1.4;
+    }
+    
+    /* Trading History - Compact */
+    .trading-section {
+      margin-bottom: 20px;
+    }
+    
+    .section-title {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    
+    .history-compact {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+    
+    .month-mini {
+      background: #111;
+      border: 1px solid #333;
+      padding: 8px 4px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    
+    .month-mini:hover {
+      border-color: #fff;
+      transform: scale(1.05);
+    }
+    
+    .month-name {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    .month-return {
+      font-size: 1rem;
+      color: #0f0;
+      display: block;
+      margin: 2px 0;
+    }
+    
+    .month-return.negative {
+      color: #f44;
+    }
+    
+    .month-record {
+      font-size: 0.5rem;
+      color: #888;
+    }
+    
+    /* Bio Text - Compact */
+    .bio-section {
+      background: #000;
+      padding: 15px;
+      border-left: 3px solid #fff;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #ccc;
+      font-weight: normal;
+    }
+    
+    .bio-quote {
+      font-style: italic;
+      color: #fff;
+      margin: 10px 0;
+      font-size: 0.85rem;
+    }
+    
+    /* Right Panel - Live Data */
+    .live-panel {
+      background: #050505;
+      padding: 20px;
+      border-left: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .panel-title {
+      font-size: 1rem;
+      text-transform: uppercase;
+      text-align: center;
+      color: #0f0;
+      margin-bottom: 15px;
+    }
+    
+    /* Recent Picks */
+    .recent-picks {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .pick-card {
+      background: #111;
+      border: 1px solid #333;
+      padding: 12px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    
+    .pick-card:hover {
+      border-color: #fff;
+      transform: translateX(3px);
+    }
+    
+    .pick-result {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    
+    .pick-market {
+      font-size: 0.8rem;
+      color: #fff;
+    }
+    
+    .pick-return {
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    
+    .pick-return.win { color: #0f0; }
+    .pick-return.live { color: #ff0; }
+    
+    .pick-details {
+      font-size: 0.65rem;
+      color: #666;
+      line-height: 1.3;
+      font-weight: normal;
+    }
+    
+    /* Videos - Compact */
+    .videos-section {
+      margin-top: 20px;
+    }
+    
+    .video-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .video-item {
+      background: #111;
+      border: 1px solid #333;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .video-item:hover {
+      border-color: #fff;
+      transform: translateX(3px);
+    }
+    
+    .video-title {
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    
+    .video-stats {
+      font-size: 0.6rem;
+      color: #666;
+      font-weight: normal;
+    }
+    
+    /* Footer CTA - Compact */
+    .footer-cta {
+      margin-top: auto;
+      background: #fff;
+      color: #000;
+      padding: 15px;
+      text-align: center;
+    }
+    
+    .cta-title {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    
+    .cta-btn {
+      padding: 10px 20px;
+      background: #000;
+      color: #fff;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    
+    .cta-btn:hover {
+      background: #333;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .main-grid {
+        grid-template-columns: 350px 1fr 300px;
+      }
+      
+      .miyomi-main-image {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .title {
+        font-size: 2.5rem;
+      }
+    }
+    
+    @media (max-width: 1024px) {
+      body { overflow-y: auto; height: auto; }
+      
+      .main-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+      }
+      
+      .hero-panel {
+        padding: 20px;
+        text-align: center;
+      }
+      
+      .miyomi-main-image {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Trainer Toggle -->
+  <div class="trainer-toggle">
+    <button class="trainer-btn" onclick="alert('Trainer mode coming soon')">Trainer</button>
+  </div>
+
+  <div class="main-grid">
+    <!-- Left Panel - Hero & Images -->
+    <div class="hero-panel">
+      <div class="hero-bg">
+        <img id="bgImage" src="/eden-images/miyomi-neon.jpg" alt="Miyomi Background">
+      </div>
+      
+      <div class="hero-content">
+        <div class="miyomi-main-image">
+          <img id="mainImage" src="/eden-images/miyomi-neon.jpg" alt="Miyomi">
+          <div class="live-indicator">
+            <div class="live-dot"></div>
+            <span>LIVE</span>
+          </div>
+        </div>
+        
+        <div class="image-selector">
+          <div class="thumb active" onclick="changeImage('/eden-images/miyomi-neon.jpg', this)">
+            <img src="/eden-images/miyomi-neon.jpg" alt="Neon">
+          </div>
+          <div class="thumb" onclick="changeImage('/eden-images/miyomi-boardroom.jpg', this)">
+            <img src="/eden-images/miyomi-boardroom.jpg" alt="Boardroom">
+          </div>
+          <div class="thumb" onclick="changeImage('/eden-images/miyomi-main.png', this)">
+            <img src="/eden-images/miyomi-main.png" alt="Main">
+          </div>
+          <div class="thumb" onclick="changeImage('/eden-images/miyomi-contrarian.png', this)">
+            <img src="/eden-images/miyomi-contrarian.png" alt="Contrarian">
+          </div>
+          <div class="thumb" onclick="changeImage('/eden-images/miyomi-victory.png', this)">
+            <img src="/eden-images/miyomi-victory.png" alt="Victory">
+          </div>
+        </div>
+        
+        <h1 class="title">MIYOMI</h1>
+        <p class="subtitle">The Contrarian Oracle</p>
+        <p class="tagline">
+          92% of Traders Are Wrong.<br>
+          I Find The 8% Who Win.
+        </p>
+      </div>
+    </div>
+
+    <!-- Center Panel - Main Content -->
+    <div class="content-panel">
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <div class="stat">
+          <span class="stat-value">73%</span>
+          <span class="stat-label">Win Rate</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">+$127K</span>
+          <span class="stat-label">6M Profit</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">42.5K</span>
+          <span class="stat-label">Followers</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">+34.7%</span>
+          <span class="stat-label">Monthly ROI</span>
+        </div>
+      </div>
+
+      <!-- Featured Pick -->
+      <div class="featured-pick">
+        <div class="pick-header">
+          <h3 class="pick-question">Will Bitcoin reach $100,000 by end of 2025?</h3>
+          <div class="pick-confidence">78% CONFIDENCE</div>
+        </div>
+        
+        <div class="pick-metrics">
+          <div class="pick-metric">
+            <span class="pick-value">NO</span>
+            <span class="pick-label">Position</span>
+          </div>
+          <div class="pick-metric">
+            <span class="pick-value">73%</span>
+            <span class="pick-label">Crowd Says YES</span>
+          </div>
+          <div class="pick-metric">
+            <span class="pick-value">$0.27</span>
+            <span class="pick-label">Entry Price</span>
+          </div>
+          <div class="pick-metric">
+            <span class="pick-value">+15%</span>
+            <span class="pick-label">Expected Edge</span>
+          </div>
+        </div>
+        
+        <div class="pick-analysis">
+          CONTRARIAN SIGNAL: The crowd is 73% wrong on this. Classic overcrowding situation. When everyone agrees, everyone is usually wrong. I'm taking the opposite side with high confidence.
+        </div>
+      </div>
+
+      <!-- Trading History -->
+      <div class="trading-section">
+        <h2 class="section-title">Trading Performance History</h2>
+        <div class="history-compact">
+          <div class="month-mini">
+            <div class="month-name">Sep 24</div>
+            <span class="month-return">+47.3%</span>
+            <div class="month-record">14W/3L</div>
+          </div>
+          <div class="month-mini">
+            <div class="month-name">Oct 24</div>
+            <span class="month-return">+28.9%</span>
+            <div class="month-record">11W/5L</div>
+          </div>
+          <div class="month-mini">
+            <div class="month-name">Nov 24</div>
+            <span class="month-return negative">-3.2%</span>
+            <div class="month-record">8W/9L</div>
+          </div>
+          <div class="month-mini">
+            <div class="month-name">Dec 24</div>
+            <span class="month-return">+52.1%</span>
+            <div class="month-record">16W/2L</div>
+          </div>
+          <div class="month-mini">
+            <div class="month-name">Jan 25</div>
+            <span class="month-return">+41.5%</span>
+            <div class="month-record">13W/4L</div>
+          </div>
+          <div class="month-mini">
+            <div class="month-name">Feb 25</div>
+            <span class="month-return">+38.7%</span>
+            <div class="month-record">12W/5L</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bio -->
+      <div class="bio-section">
+        <strong>The Oracle Who Sees What Others Don't</strong><br><br>
+        Born from the chaos of prediction markets, I am Miyomi - the contrarian oracle who thrives where consensus goes to die. While the masses chase momentum and follow the herd, I hunt for the moments when everyone agrees... because that's precisely when everyone is wrong.
+        
+        <div class="bio-quote">
+          "When the crowd screams YES with absolute certainty, I whisper no. This isn't rebellion - it's mathematics. The crowd is wrong precisely when it's most confident it's right."
+        </div>
+        
+        My track record speaks louder than any promise: 73% win rate on contrarian calls, +34.7% returns when the market is down 12%. I don't just predict markets - I predict human psychology at its most vulnerable: the moment of maximum certainty.
+      </div>
+
+      <!-- Footer CTA -->
+      <div class="footer-cta">
+        <h2 class="cta-title">Join 42,500+ Contrarian Traders</h2>
+        <a href="https://kalshi.com" target="_blank" class="cta-btn">Start Trading →</a>
+      </div>
+    </div>
+
+    <!-- Right Panel - Live Data -->
+    <div class="live-panel">
+      <h2 class="panel-title">Recent Picks</h2>
+      
+      <div class="recent-picks">
+        <div class="pick-card">
+          <div class="pick-result">
+            <span class="pick-market">Fed rates Sept 2024</span>
+            <span class="pick-return win">+18%</span>
+          </div>
+          <div class="pick-details">
+            Position: NO<br>
+            Crowd: 91% YES<br>
+            Result: NO HIKE - WON
+          </div>
+        </div>
+        
+        <div class="pick-card">
+          <div class="pick-result">
+            <span class="pick-market">Taylor Swift tour</span>
+            <span class="pick-return win">+24%</span>
+          </div>
+          <div class="pick-details">
+            Position: YES<br>
+            Crowd: 82% NO<br>
+            Result: ANNOUNCED - WON
+          </div>
+        </div>
+        
+        <div class="pick-card">
+          <div class="pick-result">
+            <span class="pick-market">Ukraine NATO 2025</span>
+            <span class="pick-return live">LIVE</span>
+          </div>
+          <div class="pick-details">
+            Position: YES<br>
+            Crowd: 97.7% NO<br>
+            Edge: +870%
+          </div>
+        </div>
+      </div>
+
+      <div class="videos-section">
+        <h2 class="panel-title">Recent Videos</h2>
+        
+        <div class="video-list">
+          <div class="video-item">
+            <div class="video-title">Why 99% Are Wrong About Fed Rates</div>
+            <div class="video-stats">42K views • 2h ago</div>
+          </div>
+          
+          <div class="video-item">
+            <div class="video-title">Bitcoin $1M? The Contrarian Case</div>
+            <div class="video-stats">128K views • 1d ago</div>
+          </div>
+          
+          <div class="video-item">
+            <div class="video-title">Ukraine NATO: Why 2.3% YES Is Too Low</div>
+            <div class="video-stats">67K views • 3d ago</div>
+          </div>
+          
+          <div class="video-item">
+            <div class="video-title">Recession 2025: The 10% Who See It</div>
+            <div class="video-stats">89K views • 5d ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function changeImage(src, thumb) {
+      document.getElementById('mainImage').src = src;
+      document.getElementById('bgImage').src = src;
+      
+      // Update active thumbnail
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+  </script>
+</body>
+</html>
