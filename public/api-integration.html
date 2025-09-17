@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI - Video Generation API Integration</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+      letter-spacing: 3px;
+    }
+
+    .section {
+      background: #111;
+      border: 2px solid #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      border: 1px solid #666;
+      padding: 10px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    button {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover:not(:disabled) {
+      background: #00ff00;
+    }
+
+    button:disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    .status {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .status.success {
+      background: #00ff0020;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+    }
+
+    .status.error {
+      background: #ff000020;
+      border: 1px solid #ff0000;
+      color: #ff0000;
+    }
+
+    .status.loading {
+      background: #ffff0020;
+      border: 1px solid #ffff00;
+      color: #ffff00;
+    }
+
+    .video-preview {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .video-preview video {
+      max-width: 100%;
+      max-height: 500px;
+      border: 2px solid #fff;
+    }
+
+    .code-block {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      padding: 15px;
+      margin: 10px 0;
+      font-family: monospace;
+      font-size: 12px;
+      overflow-x: auto;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #333;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: transparent;
+      color: #888;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 12px;
+      transition: all 0.3s;
+    }
+
+    .tab.active {
+      color: #fff;
+      border-bottom: 2px solid #fff;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>MIYOMI VIDEO GENERATION API</h1>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('eden')">EDEN API</button>
+    <button class="tab" onclick="switchTab('mock')">MOCK API</button>
+    <button class="tab" onclick="switchTab('docs')">DOCUMENTATION</button>
+  </div>
+
+  <!-- Eden API Tab -->
+  <div id="eden-tab" class="tab-content active">
+    <div class="section">
+      <div class="section-title">Eden Video Generation</div>
+      
+      <div class="form-group">
+        <label>API Key</label>
+        <input type="password" id="eden-api-key" placeholder="Enter your Eden API key">
+      </div>
+
+      <div class="form-group">
+        <label>Market Type</label>
+        <select id="eden-market">
+          <option value="polymarket">Polymarket</option>
+          <option value="kalshi">Kalshi</option>
+          <option value="both">Cross-Market</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Position</label>
+        <input type="text" id="eden-position" placeholder='e.g., Trump 2024 @ 45% (SHORT)'>
+      </div>
+
+      <div class="form-group">
+        <label>Script</label>
+        <textarea id="eden-script" placeholder="Enter your 30-second video script...">Everyone's betting Trump at 45%? Time to fade this garbage. Here's what the crowd's missing: The polls are lagging indicators. Smart money already moved. Look at the volume spike at 62% last week - that was the exit signal. Already up $3,241 on this position. Follow for trades that actually print.</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Aspect Ratio</label>
+        <select id="eden-aspect">
+          <option value="9:16">9:16 (TikTok/Shorts)</option>
+          <option value="1:1">1:1 (Instagram)</option>
+          <option value="16:9">16:9 (YouTube)</option>
+        </select>
+      </div>
+
+      <button onclick="generateEdenVideo()">Generate Video with Eden</button>
+      
+      <div id="eden-status"></div>
+      <div id="eden-preview" class="video-preview"></div>
+    </div>
+  </div>
+
+  <!-- Mock API Tab -->
+  <div id="mock-tab" class="tab-content">
+    <div class="section">
+      <div class="section-title">Mock Video Generation (For Testing)</div>
+      
+      <div class="form-group">
+        <label>Template</label>
+        <select id="mock-template">
+          <option value="poly-fade">Polymarket Fade</option>
+          <option value="kalshi-arb">Kalshi Arbitrage</option>
+          <option value="cross-market">Cross-Market Opportunity</option>
+          <option value="winner-lap">Winner Lap</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Duration</label>
+        <select id="mock-duration">
+          <option value="30">30 seconds</option>
+          <option value="60">60 seconds</option>
+          <option value="90">90 seconds</option>
+        </select>
+      </div>
+
+      <button onclick="generateMockVideo()">Generate Mock Video</button>
+      
+      <div id="mock-status"></div>
+      <div id="mock-response" class="code-block" style="display: none;"></div>
+    </div>
+  </div>
+
+  <!-- Documentation Tab -->
+  <div id="docs-tab" class="tab-content">
+    <div class="section">
+      <div class="section-title">API Integration Guide</div>
+      
+      <h3>Eden API Endpoint</h3>
+      <div class="code-block">
+POST https://api.eden.art/v1/characters/miyomi/video
+Authorization: Bearer YOUR_API_KEY
+Content-Type: application/json
+
+{
+  "script": "Your video script here",
+  "style": "contrarian_oracle",
+  "aspectRatio": "9:16",
+  "duration": 30,
+  "voice": "miyomi_confident",
+  "background": "trading_charts",
+  "metadata": {
+    "market": "polymarket",
+    "position": "Trump 2024 @ 45% SHORT",
+    "pnl": "+$3,241"
+  }
+}</div>
+
+      <h3>Response Format</h3>
+      <div class="code-block">
+{
+  "success": true,
+  "videoId": "vid_123456",
+  "videoUrl": "https://cdn.eden.art/videos/miyomi/vid_123456.mp4",
+  "thumbnailUrl": "https://cdn.eden.art/thumbnails/miyomi/vid_123456.jpg",
+  "duration": 30,
+  "status": "completed",
+  "processingTime": 45.2
+}</div>
+
+      <h3>JavaScript Implementation</h3>
+      <div class="code-block">
+async function generateVideo(script, market, position) {
+  const response = await fetch('https://api.eden.art/v1/characters/miyomi/video', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${EDEN_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      script,
+      style: 'contrarian_oracle',
+      aspectRatio: '9:16',
+      duration: 30,
+      voice: 'miyomi_confident',
+      background: 'trading_charts',
+      metadata: { market, position }
+    })
+  });
+  
+  const data = await response.json();
+  return data;
+}</div>
+
+      <h3>Error Handling</h3>
+      <div class="code-block">
+// Rate limiting: 10 videos per hour
+// Max script length: 500 characters
+// Supported formats: MP4, WebM
+
+{
+  "success": false,
+  "error": "RATE_LIMIT_EXCEEDED",
+  "message": "You have exceeded the rate limit of 10 videos per hour",
+  "retryAfter": 3600
+}</div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    function switchTab(tab) {
+      // Update tab buttons
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      // Update content
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      document.getElementById(`${tab}-tab`).classList.add('active');
+    }
+
+    // Eden API integration
+    async function generateEdenVideo() {
+      const apiKey = document.getElementById('eden-api-key').value;
+      const market = document.getElementById('eden-market').value;
+      const position = document.getElementById('eden-position').value;
+      const script = document.getElementById('eden-script').value;
+      const aspectRatio = document.getElementById('eden-aspect').value;
+      
+      if (!apiKey) {
+        showStatus('eden-status', 'Please enter your Eden API key', 'error');
+        return;
+      }
+      
+      showStatus('eden-status', 'Generating video... This may take 30-60 seconds', 'loading');
+      
+      try {
+        // For demo purposes, we'll simulate the API call
+        // In production, replace with actual Eden API endpoint
+        const response = await simulateEdenAPI({
+          script,
+          market,
+          position,
+          aspectRatio
+        });
+        
+        if (response.success) {
+          showStatus('eden-status', `Video generated successfully! ID: ${response.videoId}`, 'success');
+          displayVideo('eden-preview', response.videoUrl);
+        } else {
+          showStatus('eden-status', `Error: ${response.message}`, 'error');
+        }
+      } catch (error) {
+        showStatus('eden-status', `Error: ${error.message}`, 'error');
+      }
+    }
+
+    // Mock API for testing
+    async function generateMockVideo() {
+      const template = document.getElementById('mock-template').value;
+      const duration = document.getElementById('mock-duration').value;
+      
+      showStatus('mock-status', 'Generating mock video...', 'loading');
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const mockResponse = {
+        success: true,
+        videoId: `mock_${Date.now()}`,
+        videoUrl: `https://example.com/mock-video-${template}.mp4`,
+        thumbnailUrl: `https://example.com/mock-thumb-${template}.jpg`,
+        template: template,
+        duration: parseInt(duration),
+        script: getTemplateScript(template),
+        metadata: {
+          market: template.includes('poly') ? 'polymarket' : 'kalshi',
+          generatedAt: new Date().toISOString()
+        }
+      };
+      
+      showStatus('mock-status', 'Mock video generated!', 'success');
+      document.getElementById('mock-response').style.display = 'block';
+      document.getElementById('mock-response').textContent = JSON.stringify(mockResponse, null, 2);
+      
+      return mockResponse;
+    }
+
+    // Simulate Eden API (replace with real API call in production)
+    async function simulateEdenAPI(params) {
+      // Simulate processing delay
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      // Mock successful response
+      return {
+        success: true,
+        videoId: `eden_${Date.now()}`,
+        videoUrl: `data:video/mp4;base64,MOCK_VIDEO_DATA`,
+        thumbnailUrl: `/eden-images/miyomi-neon.jpg`,
+        duration: 30,
+        status: 'completed',
+        processingTime: 42.7
+      };
+    }
+
+    // Get template script
+    function getTemplateScript(template) {
+      const scripts = {
+        'poly-fade': "Everyone's wrong about Trump at 45%. Time to fade this garbage...",
+        'kalshi-arb': "Kalshi has CPI at 61%? FREE MONEY ALERT...",
+        'cross-market': "Found a 12% arbitrage between Polymarket and Kalshi...",
+        'winner-lap': "Called it! +$5,422 on that Bitcoin ETF fade..."
+      };
+      return scripts[template] || "Default script";
+    }
+
+    // Display video
+    function displayVideo(elementId, videoUrl) {
+      const preview = document.getElementById(elementId);
+      if (videoUrl.startsWith('data:')) {
+        // Mock video - show placeholder
+        preview.innerHTML = `
+          <div style="background: #111; border: 2px solid #fff; padding: 40px; margin-top: 20px;">
+            <div style="font-size: 48px; margin-bottom: 10px;">▶️</div>
+            <div>Mock Video Generated</div>
+            <div style="font-size: 12px; color: #666; margin-top: 10px;">30 seconds • 9:16 aspect ratio</div>
+          </div>
+        `;
+      } else {
+        preview.innerHTML = `<video src="${videoUrl}" controls></video>`;
+      }
+    }
+
+    // Show status message
+    function showStatus(elementId, message, type) {
+      const status = document.getElementById(elementId);
+      status.className = `status ${type}`;
+      status.textContent = message;
+      status.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

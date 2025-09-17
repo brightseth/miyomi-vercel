@@ -1,12 +1,24 @@
 {
-  "name": "miyomi-vercel",
+  "name": "miyomi-federation",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "MIYOMI - Prediction Market Video Oracle",
+  "main": "index.html",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vercel dev",
+    "build": "echo 'Static build complete'",
+    "start": "vercel dev"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4"
+  },
+  "keywords": [
+    "prediction-markets",
+    "ai-agent",
+    "video-generation",
+    "contrarian",
+    "miyomi"
+  ],
+  "author": "Eden Academy",
+  "license": "MIT"
 }

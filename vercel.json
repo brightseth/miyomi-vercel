@@ -6,6 +6,6 @@
     { "source": "/gallery", "destination": "/media-gallery.html" },
     { "source": "/personality", "destination": "/personality.html" },
     { "source": "/trainer", "destination": "/miyomi-app.html" },
-    { "source": "/", "destination": "/miyomi-video-dashboard.html" }
+    { "source": "/", "destination": "/eden-api-connector.html" }
   ]
 }
