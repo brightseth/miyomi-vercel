@@ -1,20 +1,29 @@
 # MIYOMI - Prediction Market Video Oracle
 
-## 🚀 Production URL
-**Live System:** https://miyomi-federation-3mtdz91sc-edenprojects.vercel.app
+## 🚀 Production URLs
+**Main Domain:** https://miyomi.ai
+**Latest Deployment:** https://miyomi-federation-g95f40f0b-edenprojects.vercel.app
 
-## 📊 System Status
+## 📊 System Status (Updated: January 17, 2025)
 - ✅ **Database**: Fully integrated with Supabase
-- ✅ **Video Storage**: Persistent video history 
-- ✅ **API Endpoints**: All working with mock fallback
-- ⏳ **Eden API**: Awaiting proper endpoint from Eden Academy team
+- ✅ **Live Market Data**: Real Polymarket & Kalshi APIs integrated
+- ✅ **Trainer Dashboard**: Complete curation system deployed
+- ✅ **Video Generation**: Pipeline ready (Eden API pending)
+- ✅ **Contrarian Analysis**: Automatic edge detection for >70% or <30% consensus
 
 ## 🔗 Quick Links
 
-### Dashboard Access
-- **Main Interface**: https://miyomi-federation-3mtdz91sc-edenprojects.vercel.app
-- **Video History API**: https://miyomi-federation-3mtdz91sc-edenprojects.vercel.app/api/video-history
-- **Database Health**: https://miyomi-federation-3mtdz91sc-edenprojects.vercel.app/api/database-health
+### Live Features
+- **[Live Market Dashboard](https://miyomi.ai/miyomi-live-dashboard.html)** - Real-time market monitoring
+- **[Trainer Dashboard](https://miyomi.ai/trainer-dashboard.html)** - Private curation (password: `miyomi2025`)
+- **[Original Interface](https://miyomi.ai/eden-api-connector.html)** - Video generation UI
+
+### API Endpoints
+- **Live Polymarket Data**: https://miyomi.ai/api/polymarket-live
+- **Live Kalshi Data**: https://miyomi.ai/api/kalshi-live
+- **Video Generation**: https://miyomi.ai/api/generate-video-v2
+- **Video History**: https://miyomi.ai/api/video-history
+- **Database Health**: https://miyomi.ai/api/database-health
 
 ### Development
 - **GitHub Repo**: [Add your repo URL here]
@@ -23,11 +32,18 @@
 
 ## 🎯 Current Capabilities
 
-### Working Features
+### New Features (January 17, 2025)
+1. **Live Market Data** - Real Polymarket/Kalshi APIs with contrarian analysis
+2. **Trainer Dashboard** - Complete pick curation and approval workflow
+3. **Enhanced Video Generation** - Multiple Eden endpoint attempts with fallbacks
+4. **Automatic Edge Detection** - Identifies extreme consensus opportunities
+5. **Real-time Updates** - Auto-refresh every 30 seconds on live dashboard
+
+### Core Features
 1. **Video Generation API** - Creates video records with full metadata
 2. **Database Persistence** - All videos saved to Supabase
 3. **Video History** - Retrieve past videos by category
-4. **Market Integration** - Polymarket/Kalshi data display
+4. **Market Integration** - Live prediction market data
 5. **3 Daily Categories**:
    - Economy/Crypto (9AM)
    - Politics/World Events (2PM)
@@ -86,10 +102,10 @@ EDEN_API_KEY=db10962875d98d2a2dafa8599a89c850766f39647095c002
 ```
 
 ## 🔄 Next Steps
-1. **Eden Academy** to provide video generation endpoint
-2. **Implement** task status polling for video completion
-3. **Add** social media auto-publishing
-4. **Create** performance tracking dashboard
+1. **Social Media Automation** - Auto-publish to TikTok, YouTube Shorts, X/Twitter
+2. **WebSocket Integration** - Real-time market updates without polling
+3. **Advanced Analytics** - Track video performance and trading P&L
+4. **ML Edge Detection** - Machine learning for opportunity identification
 
 ## 💬 Contact & Support
 - **Project Lead**: Seth (you!)
@@ -97,19 +113,34 @@ EDEN_API_KEY=db10962875d98d2a2dafa8599a89c850766f39647095c002
 - **Eden Support**: Henry (for API access)
 
 ## 🎯 Quick Testing
+
+### Test Live Market Data
 ```bash
-# Test video generation (will use mock mode currently)
-curl -X POST "https://miyomi-federation-3mtdz91sc-edenprojects.vercel.app/api/generate-video" \
+# Get live Polymarket data
+curl https://miyomi.ai/api/polymarket-live
+
+# Get live Kalshi markets
+curl https://miyomi.ai/api/kalshi-live
+```
+
+### Test Video Generation
+```bash
+# Generate contrarian video
+curl -X POST "https://miyomi.ai/api/generate-video-v2" \
   -H "Content-Type: application/json" \
   -d '{
     "category": "economy",
     "position": "SHORT Bitcoin at 100k",
-    "thesis": "Bubble about to burst",
-    "script": "30-second contrarian take"
+    "thesis": "Extreme greed signals market top",
+    "script": "The crowd is always wrong at extremes"
   }'
 ```
 
+### Access Dashboards
+- **Live Markets**: https://miyomi.ai/miyomi-live-dashboard.html
+- **Trainer Access**: https://miyomi.ai/trainer-dashboard.html (password: `miyomi2025`)
+
 ---
 
-**Last Updated**: January 16, 2025
-**Session Summary**: Database fully integrated, awaiting Eden API video generation endpoint
+**Last Updated**: January 17, 2025
+**Latest Features**: Live market data integration, trainer dashboard, contrarian analysis automation

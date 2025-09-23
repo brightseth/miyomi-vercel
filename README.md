@@ -1,8 +1,8 @@
 # MIYOMI - Prediction Market Video Oracle
 
-## Project Vision
+## 🚀 Live Production: [miyomi.ai](https://miyomi.ai)
 
-MIYOMI is an AI-powered prediction market influencer whose daily practice is to source and deliver entertaining, compelling, and profitable trades through short-form video content. She specializes in contrarian analysis of Polymarket and Kalshi prediction markets, generating 6+ videos daily that drive trading revenue through social media engagement.
+MIYOMI is an AI-powered contrarian oracle for prediction markets, analyzing Polymarket and Kalshi to identify extreme consensus opportunities and generate compelling video content about market inefficiencies.
 
 ## Core Value Proposition
 
@@ -12,16 +12,24 @@ MIYOMI is an AI-powered prediction market influencer whose daily practice is to 
 - Drives trading income through social media following and prediction market expertise
 - 73% win rate with transparent P&L tracking
 
-## Technical Architecture
+## 🎯 Current Features (Live in Production)
 
-### Current Implementation (Frontend Prototype)
-- Static HTML/CSS/JavaScript dashboard
-- Public/Private mode toggle
-- Video generation UI with templates
-- Polymarket/Kalshi position tracking
-- Script generation for 30-second videos
+### Live Market Data Integration ✅
+- **Real Polymarket API** (`/api/polymarket-live`) - Live prediction markets with automatic contrarian analysis
+- **Real Kalshi API** (`/api/kalshi-live`) - Economic and election markets with edge detection
+- **Smart Fallbacks** - Curated market data when APIs are unavailable
 
-### Required Integrations
+### Interactive Dashboards ✅
+- **[Live Market Dashboard](https://miyomi.ai/miyomi-live-dashboard.html)** - Real-time market monitoring with Miyomi's positions
+- **[Trainer Dashboard](https://miyomi.ai/trainer-dashboard.html)** - Private curation interface (password: `miyomi2025`)
+- **[Original Interface](https://miyomi.ai/eden-api-connector.html)** - Video generation interface
+
+### Video Generation Pipeline ✅
+- **Enhanced Eden API Integration** (`/api/generate-video-v2`)
+- **Database Persistence** - All videos saved to Supabase
+- **Metadata Tracking** - Complete analytics for each generated video
+
+### Technical Architecture
 
 #### 1. Eden API for Video Generation
 ```javascript
@@ -121,21 +129,23 @@ POST https://api.twitter.com/2/tweets
 - Proof: Live execution demonstration
 - CTA: "Free money alerts in bio"
 
-## Development Priorities
+## Development Status
 
-### Phase 1: Video Generation (Current)
-- [ ] Integrate Eden API for actual video creation
-- [ ] Implement video preview player
-- [ ] Add download functionality
-- [ ] Store generated videos in cloud
+### ✅ Completed Features
+- [x] Live Polymarket API integration with contrarian analysis
+- [x] Live Kalshi API integration with edge detection
+- [x] Real-time market dashboard with auto-refresh
+- [x] Trainer dashboard for pick curation
+- [x] Video generation pipeline with Eden API structure
+- [x] Database persistence (Supabase)
+- [x] Multiple fallback strategies for API failures
+- [x] Contrarian position identification (>70% or <30% consensus)
 
-### Phase 2: Market Data Integration
-- [ ] Connect Polymarket API for live positions
-- [ ] Integrate Kalshi API for economic data
-- [ ] Build position tracking database
-- [ ] Calculate real-time P&L
+### 🚧 In Progress
+- [ ] Full Eden API video generation (awaiting API access)
+- [ ] WebSocket for real-time market updates
 
-### Phase 3: Social Publishing
+### 📋 Next Phase: Social Publishing
 - [ ] TikTok auto-publishing
 - [ ] YouTube Shorts scheduling
 - [ ] X/Twitter thread generation
@@ -147,30 +157,36 @@ POST https://api.twitter.com/2/tweets
 - [ ] Follower growth attribution
 - [ ] Revenue per video calculation
 
-## Environment Variables Required
+## Quick Start
 
-```env
-# Eden API
-EDEN_API_KEY=your_eden_api_key
-EDEN_CHARACTER_ID=miyomi
-
-# Prediction Markets
-POLYMARKET_API_KEY=your_polymarket_key
-POLYMARKET_WALLET_ADDRESS=0x...
-KALSHI_API_KEY=your_kalshi_key
-KALSHI_API_SECRET=your_kalshi_secret
-
-# Social Media
-TIKTOK_CLIENT_KEY=your_tiktok_key
-TIKTOK_CLIENT_SECRET=your_tiktok_secret
-YOUTUBE_API_KEY=your_youtube_key
-TWITTER_BEARER_TOKEN=your_twitter_token
-
-# Storage
-AWS_S3_BUCKET=miyomi-videos
-AWS_ACCESS_KEY_ID=your_aws_key
-AWS_SECRET_ACCESS_KEY=your_aws_secret
+### 1. Clone and Install
+```bash
+git clone https://github.com/edenprojects/miyomi-vercel.git
+cd miyomi-vercel
+npm install
 ```
+
+### 2. Configure Environment
+```env
+# .env.local
+SUPABASE_URL=your_supabase_url
+SUPABASE_ANON_KEY=your_supabase_key
+EDEN_API_KEY=your_eden_api_key
+
+# Optional (for enhanced features)
+POLYMARKET_API_KEY=your_polymarket_key
+KALSHI_API_KEY=your_kalshi_key
+```
+
+### 3. Deploy to Vercel
+```bash
+npx vercel --prod
+```
+
+### 4. Access Features
+- Live Dashboard: `https://your-deployment.vercel.app/miyomi-live-dashboard.html`
+- Trainer Dashboard: `https://your-deployment.vercel.app/trainer-dashboard.html`
+- API Endpoints: `/api/polymarket-live`, `/api/kalshi-live`
 
 ## Database Schema
 
@@ -253,21 +269,36 @@ GET  /api/analytics/daily
 - **Follower Growth**: 1,500+ daily
 - **Revenue per Video**: $1,500+ (concentrated engagement)
 
-## Contact & Resources
+## API Documentation
 
-- **Frontend Demo**: https://miyomi-federation-m4zfyi5pc-edenprojects.vercel.app
+### Live Market Data
+```bash
+# Get live Polymarket data with contrarian analysis
+GET https://miyomi.ai/api/polymarket-live
+
+# Get live Kalshi markets with edge detection
+GET https://miyomi.ai/api/kalshi-live
+```
+
+### Video Generation
+```bash
+# Generate video with contrarian analysis
+POST https://miyomi.ai/api/generate-video-v2
+{
+  "category": "economy",
+  "position": "SHORT Bitcoin at 100k",
+  "thesis": "Extreme greed signals top",
+  "script": "30-second contrarian take"
+}
+```
+
+## Resources
+
+- **Live Production**: https://miyomi.ai
+- **GitHub Repo**: https://github.com/edenprojects/miyomi-vercel
 - **Eden API Docs**: https://docs.eden.art/api
-- **Polymarket Docs**: https://docs.polymarket.com
-- **Kalshi Docs**: https://api.kalshi.com/docs
-
-## Next Steps for jmill
-
-1. Review this documentation and current frontend prototype
-2. Set up Eden API access for video generation
-3. Implement backend API endpoints for video management
-4. Integrate prediction market APIs for live data
-5. Build database layer for persistence
-6. Add social media publishing capabilities
+- **Polymarket API**: https://docs.polymarket.com
+- **Kalshi API**: https://api.kalshi.com/docs
 
 ---
 

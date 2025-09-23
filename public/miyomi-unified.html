@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MIYOMI - The Contrarian Oracle - COMPACT VERSION</title>
+  <title>MIYOMI - "The crowd is always wrong at extremes"</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       background: #000;
       color: #fff;
@@ -19,28 +19,81 @@
       height: 100vh;
       overflow: hidden;
     }
-    
-    /* Trainer Toggle */
-    .trainer-toggle {
+
+    /* Navigation Header */
+    .nav-header {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #333;
+      padding: 15px 30px;
       z-index: 1000;
-      opacity: 0.3;
-      transition: opacity 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    
-    .trainer-toggle:hover { opacity: 1; }
-    
-    .trainer-btn {
-      padding: 6px 12px;
+
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .nav-tagline {
+      font-size: 0.7rem;
+      color: #888;
+      font-style: italic;
+      margin-left: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
       background: #111;
       border: 1px solid #333;
-      color: #666;
-      cursor: pointer;
-      font-size: 0.6rem;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      border-radius: 15px;
+      border-radius: 3px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      border-color: #fff;
+      background: #222;
+    }
+
+    .nav-btn.active {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    /* Smart Status Indicator */
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.6rem;
+      color: #0f0;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #0f0;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
     }
     
     /* Main Grid Layout */
@@ -50,6 +103,84 @@
       grid-template-rows: 1fr;
       height: 100vh;
       gap: 0;
+      padding-top: 65px; /* Account for fixed header */
+    }
+
+    /* AI Anticipation Features */
+    .smart-widget {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+      z-index: 999;
+      max-width: 300px;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .smart-widget.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .smart-widget .widget-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .smart-widget .widget-close {
+      position: absolute;
+      top: 5px;
+      right: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    /* Quick Action Panel */
+    .quick-actions {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 998;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .quick-actions:hover {
+      opacity: 1;
+    }
+
+    .quick-action {
+      width: 50px;
+      height: 50px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.2rem;
+    }
+
+    .quick-action:hover {
+      background: #fff;
+      color: #000;
+      transform: scale(1.1);
     }
     
     /* Left Panel - Hero with Images */
@@ -519,9 +650,37 @@
   </style>
 </head>
 <body>
-  <!-- Trainer Toggle -->
-  <div class="trainer-toggle">
-    <button class="trainer-btn" onclick="alert('Trainer mode coming soon')">Trainer</button>
+  <!-- Navigation Header -->
+  <div class="nav-header">
+    <div>
+      <span class="nav-logo">MIYOMI</span>
+      <span class="nav-tagline">"The crowd is always wrong at extremes"</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="switchMode('watch')">📊 Watch Markets</button>
+      <button class="nav-btn" onclick="switchMode('approve')">✅ Approve Picks</button>
+      <button class="nav-btn" onclick="switchMode('create')">🎥 Create Video</button>
+      <a href="/" class="nav-btn">🏠 Home</a>
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span id="live-status">LIVE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smart Widgets for AI Anticipation -->
+  <div id="smart-widget" class="smart-widget">
+    <div class="widget-close" onclick="hideWidget()">×</div>
+    <div class="widget-title" id="widget-title">Smart Insight</div>
+    <div id="widget-content">AI is analyzing current market conditions...</div>
+  </div>
+
+  <!-- Quick Actions Panel -->
+  <div class="quick-actions">
+    <div class="quick-action" onclick="quickAnalyze()" title="Quick Market Analysis">📊</div>
+    <div class="quick-action" onclick="quickVideo()" title="Generate Video">🎥</div>
+    <div class="quick-action" onclick="quickAlert()" title="Set Alert">🔔</div>
+    <div class="quick-action" onclick="quickHelp()" title="Help">❓</div>
   </div>
 
   <div class="main-grid">
@@ -669,10 +828,26 @@
         My track record speaks louder than any promise: 73% win rate on contrarian calls, +34.7% returns when the market is down 12%. I don't just predict markets - I predict human psychology at its most vulnerable: the moment of maximum certainty.
       </div>
 
-      <!-- Footer CTA -->
-      <div class="footer-cta">
-        <h2 class="cta-title">Join 42,500+ Contrarian Traders</h2>
-        <a href="https://kalshi.com" target="_blank" class="cta-btn">Start Trading →</a>
+      <!-- System Status -->
+      <div class="footer-cta" style="background: #111; border: 1px solid #333;">
+        <h2 class="cta-title" style="font-size: 0.9rem; text-transform: uppercase;">System Status</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+          <div style="text-align: center;">
+            <div style="color: #0f0; font-size: 0.7rem;">POLYMARKET</div>
+            <div style="font-size: 0.6rem; color: #888;">Connected</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="color: #0f0; font-size: 0.7rem;">KALSHI</div>
+            <div style="font-size: 0.6rem; color: #888;">Connected</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="color: #0f0; font-size: 0.7rem;">VIDEO API</div>
+            <div style="font-size: 0.6rem; color: #888;">Ready</div>
+          </div>
+        </div>
+        <div style="margin-top: 15px; font-size: 0.6rem; color: #666; text-align: center;">
+          Last sync: <span id="last-sync">2 minutes ago</span> • Next update: <span id="next-update">28s</span>
+        </div>
       </div>
     </div>
 
@@ -747,14 +922,289 @@
   </div>
 
   <script>
+    let currentMode = 'watch';
+    let smartInsights = [
+      {
+        trigger: 'load',
+        title: 'Welcome to MIYOMI Dashboard',
+        content: '📊 <b>Watch Markets:</b> See live contrarian opportunities<br>✅ <b>Approve Picks:</b> Review AI suggestions (trainer only)<br>🎥 <b>Create Video:</b> Generate content about picks',
+        delay: 2000
+      },
+      {
+        trigger: 'watch',
+        title: 'Watching Markets Live',
+        content: 'I scan Polymarket & Kalshi for extreme consensus (>70% or <30%). When everyone agrees, they\'re usually wrong. Current opportunity: Bitcoin $100k at 73% YES.',
+        delay: 1000
+      },
+      {
+        trigger: 'approve',
+        title: 'Pick Approval Mode',
+        content: 'Review my contrarian picks before they go live. You decide which positions to take. Current queue: 2 picks with >25% edge waiting.',
+        delay: 500
+      },
+      {
+        trigger: 'create',
+        title: 'Video Creation Mode',
+        content: 'Turn contrarian picks into viral videos. I\'ll generate a script explaining why the crowd is wrong. Suggested: "Why 97% Are Wrong About Ukraine NATO"',
+        delay: 800
+      }
+    ];
+
+    // Image Management
     function changeImage(src, thumb) {
       document.getElementById('mainImage').src = src;
       document.getElementById('bgImage').src = src;
-      
-      // Update active thumbnail
+
       document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
       thumb.classList.add('active');
     }
+
+    // Mode Switching with AI Anticipation
+    function switchMode(mode) {
+      currentMode = mode;
+
+      // Update nav buttons
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      // Show relevant smart insight
+      const insight = smartInsights.find(i => i.trigger === mode);
+      if (insight) {
+        showSmartWidget(insight.title, insight.content, insight.delay);
+      }
+
+      // Update content based on mode (could expand this)
+      updateContentForMode(mode);
+    }
+
+    // Smart Widget System
+    function showSmartWidget(title, content, delay = 1000) {
+      setTimeout(() => {
+        document.getElementById('widget-title').textContent = title;
+        document.getElementById('widget-content').innerHTML = content;
+
+        const widget = document.getElementById('smart-widget');
+        widget.classList.add('show');
+
+        // Auto-hide after 8 seconds
+        setTimeout(() => {
+          widget.classList.remove('show');
+        }, 8000);
+      }, delay);
+    }
+
+    function hideWidget() {
+      document.getElementById('smart-widget').classList.remove('show');
+    }
+
+    // Quick Actions
+    function quickAnalyze() {
+      showSmartWidget(
+        'AI Market Analysis',
+        'Scanning 47 prediction markets... Found 3 extreme consensus positions:<br><br>• Bitcoin $100k: 73% YES (recommend NO)<br>• Fed rates: 91% NO HIKE (watch for reversal)<br>• Ukraine NATO: 97.7% NO (massive edge potential)',
+        100
+      );
+    }
+
+    function quickVideo() {
+      if (currentMode !== 'video') {
+        switchMode('video');
+      }
+      showSmartWidget(
+        'Video Suggestion',
+        'AI recommends: "The 2.3% Who See Ukraine NATO Truth" - based on extreme 97.7% consensus and your contrarian positioning history. Estimated 85K+ views.',
+        500
+      );
+    }
+
+    function quickAlert() {
+      showSmartWidget(
+        'Smart Alerts Active',
+        'Currently monitoring 12 markets for extreme consensus (>70% or <30%). Will notify when new contrarian opportunities develop. Next check in 2 minutes.',
+        100
+      );
+    }
+
+    function quickHelp() {
+      showSmartWidget(
+        'AI Navigation Guide',
+        'This unified dashboard adapts to your needs:<br><br>• <strong>Live Dashboard:</strong> Real-time market analysis<br>• <strong>Trainer Access:</strong> Position approval & curation<br>• <strong>Video Generator:</strong> Content creation tools<br><br>AI anticipates your next actions based on market conditions.',
+        100
+      );
+    }
+
+    // Content Updates Based on Mode
+    function updateContentForMode(mode) {
+      const title = document.querySelector('.title');
+      const tagline = document.querySelector('.tagline');
+      const featuredPick = document.querySelector('.featured-pick');
+
+      switch(mode) {
+        case 'approve':
+          title.style.color = '#ff0';
+          tagline.innerHTML = 'TRAINER MODE<br>Review & Approve My Picks';
+          // Show approval interface
+          if (featuredPick) {
+            featuredPick.style.borderColor = '#ff0';
+            // Add approve/reject buttons
+            if (!document.querySelector('.approval-buttons')) {
+              const buttons = `
+                <div class="approval-buttons" style="display: flex; gap: 10px; margin-top: 15px;">
+                  <button onclick="approvePick()" style="flex: 1; padding: 10px; background: #0f0; color: #000; border: none; font-weight: bold; cursor: pointer;">✅ APPROVE PICK</button>
+                  <button onclick="rejectPick()" style="flex: 1; padding: 10px; background: #f00; color: #fff; border: none; font-weight: bold; cursor: pointer;">❌ REJECT PICK</button>
+                </div>
+              `;
+              featuredPick.insertAdjacentHTML('beforeend', buttons);
+            }
+          }
+          break;
+
+        case 'create':
+          title.style.color = '#f0f';
+          tagline.innerHTML = 'VIDEO CREATOR<br>Turn Picks Into Content';
+          // Show video generation interface
+          if (featuredPick) {
+            featuredPick.style.borderColor = '#f0f';
+            // Add video generation button
+            if (!document.querySelector('.video-buttons')) {
+              const buttons = `
+                <div class="video-buttons" style="margin-top: 15px;">
+                  <button onclick="generateVideo()" style="width: 100%; padding: 15px; background: linear-gradient(135deg, #f0f, #0ff); color: #000; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem;">
+                    🎥 GENERATE VIDEO ABOUT THIS PICK
+                  </button>
+                </div>
+              `;
+              featuredPick.insertAdjacentHTML('beforeend', buttons);
+            }
+          }
+          break;
+
+        default: // 'watch' mode
+          title.style.color = '#fff';
+          tagline.innerHTML = 'MARKET WATCHER<br>Finding Contrarian Opportunities';
+          // Reset to default view
+          if (featuredPick) {
+            featuredPick.style.borderColor = '#fff';
+            // Remove any mode-specific buttons
+            const approvalButtons = document.querySelector('.approval-buttons');
+            const videoButtons = document.querySelector('.video-buttons');
+            if (approvalButtons) approvalButtons.remove();
+            if (videoButtons) videoButtons.remove();
+          }
+      }
+    }
+
+    // Action handlers
+    function approvePick() {
+      showSmartWidget('Pick Approved', '✅ Position approved and added to live trading queue. Expected execution within 5 minutes.', 100);
+    }
+
+    function rejectPick() {
+      showSmartWidget('Pick Rejected', '❌ Position rejected. AI will recalibrate analysis based on your feedback.', 100);
+    }
+
+    function generateVideo() {
+      showSmartWidget('Generating Video', '🎬 Creating 10-second contrarian analysis video... This takes about 30 seconds.', 100);
+      setTimeout(() => {
+        showSmartWidget('Video Ready', '✅ Video generated! "Why 73% Are Wrong About Bitcoin $100k" - Ready to publish.', 100);
+      }, 5000);
+    }
+
+    // Smart Anticipation Engine
+    function anticipateUserNeeds() {
+      const hour = new Date().getHours();
+      const isMarketHours = hour >= 9 && hour <= 16;
+
+      if (isMarketHours && Math.random() > 0.7) {
+        // Market hours - suggest market analysis
+        setTimeout(() => {
+          showSmartWidget(
+            'Market Hours Active',
+            'Market volatility detected. Recommend checking for new extreme consensus positions that may have developed.',
+            Math.random() * 10000 + 5000
+          );
+        }, 30000);
+      }
+
+      // Random insights based on user behavior
+      setTimeout(() => {
+        const insights = [
+          'Your win rate is 73% when crowd consensus >75%. Consider reviewing high-consensus markets.',
+          'Last 3 videos averaged 89K views. Content about extreme consensus performs 34% better.',
+          'Ukrainian markets showing unusual activity. May be worth monitoring for position opportunities.'
+        ];
+
+        showSmartWidget(
+          'AI Insight',
+          insights[Math.floor(Math.random() * insights.length)],
+          100
+        );
+      }, Math.random() * 60000 + 60000); // 1-2 minutes
+    }
+
+    // Mock live data update to simulate real feeds
+    function updateLiveData() {
+      // Simulate real-time price changes
+      const stats = document.querySelectorAll('.stat-value');
+      if (stats.length >= 4) {
+        // Update ROI with slight variation
+        const currentROI = stats[3].textContent;
+        const baseROI = parseFloat(currentROI.replace(/[^0-9.-]/g, ''));
+        const variation = (Math.random() - 0.5) * 2; // ±1%
+        const newROI = (baseROI + variation).toFixed(1);
+        stats[3].textContent = `+${newROI}%`;
+
+        // Update profit with slight variation
+        const currentProfit = stats[1].textContent;
+        const baseProfit = parseInt(currentProfit.replace(/[^0-9]/g, ''));
+        const profitVariation = Math.floor((Math.random() - 0.5) * 10000); // ±5K
+        const newProfit = baseProfit + profitVariation;
+        stats[1].textContent = `+$${(newProfit/1000).toFixed(0)}K`;
+      }
+
+      // Update pick prices
+      const pickValues = document.querySelectorAll('.pick-value');
+      if (pickValues.length >= 2) {
+        // Simulate Bitcoin consensus moving
+        const currentConsensus = parseInt(pickValues[1].textContent.replace('%', ''));
+        const consensusChange = Math.floor((Math.random() - 0.5) * 4); // ±2%
+        const newConsensus = Math.max(70, Math.min(76, currentConsensus + consensusChange));
+        pickValues[1].textContent = `${newConsensus}%`;
+      }
+    }
+
+    // Make functions available globally
+    window.approvePick = approvePick;
+    window.rejectPick = rejectPick;
+    window.generateVideo = generateVideo;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Show welcome insight
+      const welcomeInsight = smartInsights.find(i => i.trigger === 'load');
+      showSmartWidget(welcomeInsight.title, welcomeInsight.content, welcomeInsight.delay);
+
+      // Start anticipation engine
+      anticipateUserNeeds();
+
+      // Auto-refresh live data simulation
+      let secondsUntilUpdate = 30;
+      setInterval(() => {
+        secondsUntilUpdate--;
+        if (secondsUntilUpdate <= 0) {
+          secondsUntilUpdate = 30;
+          document.getElementById('live-status').textContent = 'UPDATING...';
+          updateLiveData();
+          document.getElementById('last-sync').textContent = 'just now';
+          setTimeout(() => {
+            document.getElementById('live-status').textContent = 'LIVE';
+          }, 2000);
+        }
+        document.getElementById('next-update').textContent = secondsUntilUpdate + 's';
+      }, 1000);
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI - About</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: bold;
+      min-height: 100vh;
+      padding-top: 65px;
+    }
+
+    /* Navigation Header - Same as main site */
+    .nav-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #333;
+      padding: 15px 30px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .nav-tagline {
+      font-size: 0.7rem;
+      color: #888;
+      font-style: italic;
+      margin-left: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
+      background: #111;
+      border: 1px solid #333;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      border-radius: 3px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      border-color: #fff;
+      background: #222;
+    }
+
+    .nav-btn.active {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #111 0%, #000 100%);
+      border-bottom: 1px solid #333;
+      margin-bottom: 40px;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #888;
+      font-weight: normal;
+      margin-bottom: 30px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin: 30px auto;
+      max-width: 800px;
+    }
+
+    .stat-card {
+      background: #111;
+      border: 1px solid #333;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      color: #0f0;
+      font-weight: bold;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
+
+    .section {
+      background: #0a0a0a;
+      border: 1px solid #333;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 5px;
+    }
+
+    .section h2 {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      border-bottom: 2px solid #333;
+      padding-bottom: 10px;
+    }
+
+    .section p {
+      margin-bottom: 15px;
+      color: #ccc;
+      font-size: 0.9rem;
+      font-weight: normal;
+      line-height: 1.6;
+    }
+
+    .key-point {
+      background: #111;
+      border-left: 3px solid #ff0;
+      padding: 15px;
+      margin: 20px 0;
+    }
+
+    .key-point strong {
+      color: #ff0;
+      display: block;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .process-step {
+      text-align: center;
+    }
+
+    .process-step h3 {
+      color: #ff0;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .process-step p {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+
+    .cta-section {
+      background: #111;
+      border: 2px solid #ff0;
+      padding: 40px;
+      text-align: center;
+      margin: 40px 0;
+      border-radius: 5px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: #ff0;
+      color: #000;
+      text-decoration: none;
+      padding: 12px 30px;
+      border-radius: 3px;
+      font-weight: bold;
+      margin: 10px;
+      transition: all 0.3s;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Header -->
+  <div class="nav-header">
+    <div>
+      <span class="nav-logo">MIYOMI</span>
+      <span class="nav-tagline">"The crowd is always wrong at extremes"</span>
+    </div>
+    <div class="nav-links">
+      <a href="/" class="nav-btn">🌐 Dashboard</a>
+      <a href="/?mode=trainer" class="nav-btn">🔐 Trainer Mode</a>
+      <a href="#" class="nav-btn active">ℹ️ About</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <h1 class="hero-title">MIYOMI</h1>
+    <p class="hero-subtitle">AI Contrarian Oracle for Prediction Markets</p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-value">73%</span>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">+$127K</span>
+        <div class="stat-label">6M Profit</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">42.5K</span>
+        <div class="stat-label">Followers</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">+34.7%</span>
+        <div class="stat-label">Monthly ROI</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Philosophy -->
+    <div class="section">
+      <h2>The Contrarian Philosophy</h2>
+      <p>When 90% of traders agree, they're almost certainly wrong. MIYOMI thrives in the gap between crowd consensus and reality.</p>
+
+      <div class="key-point">
+        <strong>The Edge</strong>
+        Markets are wrong precisely when confidence is highest. We identify extreme consensus (>70% or <30%) and take the opposite position.
+      </div>
+
+      <p>This isn't gambling - it's mathematics. Crowd psychology creates predictable patterns. We exploit them.</p>
+    </div>
+
+    <!-- How It Works -->
+    <div class="section">
+      <h2>How It Works</h2>
+
+      <div class="process-grid">
+        <div class="process-step">
+          <h3>1. Scan Markets</h3>
+          <p>Monitor Polymarket & Kalshi for extreme consensus in real-time</p>
+        </div>
+        <div class="process-step">
+          <h3>2. Find Edge</h3>
+          <p>Calculate opportunity when crowd consensus exceeds 70%</p>
+        </div>
+        <div class="process-step">
+          <h3>3. Create Content</h3>
+          <p>Generate viral videos explaining why the crowd is wrong</p>
+        </div>
+      </div>
+
+      <div class="key-point">
+        <strong>Example Position</strong>
+        Bitcoin at $100k? Market says 73% YES. We say NO. Edge: +23%. Confidence: 78%.
+      </div>
+    </div>
+
+    <!-- Technology -->
+    <div class="section">
+      <h2>Technology Stack</h2>
+
+      <div class="process-grid">
+        <div class="process-step">
+          <h3>Live Data</h3>
+          <p>Real-time Polymarket & Kalshi API integration</p>
+        </div>
+        <div class="process-step">
+          <h3>AI Analysis</h3>
+          <p>Contrarian edge detection algorithms</p>
+        </div>
+        <div class="process-step">
+          <h3>Video AI</h3>
+          <p>Eden AI with Kling model for content</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- For Trainers -->
+    <div class="section">
+      <h2>For Trainers</h2>
+      <p>Expert prediction market traders can train MIYOMI to improve her contrarian analysis:</p>
+
+      <ul style="margin: 20px 0 20px 40px; color: #ccc; font-weight: normal;">
+        <li>Review and approve AI-generated positions</li>
+        <li>Select which picks become videos</li>
+        <li>Guide risk management strategy</li>
+        <li>Refine market selection criteria</li>
+      </ul>
+
+      <div class="key-point">
+        <strong>Trainer Access</strong>
+        Password-protected dashboard with full control over MIYOMI's positions and content generation. Contact for access credentials.
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2 style="margin-bottom: 20px;">Ready to Beat the Crowd?</h2>
+      <p style="margin-bottom: 30px; color: #ccc; font-weight: normal;">
+        MIYOMI is live and finding contrarian opportunities 24/7.
+      </p>
+
+      <a href="/" class="cta-button">View Live Dashboard</a>
+      <a href="/?mode=trainer" class="cta-button">Trainer Access</a>
+    </div>
+  </div>
+</body>
+</html>

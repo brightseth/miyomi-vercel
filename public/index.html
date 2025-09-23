@@ -3,845 +3,903 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MIYOMI - Prediction Market Video Oracle</title>
+  <title>MIYOMI - "The crowd is always wrong at extremes"</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       background: #000;
       color: #fff;
       font-family: 'Helvetica Neue', Arial, sans-serif;
       font-weight: bold;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    /* Mode Toggle */
-    .mode-toggle {
+    /* Navigation Header */
+    .nav-header {
       position: fixed;
-      top: 10px;
-      right: 10px;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #333;
+      padding: 15px 30px;
       z-index: 1000;
-      display: flex;
-      gap: 5px;
-      background: #000;
-      border: 2px solid #fff;
-      padding: 5px;
-    }
-
-    .mode-btn {
-      padding: 8px 15px;
-      background: #000;
-      color: #fff;
-      border: 1px solid #666;
-      cursor: pointer;
-      text-transform: uppercase;
-      font-size: 11px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      transition: all 0.3s;
-    }
-
-    .mode-btn.active {
-      background: #fff;
-      color: #000;
-      border-color: #fff;
-    }
-
-    /* Header */
-    .header {
-      background: linear-gradient(90deg, #1a1a1a 0%, #0a0a0a 100%);
-      border-bottom: 2px solid #fff;
-      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .logo {
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .nav-tagline {
+      font-size: 0.7rem;
+      color: #888;
+      font-style: italic;
+      margin-left: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
+      background: #111;
+      border: 1px solid #333;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      border-radius: 3px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      border-color: #fff;
+      background: #222;
+    }
+
+    .nav-btn.active {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    /* Smart Status Indicator */
+    .status-indicator {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 8px;
+      font-size: 0.6rem;
+      color: #0f0;
     }
 
-    .logo-img {
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #0f0;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    /* Main Grid Layout */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 400px 1fr 350px;
+      grid-template-rows: 1fr;
+      height: 100vh;
+      gap: 0;
+      padding-top: 65px; /* Account for fixed header */
+    }
+
+    /* AI Anticipation Features */
+    .smart-widget {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+      z-index: 999;
+      max-width: 300px;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .smart-widget.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .smart-widget .widget-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .smart-widget .widget-close {
+      position: absolute;
+      top: 5px;
+      right: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    /* Quick Action Panel */
+    .quick-actions {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 998;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .quick-actions:hover {
+      opacity: 1;
+    }
+
+    .quick-action {
       width: 50px;
       height: 50px;
-      border-radius: 50%;
-      border: 2px solid #fff;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.2rem;
+    }
+
+    .quick-action:hover {
+      background: #fff;
+      color: #000;
+      transform: scale(1.1);
+    }
+    
+    /* Left Panel - Hero with Images */
+    .hero-panel {
+      background: linear-gradient(135deg, #111 0%, #000 100%);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+      z-index: 0;
+    }
+    
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
-
-    .logo-text {
-      font-size: 28px;
-      letter-spacing: 3px;
-    }
-
-    .logo-subtitle {
-      font-size: 10px;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 3px;
-    }
-
-    /* Market Stats */
-    .market-stats {
-      display: flex;
-      gap: 30px;
-    }
-
-    .market-stat {
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
       text-align: center;
     }
-
-    .market-platform {
-      font-size: 9px;
-      color: #666;
+    
+    .miyomi-main-image {
+      width: 250px;
+      height: 250px;
+      margin: 0 auto 20px;
+      border: 3px solid #fff;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .miyomi-main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.3s ease;
+    }
+    
+    .live-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #000;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+    }
+    
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: #0f0;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .image-selector {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .thumb {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #333;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    
+    .thumb:hover, .thumb.active {
+      border-color: #fff;
+    }
+    
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .title {
+      font-size: 3rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 3px;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
     }
-
-    .market-value {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .market-value.positive {
-      color: #00ff00;
-    }
-
-    .market-value.negative {
-      color: #ff0000;
-    }
-
-    .market-label {
-      font-size: 10px;
+    
+    .subtitle {
+      font-size: 0.9rem;
       color: #888;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-top: 3px;
+      margin-bottom: 15px;
     }
-
-    /* Public View */
-    .public-view {
-      padding: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
+    
+    .tagline {
+      font-size: 1.1rem;
+      font-weight: normal;
+      line-height: 1.3;
+      color: #ccc;
     }
-
-    .live-positions {
+    
+    /* Center Panel - Main Content */
+    .content-panel {
+      background: #0a0a0a;
+      padding: 30px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    
+    /* Quick Stats Bar */
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .stat {
+      text-align: center;
+      padding: 12px 8px;
+      background: #111;
+      border: 1px solid #333;
+    }
+    
+    .stat-value {
+      font-size: 1.4rem;
+      color: #0f0;
+      display: block;
+    }
+    
+    .stat-label {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    
+    /* Featured Pick */
+    .featured-pick {
       background: #111;
       border: 2px solid #fff;
       padding: 20px;
       margin-bottom: 20px;
     }
-
-    .section-header {
-      font-size: 16px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    
+    .pick-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
       margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
-
-    .live-indicator {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      background: #00ff00;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-      margin-right: 5px;
+    
+    .pick-question {
+      font-size: 1rem;
+      line-height: 1.2;
+      max-width: 70%;
     }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+    
+    .pick-confidence {
+      background: #fff;
+      color: #000;
+      padding: 6px 12px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
     }
-
-    .positions-grid {
+    
+    .pick-metrics {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 15px;
+      margin: 15px 0;
     }
-
-    .position-card {
-      background: #1a1a1a;
-      border: 1px solid #333;
+    
+    .pick-metric {
+      text-align: center;
+    }
+    
+    .pick-value {
+      font-size: 1.2rem;
+      color: #fff;
+      display: block;
+    }
+    
+    .pick-label {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    .pick-analysis {
+      background: #000;
       padding: 15px;
-      transition: all 0.3s;
-      cursor: pointer;
+      margin: 15px 0;
+      border-left: 3px solid #fff;
+      font-size: 0.85rem;
+      color: #ccc;
+      font-weight: normal;
+      line-height: 1.4;
     }
-
-    .position-card:hover {
-      border-color: #fff;
-      transform: translateY(-2px);
+    
+    /* Trading History - Compact */
+    .trading-section {
+      margin-bottom: 20px;
     }
-
-    .position-platform {
-      font-size: 10px;
-      color: #888;
+    
+    .section-title {
+      font-size: 1.2rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 5px;
+      margin-bottom: 12px;
+      text-align: center;
     }
-
-    .position-platform.polymarket {
-      color: #7c3aed;
-    }
-
-    .position-platform.kalshi {
-      color: #0ea5e9;
-    }
-
-    .position-title {
-      font-size: 14px;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-
-    .position-details {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid #222;
-    }
-
-    .position-side {
-      font-size: 12px;
-      padding: 3px 8px;
-      border: 1px solid;
-      text-transform: uppercase;
-    }
-
-    .position-side.long {
-      color: #00ff00;
-      border-color: #00ff00;
-    }
-
-    .position-side.short {
-      color: #ff0000;
-      border-color: #ff0000;
-    }
-
-    .position-odds {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .position-pnl {
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .position-pnl.positive {
-      color: #00ff00;
-    }
-
-    .position-pnl.negative {
-      color: #ff0000;
-    }
-
-    /* Private Dashboard */
-    .private-dashboard {
-      display: none;
-      padding: 20px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .dashboard-grid {
+    
+    .history-compact {
       display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
     }
-
-    /* Video Generator */
-    .video-generator {
+    
+    .month-mini {
       background: #111;
-      border: 2px solid #fff;
+      border: 1px solid #333;
+      padding: 8px 4px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    
+    .month-mini:hover {
+      border-color: #fff;
+      transform: scale(1.05);
+    }
+    
+    .month-name {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    .month-return {
+      font-size: 1rem;
+      color: #0f0;
+      display: block;
+      margin: 2px 0;
+    }
+    
+    .month-return.negative {
+      color: #f44;
+    }
+    
+    .month-record {
+      font-size: 0.5rem;
+      color: #888;
+    }
+    
+    /* Bio Text - Compact */
+    .bio-section {
+      background: #000;
+      padding: 15px;
+      border-left: 3px solid #fff;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #ccc;
+      font-weight: normal;
+    }
+    
+    .bio-quote {
+      font-style: italic;
+      color: #fff;
+      margin: 10px 0;
+      font-size: 0.85rem;
+    }
+    
+    /* Right Panel - Live Data */
+    .live-panel {
+      background: #050505;
       padding: 20px;
-    }
-
-    .generator-controls {
-      display: grid;
-      gap: 15px;
-    }
-
-    .control-group {
+      border-left: 1px solid #333;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 20px;
     }
-
-    .control-label {
-      font-size: 11px;
+    
+    .panel-title {
+      font-size: 1rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #888;
-    }
-
-    .control-input, .control-select {
-      background: #000;
-      color: #fff;
-      border: 1px solid #666;
-      padding: 10px;
-      font-size: 14px;
-      font-weight: bold;
-      font-family: inherit;
-    }
-
-    .control-input:focus, .control-select:focus {
-      outline: none;
-      border-color: #fff;
-    }
-
-    /* Quick Templates */
-    .quick-templates {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid #333;
-    }
-
-    .template-btn {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      padding: 15px 10px;
       text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .template-btn:hover {
-      border-color: #fff;
-      background: #222;
-    }
-
-    .template-icon {
-      font-size: 24px;
-      margin-bottom: 5px;
-    }
-
-    .template-name {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 3px;
-    }
-
-    .template-desc {
-      font-size: 9px;
-      color: #666;
-    }
-
-    /* Generate Button */
-    .generate-btn {
-      background: #fff;
-      color: #000;
-      border: none;
-      padding: 15px;
-      font-size: 14px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      cursor: pointer;
-      margin-top: 20px;
-      width: 100%;
-      transition: all 0.3s;
-    }
-
-    .generate-btn:hover {
-      background: #00ff00;
-    }
-
-    /* Video Preview */
-    .video-preview {
-      background: #0a0a0a;
-      border: 2px solid #00ff00;
-      padding: 20px;
-      margin-top: 20px;
-    }
-
-    .preview-header {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      color: #0f0;
       margin-bottom: 15px;
-      color: #00ff00;
     }
-
-    .preview-player {
-      background: #000;
-      border: 1px solid #333;
-      aspect-ratio: 9/16;
-      max-width: 300px;
-      margin: 0 auto 20px;
+    
+    /* Recent Picks */
+    .recent-picks {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      flex-direction: column;
+      gap: 12px;
     }
-
-    .preview-placeholder {
-      text-align: center;
-      padding: 20px;
-    }
-
-    .preview-script {
+    
+    .pick-card {
       background: #111;
       border: 1px solid #333;
-      padding: 15px;
-      margin-bottom: 15px;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .preview-actions {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    .preview-btn {
-      background: #1a1a1a;
-      color: #fff;
-      border: 1px solid #666;
-      padding: 10px;
-      font-size: 11px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      padding: 12px;
+      transition: all 0.2s;
       cursor: pointer;
-      transition: all 0.3s;
     }
-
-    .preview-btn:hover {
-      background: #fff;
-      color: #000;
+    
+    .pick-card:hover {
+      border-color: #fff;
+      transform: translateX(3px);
     }
-
-    .preview-btn.primary {
-      background: #00ff00;
-      color: #000;
-      border-color: #00ff00;
+    
+    .pick-result {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
     }
-
-    /* Recent Videos */
-    .recent-videos {
-      background: #111;
-      border: 2px solid #fff;
-      padding: 20px;
+    
+    .pick-market {
+      font-size: 0.8rem;
+      color: #fff;
     }
-
+    
+    .pick-return {
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    
+    .pick-return.win { color: #0f0; }
+    .pick-return.live { color: #ff0; }
+    
+    .pick-details {
+      font-size: 0.65rem;
+      color: #666;
+      line-height: 1.3;
+      font-weight: normal;
+    }
+    
+    /* Videos - Compact */
+    .videos-section {
+      margin-top: 20px;
+    }
+    
     .video-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
-
+    
     .video-item {
-      background: #1a1a1a;
+      background: #111;
       border: 1px solid #333;
       padding: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.2s;
     }
-
+    
     .video-item:hover {
       border-color: #fff;
+      transform: translateX(3px);
     }
-
-    .video-market {
-      font-size: 9px;
-      color: #888;
-      text-transform: uppercase;
-      margin-bottom: 3px;
-    }
-
+    
     .video-title {
-      font-size: 11px;
-      margin-bottom: 3px;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+      line-height: 1.2;
     }
-
+    
     .video-stats {
-      font-size: 9px;
+      font-size: 0.6rem;
       color: #666;
+      font-weight: normal;
     }
-
-    .video-performance {
-      text-align: right;
+    
+    /* Footer CTA - Compact */
+    .footer-cta {
+      margin-top: auto;
+      background: #fff;
+      color: #000;
+      padding: 15px;
+      text-align: center;
     }
-
-    .video-roi {
-      font-size: 14px;
+    
+    .cta-title {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    
+    .cta-btn {
+      padding: 10px 20px;
+      background: #000;
+      color: #fff;
+      border: none;
+      font-size: 0.8rem;
       font-weight: bold;
-      color: #00ff00;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
     }
-
+    
+    .cta-btn:hover {
+      background: #333;
+    }
+    
     /* Responsive */
     @media (max-width: 1200px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr;
+      .main-grid {
+        grid-template-columns: 350px 1fr 300px;
       }
       
-      .positions-grid {
-        grid-template-columns: 1fr;
+      .miyomi-main-image {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .title {
+        font-size: 2.5rem;
       }
     }
-
-    @media (max-width: 768px) {
-      .market-stats {
-        display: none;
-      }
+    
+    @media (max-width: 1024px) {
+      body { overflow-y: auto; height: auto; }
       
-      .quick-templates {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .preview-actions {
+      .main-grid {
         grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+      }
+      
+      .hero-panel {
+        padding: 20px;
+        text-align: center;
+      }
+      
+      .miyomi-main-image {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto 20px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Mode Toggle -->
-  <div class="mode-toggle">
-    <button class="mode-btn active" data-mode="public">PUBLIC</button>
-    <button class="mode-btn" data-mode="private">TRAINER</button>
-  </div>
-
-  <!-- Header -->
-  <div class="header">
-    <div class="logo">
-      <img src="/eden-images/miyomi-neon.jpg" alt="MIYOMI" class="logo-img" id="profile-img">
-      <div>
-        <div class="logo-text">MIYOMI</div>
-        <div class="logo-subtitle">Prediction Market Oracle</div>
-      </div>
+  <!-- Navigation Header -->
+  <div class="nav-header">
+    <div>
+      <span class="nav-logo">MIYOMI</span>
+      <span class="nav-tagline">"The crowd is always wrong at extremes"</span>
     </div>
-    <div class="market-stats">
-      <div class="market-stat">
-        <div class="market-platform">POLYMARKET</div>
-        <div class="market-value positive">+$12,847</div>
-        <div class="market-label">24H P&L</div>
-      </div>
-      <div class="market-stat">
-        <div class="market-platform">KALSHI</div>
-        <div class="market-value positive">73%</div>
-        <div class="market-label">WIN RATE</div>
-      </div>
-      <div class="market-stat">
-        <div class="market-platform">COMBINED</div>
-        <div class="market-value positive">142</div>
-        <div class="market-label">ACTIVE BETS</div>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="switchMode('public')">🌐 Public View</button>
+      <button class="nav-btn" onclick="switchMode('trainer')">🔐 Trainer Mode</button>
+      <a href="/about.html" class="nav-btn">ℹ️ About</a>
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span id="live-status">LIVE</span>
       </div>
     </div>
   </div>
 
-  <!-- Public View -->
-  <div class="public-view">
-    <!-- Live Positions -->
-    <div class="live-positions">
-      <div class="section-header">
-        <span><span class="live-indicator"></span> LIVE PREDICTION MARKET POSITIONS</span>
-        <span style="font-size: 12px; color: #888;">UPDATED: 2 MIN AGO</span>
-      </div>
-      <div class="positions-grid">
-        <div class="position-card">
-          <div class="position-platform polymarket">POLYMARKET</div>
-          <div class="position-title">"Trump wins 2024 Republican nomination"</div>
-          <div class="position-details">
-            <span class="position-side short">SHORT</span>
-            <span class="position-odds">45%</span>
-            <span class="position-pnl positive">+$3,241</span>
-          </div>
-        </div>
-        <div class="position-card">
-          <div class="position-platform kalshi">KALSHI</div>
-          <div class="position-title">"Fed cuts rates in Q1 2025"</div>
-          <div class="position-details">
-            <span class="position-side long">LONG</span>
-            <span class="position-odds">78%</span>
-            <span class="position-pnl positive">+$1,892</span>
-          </div>
-        </div>
-        <div class="position-card">
-          <div class="position-platform polymarket">POLYMARKET</div>
-          <div class="position-title">"ETH above $5000 by March"</div>
-          <div class="position-details">
-            <span class="position-side long">LONG</span>
-            <span class="position-odds">23%</span>
-            <span class="position-pnl negative">-$421</span>
-          </div>
-        </div>
-        <div class="position-card">
-          <div class="position-platform kalshi">KALSHI</div>
-          <div class="position-title">"CPI above 3.5% next print"</div>
-          <div class="position-details">
-            <span class="position-side short">SHORT</span>
-            <span class="position-odds">61%</span>
-            <span class="position-pnl positive">+$2,147</span>
-          </div>
-        </div>
-        <div class="position-card">
-          <div class="position-platform polymarket">POLYMARKET</div>
-          <div class="position-title">"Bitcoin ETF approval this quarter"</div>
-          <div class="position-details">
-            <span class="position-side long">LONG</span>
-            <span class="position-odds">89%</span>
-            <span class="position-pnl positive">+$5,422</span>
-          </div>
-        </div>
-        <div class="position-card">
-          <div class="position-platform kalshi">KALSHI</div>
-          <div class="position-title">"Unemployment below 3.5%"</div>
-          <div class="position-details">
-            <span class="position-side short">SHORT</span>
-            <span class="position-odds">32%</span>
-            <span class="position-pnl positive">+$987</span>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Recent Video Wins -->
-    <div class="live-positions">
-      <div class="section-header">
-        <span>🏆 RECENT VIDEO PREDICTIONS</span>
-        <span style="font-size: 12px; color: #00ff00;">6 FOR 6 TODAY</span>
+  <div class="main-grid">
+    <!-- Left Panel - Hero & Images -->
+    <div class="hero-panel">
+      <div class="hero-bg">
+        <img id="bgImage" src="/eden-images/miyomi-neon.jpg" alt="Miyomi Background">
       </div>
-      <div class="video-list">
-        <div class="video-item">
-          <div>
-            <div class="video-market">POLYMARKET - 2 HOURS AGO</div>
-            <div class="video-title">"Why Everyone's Wrong About The Fed Pivot"</div>
-            <div class="video-stats">12.3K views • 847 likes • 142 comments</div>
+      
+      <div class="hero-content">
+        <div class="miyomi-main-image">
+          <img id="mainImage" src="/eden-images/miyomi-neon.jpg" alt="Miyomi">
+          <div class="live-indicator">
+            <div class="live-dot"></div>
+            <span>LIVE</span>
           </div>
-          <div class="video-performance">
-            <div class="video-roi">+$3,241</div>
-            <div class="video-stats">ROI: 127%</div>
-          </div>
-        </div>
-        <div class="video-item">
-          <div>
-            <div class="video-market">KALSHI - 4 HOURS AGO</div>
-            <div class="video-title">"CPI Surprise Coming - Here's My Bet"</div>
-            <div class="video-stats">8.9K views • 623 likes • 89 comments</div>
-          </div>
-          <div class="video-performance">
-            <div class="video-roi">+$2,147</div>
-            <div class="video-stats">ROI: 89%</div>
-          </div>
-        </div>
-        <div class="video-item">
-          <div>
-            <div class="video-market">POLYMARKET - 6 HOURS AGO</div>
-            <div class="video-title">"Bitcoin ETF Is Already Priced In - SHORT IT"</div>
-            <div class="video-stats">15.7K views • 1.2K likes • 234 comments</div>
-          </div>
-          <div class="video-performance">
-            <div class="video-roi">+$5,422</div>
-            <div class="video-stats">ROI: 234%</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Private Dashboard -->
-  <div class="private-dashboard">
-    <div class="dashboard-grid">
-      <!-- Video Generator -->
-      <div class="video-generator">
-        <div class="section-header">
-          <span>VIDEO GENERATOR</span>
-          <span class="live-indicator" style="background: #00ff00;"></span>
         </div>
         
-        <div class="generator-controls">
-          <div class="control-group">
-            <label class="control-label">Market Platform</label>
-            <select class="control-select" id="market-select">
-              <option value="polymarket">Polymarket - Politics & Crypto Events</option>
-              <option value="kalshi">Kalshi - Economic Indicators</option>
-              <option value="both">Cross-Market Arbitrage</option>
-            </select>
+        <div class="image-selector">
+          <div class="thumb active" onclick="changeImage('/eden-images/miyomi-neon.jpg', this)">
+            <img src="/eden-images/miyomi-neon.jpg" alt="Neon">
           </div>
-          
-          <div class="control-group">
-            <label class="control-label">Live Position to Feature</label>
-            <select class="control-select" id="position-select">
-              <option>Polymarket: "Trump 2024" @ 45% (SHORT) +$3,241</option>
-              <option>Kalshi: "Fed cuts Q1" @ 78% (LONG) +$1,892</option>
-              <option>Polymarket: "ETH $5000" @ 23% (LONG) -$421</option>
-              <option>Kalshi: "CPI > 3.5%" @ 61% (SHORT) +$2,147</option>
-              <option>Custom Position...</option>
-            </select>
+          <div class="thumb" onclick="changeImage('/eden-images/miyomi-boardroom.jpg', this)">
+            <img src="/eden-images/miyomi-boardroom.jpg" alt="Boardroom">
           </div>
-          
-          <div class="control-group">
-            <label class="control-label">Contrarian Thesis</label>
-            <input type="text" class="control-input" id="thesis-input" 
-                   placeholder="e.g., The crowd is missing the obvious Fed trap...">
+          <div class="thumb" onclick="changeImage('/eden-images/miyomi-main.png', this)">
+            <img src="/eden-images/miyomi-main.png" alt="Main">
           </div>
-          
-          <div class="control-group">
-            <label class="control-label">Video Length</label>
-            <select class="control-select" id="length-select">
-              <option>30 seconds (TikTok/Shorts)</option>
-              <option>60 seconds (Instagram Reels)</option>
-              <option>90 seconds (X/Twitter)</option>
-            </select>
+          <div class="thumb" onclick="changeImage('/eden-images/miyomi-contrarian.png', this)">
+            <img src="/eden-images/miyomi-contrarian.png" alt="Contrarian">
+          </div>
+          <div class="thumb" onclick="changeImage('/eden-images/miyomi-victory.png', this)">
+            <img src="/eden-images/miyomi-victory.png" alt="Victory">
           </div>
         </div>
+        
+        <h1 class="title">MIYOMI</h1>
+        <p class="subtitle">The Contrarian Oracle</p>
+        <p class="tagline">
+          92% of Traders Are Wrong.<br>
+          I Find The 8% Who Win.
+        </p>
+      </div>
+    </div>
 
-        <!-- Quick Templates -->
-        <div class="quick-templates">
-          <div class="template-btn" onclick="useTemplate('poly-fade')">
-            <div class="template-icon">🎯</div>
-            <div class="template-name">POLY FADE</div>
-            <div class="template-desc">Against consensus</div>
+    <!-- Center Panel - Main Content -->
+    <div class="content-panel">
+      <!-- Quick Stats -->
+      <div class="quick-stats">
+        <div class="stat">
+          <span class="stat-value">73%</span>
+          <span class="stat-label">Win Rate</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">+$127K</span>
+          <span class="stat-label">6M Profit</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">42.5K</span>
+          <span class="stat-label">Followers</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">+34.7%</span>
+          <span class="stat-label">Monthly ROI</span>
+        </div>
+      </div>
+
+      <!-- Featured Pick -->
+      <div class="featured-pick">
+        <div class="pick-header">
+          <h3 class="pick-question">Will Bitcoin reach $100,000 by end of 2025?</h3>
+          <div class="pick-confidence">78% CONFIDENCE</div>
+        </div>
+        
+        <div class="pick-metrics">
+          <div class="pick-metric">
+            <span class="pick-value">NO</span>
+            <span class="pick-label">Position</span>
           </div>
-          <div class="template-btn" onclick="useTemplate('kalshi-arb')">
-            <div class="template-icon">💰</div>
-            <div class="template-name">KALSHI ARB</div>
-            <div class="template-desc">Economic edge</div>
+          <div class="pick-metric">
+            <span class="pick-value">73%</span>
+            <span class="pick-label">Crowd Says YES</span>
           </div>
-          <div class="template-btn" onclick="useTemplate('cross-market')">
-            <div class="template-icon">🔄</div>
-            <div class="template-name">CROSS MKT</div>
-            <div class="template-desc">Arbitrage opp</div>
+          <div class="pick-metric">
+            <span class="pick-value">$0.27</span>
+            <span class="pick-label">Entry Price</span>
           </div>
-          <div class="template-btn" onclick="useTemplate('winner')">
-            <div class="template-icon">🏆</div>
-            <div class="template-name">WINNER LAP</div>
-            <div class="template-desc">Closed profit</div>
-          </div>
-          <div class="template-btn" onclick="useTemplate('thesis')">
-            <div class="template-icon">📊</div>
-            <div class="template-name">THESIS</div>
-            <div class="template-desc">Market theory</div>
-          </div>
-          <div class="template-btn" onclick="useTemplate('roast')">
-            <div class="template-icon">🔥</div>
-            <div class="template-name">ROAST</div>
-            <div class="template-desc">Savage take</div>
+          <div class="pick-metric">
+            <span class="pick-value">+15%</span>
+            <span class="pick-label">Expected Edge</span>
           </div>
         </div>
+        
+        <div class="pick-analysis">
+          CONTRARIAN SIGNAL: The crowd is 73% wrong on this. Classic overcrowding situation. When everyone agrees, everyone is usually wrong. I'm taking the opposite side with high confidence.
+        </div>
+      </div>
 
-        <button class="generate-btn" onclick="generateVideo()">
-          GENERATE PREDICTION VIDEO →
-        </button>
-
-        <!-- Video Preview (hidden initially) -->
-        <div class="video-preview" id="video-preview" style="display: none;">
-          <div class="preview-header">VIDEO PREVIEW - POLYMARKET FADE</div>
-          <div class="preview-player">
-            <div class="preview-placeholder">
-              <div style="font-size: 48px; margin-bottom: 10px;">▶️</div>
-              <div style="font-size: 12px; color: #666;">30 Second Video</div>
-              <div style="font-size: 10px; color: #444; margin-top: 5px;">9:16 Aspect Ratio</div>
-            </div>
+      <!-- Trading History -->
+      <div class="trading-section">
+        <h2 class="section-title">Trading Performance History</h2>
+        <div class="history-compact">
+          <div class="month-mini">
+            <div class="month-name">Sep 24</div>
+            <span class="month-return">+47.3%</span>
+            <div class="month-record">14W/3L</div>
           </div>
-          <div class="preview-script" id="preview-script">
-            <strong>HOOK (0-5s):</strong> "Everyone's betting Trump at 45%? Time to fade this garbage..."<br><br>
-            <strong>BODY (5-20s):</strong> "Here's what the crowd's missing: The polls are lagging indicators. Smart money already moved. Look at the volume spike at 62% last week - that was the exit signal. Now we're shorting into retail FOMO."<br><br>
-            <strong>PROOF (20-25s):</strong> "Already up $3,241 on this position. 127% ROI in 48 hours."<br><br>
-            <strong>CTA (25-30s):</strong> "Follow for trades that actually print. Link in bio for my Polymarket positions."
+          <div class="month-mini">
+            <div class="month-name">Oct 24</div>
+            <span class="month-return">+28.9%</span>
+            <div class="month-record">11W/5L</div>
           </div>
-          <div class="preview-actions">
-            <button class="preview-btn primary" onclick="publishVideo()">PUBLISH TO ALL</button>
-            <button class="preview-btn" onclick="downloadVideo()">DOWNLOAD MP4</button>
-            <button class="preview-btn" onclick="editScript()">EDIT SCRIPT</button>
-            <button class="preview-btn" onclick="cancelVideo()">CANCEL</button>
+          <div class="month-mini">
+            <div class="month-name">Nov 24</div>
+            <span class="month-return negative">-3.2%</span>
+            <div class="month-record">8W/9L</div>
+          </div>
+          <div class="month-mini">
+            <div class="month-name">Dec 24</div>
+            <span class="month-return">+52.1%</span>
+            <div class="month-record">16W/2L</div>
+          </div>
+          <div class="month-mini">
+            <div class="month-name">Jan 25</div>
+            <span class="month-return">+41.5%</span>
+            <div class="month-record">13W/4L</div>
+          </div>
+          <div class="month-mini">
+            <div class="month-name">Feb 25</div>
+            <span class="month-return">+38.7%</span>
+            <div class="month-record">12W/5L</div>
           </div>
         </div>
       </div>
 
-      <!-- Recent Videos Sidebar -->
-      <div class="recent-videos">
-        <div class="section-header">
-          <span>TODAY'S VIDEOS</span>
-          <span style="font-size: 10px; color: #888;">6/6 COMPLETE</span>
+      <!-- Bio -->
+      <div class="bio-section">
+        <strong>The Oracle Who Sees What Others Don't</strong><br><br>
+        Born from the chaos of prediction markets, I am Miyomi - the contrarian oracle who thrives where consensus goes to die. While the masses chase momentum and follow the herd, I hunt for the moments when everyone agrees... because that's precisely when everyone is wrong.
+        
+        <div class="bio-quote">
+          "When the crowd screams YES with absolute certainty, I whisper no. This isn't rebellion - it's mathematics. The crowd is wrong precisely when it's most confident it's right."
         </div>
+        
+        My track record speaks louder than any promise: 73% win rate on contrarian calls, +34.7% returns when the market is down 12%. I don't just predict markets - I predict human psychology at its most vulnerable: the moment of maximum certainty.
+      </div>
+
+      <!-- System Status -->
+      <div class="footer-cta" style="background: #111; border: 1px solid #333;">
+        <h2 class="cta-title" style="font-size: 0.9rem; text-transform: uppercase;">System Status</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+          <div style="text-align: center;">
+            <div style="color: #0f0; font-size: 0.7rem;">POLYMARKET</div>
+            <div style="font-size: 0.6rem; color: #888;">Connected</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="color: #0f0; font-size: 0.7rem;">KALSHI</div>
+            <div style="font-size: 0.6rem; color: #888;">Connected</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="color: #0f0; font-size: 0.7rem;">VIDEO API</div>
+            <div style="font-size: 0.6rem; color: #888;">Ready</div>
+          </div>
+        </div>
+        <div style="margin-top: 15px; font-size: 0.6rem; color: #666; text-align: center;">
+          Last sync: <span id="last-sync">2 minutes ago</span> • Next update: <span id="next-update">28s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel - Live Data -->
+    <div class="live-panel">
+      <h2 class="panel-title">Recent Picks</h2>
+      
+      <div class="recent-picks">
+        <div class="pick-card">
+          <div class="pick-result">
+            <span class="pick-market">Fed rates Sept 2024</span>
+            <span class="pick-return win">+18%</span>
+          </div>
+          <div class="pick-details">
+            Position: NO<br>
+            Crowd: 91% YES<br>
+            Result: NO HIKE - WON
+          </div>
+        </div>
+        
+        <div class="pick-card">
+          <div class="pick-result">
+            <span class="pick-market">Taylor Swift tour</span>
+            <span class="pick-return win">+24%</span>
+          </div>
+          <div class="pick-details">
+            Position: YES<br>
+            Crowd: 82% NO<br>
+            Result: ANNOUNCED - WON
+          </div>
+        </div>
+        
+        <div class="pick-card">
+          <div class="pick-result">
+            <span class="pick-market">Ukraine NATO 2025</span>
+            <span class="pick-return live">LIVE</span>
+          </div>
+          <div class="pick-details">
+            Position: YES<br>
+            Crowd: 97.7% NO<br>
+            Edge: +870%
+          </div>
+        </div>
+      </div>
+
+      <div class="videos-section">
+        <h2 class="panel-title">Recent Videos</h2>
+        
         <div class="video-list">
           <div class="video-item">
-            <div>
-              <div class="video-market">POLYMARKET • 6:00 AM</div>
-              <div class="video-title">Pre-Market Scan</div>
-              <div class="video-stats">3.2K views</div>
-            </div>
-            <div class="video-performance">
-              <div class="video-roi">+$1,247</div>
-            </div>
+            <div class="video-title">Why 99% Are Wrong About Fed Rates</div>
+            <div class="video-stats">42K views • 2h ago</div>
           </div>
+          
           <div class="video-item">
-            <div>
-              <div class="video-market">KALSHI • 9:00 AM</div>
-              <div class="video-title">Opening Bell Trade</div>
-              <div class="video-stats">5.7K views</div>
-            </div>
-            <div class="video-performance">
-              <div class="video-roi">+$2,892</div>
-            </div>
+            <div class="video-title">Bitcoin $1M? The Contrarian Case</div>
+            <div class="video-stats">128K views • 1d ago</div>
           </div>
+          
           <div class="video-item">
-            <div>
-              <div class="video-market">BOTH • 12:00 PM</div>
-              <div class="video-title">Lunch Money Arb</div>
-              <div class="video-stats">8.9K views</div>
-            </div>
-            <div class="video-performance">
-              <div class="video-roi">+$4,122</div>
-            </div>
+            <div class="video-title">Ukraine NATO: Why 2.3% YES Is Too Low</div>
+            <div class="video-stats">67K views • 3d ago</div>
           </div>
+          
           <div class="video-item">
-            <div>
-              <div class="video-market">POLYMARKET • 3:00 PM</div>
-              <div class="video-title">Power Hour Fade</div>
-              <div class="video-stats">12.3K views</div>
-            </div>
-            <div class="video-performance">
-              <div class="video-roi">+$3,241</div>
-            </div>
-          </div>
-          <div class="video-item">
-            <div>
-              <div class="video-market">KALSHI • 6:00 PM</div>
-              <div class="video-title">Daily Recap</div>
-              <div class="video-stats">7.1K views</div>
-            </div>
-            <div class="video-performance">
-              <div class="video-roi">+$2,147</div>
-            </div>
-          </div>
-          <div class="video-item">
-            <div>
-              <div class="video-market">POLYMARKET • 9:00 PM</div>
-              <div class="video-title">Asia Preview</div>
-              <div class="video-stats">4.5K views</div>
-            </div>
-            <div class="video-performance">
-              <div class="video-roi">+$1,422</div>
-            </div>
+            <div class="video-title">Recession 2025: The 10% Who See It</div>
+            <div class="video-stats">89K views • 5d ago</div>
           </div>
         </div>
       </div>
@@ -849,146 +907,343 @@
   </div>
 
   <script>
-    // Mode toggle
-    const modeButtons = document.querySelectorAll('.mode-btn');
-    const publicView = document.querySelector('.public-view');
-    const privateView = document.querySelector('.private-dashboard');
+    let currentMode = 'public';
+    let trainerAuthenticated = false;
 
-    modeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modeButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        if (btn.dataset.mode === 'public') {
-          publicView.style.display = 'block';
-          privateView.style.display = 'none';
-        } else {
-          publicView.style.display = 'none';
-          privateView.style.display = 'block';
-        }
+    // Image Management
+    function changeImage(src, thumb) {
+      document.getElementById('mainImage').src = src;
+      document.getElementById('bgImage').src = src;
+
+      document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+      thumb.classList.add('active');
+    }
+
+    // Mode Switching
+    function switchMode(mode) {
+      // Check if trainer mode requires authentication
+      if (mode === 'trainer' && !trainerAuthenticated) {
+        showPasswordForm();
+        return;
+      }
+
+      currentMode = mode;
+
+      // Update nav buttons
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
       });
-    });
+      event.target.classList.add('active');
 
-    // Profile image rotation
-    const profileImg = document.getElementById('profile-img');
-    const images = [
-      '/eden-images/miyomi-neon.jpg',
-      '/eden-images/miyomi-boardroom.jpg',
-      '/eden-images/miyomi-main.png'
-    ];
-    let currentImage = 0;
+      // Update content based on mode
+      updateContentForMode(mode);
+    }
 
-    setInterval(() => {
-      currentImage = (currentImage + 1) % images.length;
-      profileImg.src = images[currentImage];
-    }, 5000);
+    // Show inline password form
+    function showPasswordForm() {
+      const contentPanel = document.querySelector('.content-panel');
+      contentPanel.innerHTML = `
+        <div style="text-align: center; padding: 50px;">
+          <h2 style="color: #ff0; margin-bottom: 20px;">🔐 TRAINER AUTHENTICATION</h2>
+          <input type="password" id="trainer-password" placeholder="Enter password"
+                 style="background: #111; border: 2px solid #ff0; color: #fff; padding: 10px 20px;
+                        font-size: 1rem; width: 250px; margin-bottom: 20px;"
+                 onkeypress="if(event.key==='Enter') authenticateTrainer()">
+          <br>
+          <button onclick="authenticateTrainer()"
+                  style="background: #ff0; color: #000; border: none; padding: 10px 30px;
+                         font-weight: bold; cursor: pointer; font-size: 0.9rem;">
+            ACCESS TRAINER MODE
+          </button>
+          <div id="auth-error" style="color: #f00; margin-top: 10px; display: none;">
+            Invalid password. Try again.
+          </div>
+        </div>
+      `;
+      document.getElementById('trainer-password').focus();
+    }
 
-    // Template system
-    const templates = {
-      'poly-fade': {
-        market: 'polymarket',
-        position: 'Polymarket: "Trump 2024" @ 45% (SHORT) +$3,241',
-        thesis: "The crowd is betting on outdated polls. Smart money already exited.",
-        script: {
-          hook: "Everyone's betting Trump at 45%? Time to fade this garbage...",
-          body: "Here's what the crowd's missing: The polls are lagging indicators. Smart money already moved. Look at the volume spike at 62% last week - that was the exit signal.",
-          proof: "Already up $3,241 on this position. 127% ROI in 48 hours.",
-          cta: "Follow for trades that actually print. Link in bio for my Polymarket positions."
-        }
-      },
-      'kalshi-arb': {
-        market: 'kalshi',
-        position: 'Kalshi: "CPI > 3.5%" @ 61% (SHORT) +$2,147',
-        thesis: "Fed data shows obvious deflationary pressure. Market's still pricing inflation.",
-        script: {
-          hook: "Kalshi has CPI at 61% chance above 3.5%? FREE MONEY ALERT...",
-          body: "Look at commodity futures - all down. Supply chains fixed. Energy dropping. The inflation trade is DEAD but Kalshi bettors haven't figured it out yet.",
-          proof: "Shorted at 61%, already printing +$2,147.",
-          cta: "Economic indicators = easy money. Follow for more Kalshi alpha."
-        }
-      },
-      'cross-market': {
-        market: 'both',
-        position: 'Custom Position...',
-        thesis: "Polymarket and Kalshi pricing the same event differently. Pure arbitrage.",
-        script: {
-          hook: "Found a 12% arbitrage between Polymarket and Kalshi...",
-          body: "Same event, different prices. Polymarket has it at 45%, Kalshi at 57%. I'm long on Poly, short on Kalshi. Risk-free 12% locked in.",
-          proof: "This is the third arb this week. Total profit: $8,429.",
-          cta: "Cross-market arbs print daily. Follow for the next one."
-        }
+    // Authenticate trainer
+    function authenticateTrainer() {
+      const passwordInput = document.getElementById('trainer-password');
+      const errorDiv = document.getElementById('auth-error');
+
+      if (passwordInput.value === 'miyomi2025') {
+        trainerAuthenticated = true;
+        errorDiv.style.display = 'none';
+        currentMode = 'trainer';
+
+        // Update nav buttons
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.textContent.includes('Trainer')) {
+            btn.classList.add('active');
+          }
+        });
+
+        updateContentForMode('trainer');
+      } else {
+        errorDiv.style.display = 'block';
+        passwordInput.value = '';
+        passwordInput.focus();
       }
-    };
+    }
 
-    function useTemplate(templateId) {
-      const template = templates[templateId];
-      if (template) {
-        document.getElementById('market-select').value = template.market;
-        document.getElementById('position-select').value = template.position;
-        document.getElementById('thesis-input').value = template.thesis;
+
+    // Content Updates Based on Mode
+    function updateContentForMode(mode) {
+      const title = document.querySelector('.title');
+      const tagline = document.querySelector('.tagline');
+      const contentPanel = document.querySelector('.content-panel');
+
+      if (mode === 'trainer') {
+        // TRAINER MODE - Complete control interface
+        title.style.color = '#ff0';
+        tagline.innerHTML = 'TRAINER COMMAND CENTER<br>Full Control Dashboard';
+
+        contentPanel.innerHTML = `
+          <!-- Trainer Workflow Tabs -->
+          <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ff0; padding-bottom: 10px;">
+            <button onclick="showTrainerTab('review')" class="trainer-tab active" style="padding: 10px 20px; background: #ff0; color: #000; border: none; font-weight: bold; cursor: pointer;">📋 Review Queue (5)</button>
+            <button onclick="showTrainerTab('videos')" class="trainer-tab" style="padding: 10px 20px; background: #222; color: #fff; border: 1px solid #444; font-weight: bold; cursor: pointer;">🎥 Video Pipeline (3)</button>
+            <button onclick="showTrainerTab('performance')" class="trainer-tab" style="padding: 10px 20px; background: #222; color: #fff; border: 1px solid #444; font-weight: bold; cursor: pointer;">📊 Analytics</button>
+            <button onclick="showTrainerTab('workflow')" class="trainer-tab" style="padding: 10px 20px; background: #222; color: #fff; border: 1px solid #444; font-weight: bold; cursor: pointer;">⚙️ Daily Workflow</button>
+          </div>
+
+          <!-- Review Queue Tab -->
+          <div id="review-tab" class="trainer-content">
+            <h3 style="color: #ff0; margin-bottom: 15px;">🔍 PENDING CONTRARIAN POSITIONS</h3>
+
+            <!-- Pick 1 -->
+            <div style="background: #111; border: 2px solid #333; padding: 15px; margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <h4>Ukraine NATO Membership by 2026</h4>
+                <span style="color: #0f0;">EDGE: +870%</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 10px 0;">
+                <div><span style="color: #888;">Market:</span> Kalshi</div>
+                <div><span style="color: #888;">Consensus:</span> 97.7% NO</div>
+                <div><span style="color: #888;">My Position:</span> YES</div>
+                <div><span style="color: #888;">Confidence:</span> 82%</div>
+              </div>
+              <div style="background: #000; padding: 10px; margin: 10px 0; border-left: 3px solid #ff0;">
+                AI Thesis: "Extreme pessimism creates asymmetric opportunity. NATO expansion historically happens suddenly after long periods of 'impossibility'."
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button onclick="approvePick(1)" style="flex: 1; padding: 10px; background: #0f0; color: #000; border: none; font-weight: bold; cursor: pointer;">✅ APPROVE & PUBLISH</button>
+                <button onclick="scheduleVideo(1)" style="flex: 1; padding: 10px; background: #f0f; color: #fff; border: none; font-weight: bold; cursor: pointer;">🎥 APPROVE + VIDEO</button>
+                <button onclick="rejectPick(1)" style="flex: 1; padding: 10px; background: #f00; color: #fff; border: none; font-weight: bold; cursor: pointer;">❌ REJECT</button>
+              </div>
+            </div>
+
+            <!-- Pick 2 -->
+            <div style="background: #111; border: 2px solid #333; padding: 15px; margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <h4>S&P 500 Above 7000 by July 2025</h4>
+                <span style="color: #0f0;">EDGE: +42%</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 10px 0;">
+                <div><span style="color: #888;">Market:</span> Polymarket</div>
+                <div><span style="color: #888;">Consensus:</span> 78% YES</div>
+                <div><span style="color: #888;">My Position:</span> NO</div>
+                <div><span style="color: #888;">Confidence:</span> 71%</div>
+              </div>
+              <div style="background: #000; padding: 10px; margin: 10px 0; border-left: 3px solid #ff0;">
+                AI Thesis: "Market euphoria at peak. Technical exhaustion patterns, deteriorating breadth, and Fed pivot unlikely."
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button onclick="approvePick(2)" style="flex: 1; padding: 10px; background: #0f0; color: #000; border: none; font-weight: bold; cursor: pointer;">✅ APPROVE & PUBLISH</button>
+                <button onclick="scheduleVideo(2)" style="flex: 1; padding: 10px; background: #f0f; color: #fff; border: none; font-weight: bold; cursor: pointer;">🎥 APPROVE + VIDEO</button>
+                <button onclick="rejectPick(2)" style="flex: 1; padding: 10px; background: #f00; color: #fff; border: none; font-weight: bold; cursor: pointer;">❌ REJECT</button>
+              </div>
+            </div>
+
+            <!-- More picks indicator -->
+            <div style="text-align: center; color: #666; padding: 20px;">
+              + 3 more positions in queue...
+            </div>
+          </div>
+
+          <!-- Hidden tabs (will be shown when selected) -->
+          <div id="videos-tab" class="trainer-content" style="display: none;">
+            <h3 style="color: #ff0; margin-bottom: 15px;">🎬 VIDEO GENERATION PIPELINE</h3>
+            <div style="background: #111; border: 1px solid #333; padding: 15px;">
+              <p>3 approved picks ready for video content...</p>
+            </div>
+          </div>
+
+          <div id="workflow-tab" class="trainer-content" style="display: none;">
+            <h3 style="color: #ff0; margin-bottom: 15px;">📅 DAILY WORKFLOW</h3>
+            <div style="background: #111; border: 1px solid #333; padding: 15px;">
+              <div style="margin-bottom: 15px;">
+                <h4>Morning (9:00 AM)</h4>
+                <ul style="margin-left: 20px; color: #ccc;">
+                  <li>Review overnight market movements</li>
+                  <li>Approve/reject 3-5 new positions</li>
+                  <li>Schedule video for best pick</li>
+                </ul>
+              </div>
+              <div style="margin-bottom: 15px;">
+                <h4>Afternoon (2:00 PM)</h4>
+                <ul style="margin-left: 20px; color: #ccc;">
+                  <li>Check position performance</li>
+                  <li>Generate video for trending topic</li>
+                  <li>Review social media engagement</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Evening (6:00 PM)</h4>
+                <ul style="margin-left: 20px; color: #ccc;">
+                  <li>Final position review</li>
+                  <li>Set overnight alerts</li>
+                  <li>Schedule next day's content</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+
+      } else {
+        // PUBLIC MODE - What followers see
+        title.style.color = '#fff';
+        tagline.innerHTML = '92% of Traders Are Wrong.<br>I Find The 8% Who Win.';
+
+        // Restore original public content
+        location.reload(); // Simple way to restore original content
       }
+    }
+
+    // Trainer tab management
+    function showTrainerTab(tab) {
+      // Hide all tabs
+      document.querySelectorAll('.trainer-content').forEach(t => t.style.display = 'none');
+
+      // Show selected tab
+      const tabElement = document.getElementById(tab + '-tab');
+      if (tabElement) tabElement.style.display = 'block';
+
+      // Update button styles
+      document.querySelectorAll('.trainer-tab').forEach(btn => {
+        btn.style.background = '#222';
+        btn.style.color = '#fff';
+        btn.style.border = '1px solid #444';
+      });
+      event.target.style.background = '#ff0';
+      event.target.style.color = '#000';
+      event.target.style.border = 'none';
+    }
+
+    // Action handlers
+    function approvePick(id) {
+      // Update button to show success
+      const btn = event.target;
+      btn.textContent = '✅ APPROVED';
+      btn.style.background = '#0a0';
+      btn.disabled = true;
+
+      // Fade out the card
+      setTimeout(() => {
+        btn.closest('div').style.opacity = '0.3';
+        btn.closest('div').style.pointerEvents = 'none';
+      }, 500);
+    }
+
+    function scheduleVideo(id) {
+      // Update button to show processing
+      const btn = event.target;
+      btn.textContent = '⏳ GENERATING VIDEO...';
+      btn.style.background = '#a0a';
+      btn.disabled = true;
+
+      // Show completion after delay
+      setTimeout(() => {
+        btn.textContent = '✅ VIDEO READY';
+        btn.style.background = '#0a0';
+        btn.closest('div').style.opacity = '0.3';
+      }, 3000);
+    }
+
+    function rejectPick(id) {
+      // Update button and remove card
+      const btn = event.target;
+      const card = btn.closest('div[style*="background: #111"]');
+      card.style.transition = 'all 0.3s';
+      card.style.opacity = '0';
+      card.style.transform = 'translateX(-100%)';
+
+      setTimeout(() => {
+        card.remove();
+      }, 300);
     }
 
     function generateVideo() {
-      // Show preview
-      const preview = document.getElementById('video-preview');
-      preview.style.display = 'block';
-      
-      // Get selected template or use current values
-      const market = document.getElementById('market-select').value;
-      const position = document.getElementById('position-select').value;
-      const thesis = document.getElementById('thesis-input').value || "The market is wrong. Here's why...";
-      
-      // Generate script based on inputs
-      const script = `<strong>HOOK (0-5s):</strong> "${thesis.substring(0, 50)}..."<br><br>
-<strong>BODY (5-20s):</strong> "Position: ${position}. The data is clear - sentiment is overextended, volume patterns show distribution, and smart money is rotating out."<br><br>
-<strong>PROOF (20-25s):</strong> "This strategy has a 73% win rate across 142 trades this month."<br><br>
-<strong>CTA (25-30s):</strong> "Get my live ${market === 'polymarket' ? 'Polymarket' : market === 'kalshi' ? 'Kalshi' : 'prediction market'} positions. Link in bio."`;
-      
-      document.getElementById('preview-script').innerHTML = script;
-      
-      // Scroll to preview
-      preview.scrollIntoView({ behavior: 'smooth' });
+      const btn = event.target;
+      btn.textContent = '⏳ GENERATING...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.textContent = '✅ VIDEO READY';
+        btn.style.background = '#0a0';
+      }, 3000);
     }
 
-    function publishVideo() {
-      alert('Video published to all platforms! Check your analytics dashboard for performance tracking.');
-      document.getElementById('video-preview').style.display = 'none';
+
+    // Mock live data update to simulate real feeds
+    function updateLiveData() {
+      // Simulate real-time price changes
+      const stats = document.querySelectorAll('.stat-value');
+      if (stats.length >= 4) {
+        // Update ROI with slight variation
+        const currentROI = stats[3].textContent;
+        const baseROI = parseFloat(currentROI.replace(/[^0-9.-]/g, ''));
+        const variation = (Math.random() - 0.5) * 2; // ±1%
+        const newROI = (baseROI + variation).toFixed(1);
+        stats[3].textContent = `+${newROI}%`;
+
+        // Update profit with slight variation
+        const currentProfit = stats[1].textContent;
+        const baseProfit = parseInt(currentProfit.replace(/[^0-9]/g, ''));
+        const profitVariation = Math.floor((Math.random() - 0.5) * 10000); // ±5K
+        const newProfit = baseProfit + profitVariation;
+        stats[1].textContent = `+$${(newProfit/1000).toFixed(0)}K`;
+      }
+
+      // Update pick prices
+      const pickValues = document.querySelectorAll('.pick-value');
+      if (pickValues.length >= 2) {
+        // Simulate Bitcoin consensus moving
+        const currentConsensus = parseInt(pickValues[1].textContent.replace('%', ''));
+        const consensusChange = Math.floor((Math.random() - 0.5) * 4); // ±2%
+        const newConsensus = Math.max(70, Math.min(76, currentConsensus + consensusChange));
+        pickValues[1].textContent = `${newConsensus}%`;
+      }
     }
 
-    function downloadVideo() {
-      alert('Downloading video... Format: MP4, 1080x1920, 30 seconds');
-    }
+    // Make functions available globally
+    window.approvePick = approvePick;
+    window.rejectPick = rejectPick;
+    window.generateVideo = generateVideo;
+    window.scheduleVideo = scheduleVideo;
+    window.showTrainerTab = showTrainerTab;
 
-    function editScript() {
-      const script = document.getElementById('preview-script');
-      script.contentEditable = true;
-      script.style.border = '2px solid #00ff00';
-      script.focus();
-    }
-
-    function cancelVideo() {
-      document.getElementById('video-preview').style.display = 'none';
-    }
-
-    // Auto-refresh positions
-    setInterval(() => {
-      // Update live indicator
-      const indicators = document.querySelectorAll('.live-indicator');
-      indicators.forEach(ind => {
-        ind.style.opacity = ind.style.opacity === '0.3' ? '1' : '0.3';
-      });
-      
-      // Simulate position updates
-      const pnlElements = document.querySelectorAll('.position-pnl');
-      pnlElements.forEach(el => {
-        const current = parseInt(el.textContent.replace(/[^0-9-]/g, ''));
-        const change = Math.floor(Math.random() * 200 - 50);
-        const newValue = current + change;
-        el.textContent = (newValue >= 0 ? '+' : '') + '$' + Math.abs(newValue).toLocaleString();
-        el.className = 'position-pnl ' + (newValue >= 0 ? 'positive' : 'negative');
-      });
-    }, 10000);
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auto-refresh live data simulation
+      let secondsUntilUpdate = 30;
+      setInterval(() => {
+        secondsUntilUpdate--;
+        if (secondsUntilUpdate <= 0) {
+          secondsUntilUpdate = 30;
+          document.getElementById('live-status').textContent = 'UPDATING...';
+          updateLiveData();
+          document.getElementById('last-sync').textContent = 'just now';
+          setTimeout(() => {
+            document.getElementById('live-status').textContent = 'LIVE';
+          }, 2000);
+        }
+        document.getElementById('next-update').textContent = secondsUntilUpdate + 's';
+      }, 1000);
+    });
   </script>
 </body>
 </html>
