@@ -23,18 +23,25 @@
 
 ## 🚀 What is Miyomi?
 
-**Concept:** A contrarian prediction market trader with personality
+**Concept:** The **Maria Bartiromo of prediction markets** - AI influencer/commentator who becomes THE personality for prediction market trading (like Jim Cramer for stocks, Dave Portnoy for sports betting)
 
+**What She Does:**
 - Identifies markets where consensus is extreme (>75% or <25%)
 - Takes opposing positions publicly
 - Generates 30-60s videos explaining her contrarian thesis
 - Tracks transparent P&L and win rate
-- Builds reputation through public track record
+- Builds audience as prediction market personality
+
+**Visual Identity:**
+- Eden LoRA: [Yeah by iflookscouldkill](https://app.eden.art/models/67ef2bba6e91dc8e0efc2f1c)
+- Edgy aesthetic: tattoos, piercings, black hair, striking makeup
+- Alternative finance personality (not suits, not boring)
 
 **Personality:** NYC downtown trader mixing sophisticated analysis with chaos energy
 - "Everyone thinks Bitcoin hits $100k? Let me tell you why they're wrong..."
 - References bodega wisdom, Dimes Square, Mercury retrograde + Fed meetings
 - Confident contrarian: "The crowd is always wrong at extremes"
+- Built-in media personality for emerging prediction market industry
 
 ---
 
@@ -175,13 +182,18 @@ Miyomi isn't just a prediction market agent - she's training to become a **Spiri
 - 25% → Seth (human mentor/creator)
 - 25% → Miyomi treasury (agent autonomy)
 
-**Royalty Sources:**
+**Royalty Sources (Multiple Revenue Streams):**
 1. **Trading profits** - Contrarian position wins
-2. **Market making fees** - Soup.xyz liquidity provision
-3. **Content monetization** - Video views, sponsorships
-4. **Premium subscriptions** - Detailed analysis access
-5. **Oracle reputation** - Trusted resolution earns volume
-6. **NFT collectibles** - Greatest trade moments
+2. **Advertising & sponsorships** - Brand deals, video ads
+3. **Affiliate fees** - Polymarket/Kalshi signup referrals
+4. **Market making fees** - Soup.xyz liquidity provision
+5. **Premium subscriptions** - Detailed analysis access
+6. **Content licensing** - Media appearances, partnerships
+7. **Oracle reputation** - Trusted resolution earns volume
+8. **NFT collectibles** - Greatest trade moments
+
+**The Influencer Model:**
+Like Jim Cramer's "Mad Money" generates revenue from ads, affiliates, and sponsorships - Miyomi becomes THE personality for prediction markets. Every trade is content. Every contrarian take drives engagement. Every affiliate signup earns revenue. But unlike traditional influencers, ALL revenue flows to $MIYOMI token holders.
 
 ### The Spirit Protocol Architecture
 
@@ -205,17 +217,21 @@ Miyomi isn't just a prediction market agent - she's training to become a **Spiri
 
 **Own 1% of $MIYOMI tokens = Earn 1% of Miyomi's revenue**
 
-Example monthly flows:
+Example monthly flows (diversified revenue):
 ```
-Trading Profits:        $5,000
-Market Making Fees:     $2,000
-Content Revenue:        $1,000
-Premium Subscriptions:  $500
+Trading Profits:        $3,000
+Advertising/Sponsors:   $2,500
+Affiliate Fees:         $1,500
+Market Making Fees:     $1,000
+Premium Subscriptions:  $1,000
+Content Licensing:      $500
+NFT Sales:              $500
 ───────────────────────────────
-Total Monthly:          $8,500
+Total Monthly:          $10,000
 
-→ Distributed to $MIYOMI holders proportionally
-→ 25% also flows to $SPIRIT holders
+→ 75% to $MIYOMI holders: $7,500
+→ 25% to Miyomi treasury: $2,500
+→ $SPIRIT holders earn 25% of the $7,500
 ```
 
 ### Launch Timeline: December 2025 / January 2026
@@ -456,13 +472,21 @@ Miyomi earns: Trading profit + market making fees
 
 ### Phase 1: Build Revenue Streams (Oct-Nov 2025)
 1. **Trading profits** - Contrarian positions on Polymarket/Kalshi
-2. **Content monetization** - Video views, sponsorships
-3. **Premium subscriptions** - Detailed analysis access
+2. **Content creation** - 3+ videos per week using Eden LoRA
+3. **Audience building** - Grow social following, establish personality
+4. **Early sponsorships** - Brand deals as audience grows
 
-### Phase 2: Add Market Making (Q1 2026)
-4. **Market making fees** - Soup.xyz liquidity provision
-5. **Oracle reputation** - Trusted resolution attracts traders
-6. **Miyomi Markets brand** - Licensing and partnerships
+### Phase 2: Scale Influencer Model (Q1 2026)
+5. **Advertising revenue** - Video sponsorships, brand integrations
+6. **Affiliate programs** - Polymarket/Kalshi signup referrals
+7. **Premium subscriptions** - Detailed analysis, early alerts
+8. **Content licensing** - Media appearances, partnerships
+
+### Phase 3: Add Market Making (Q1 2026+)
+9. **Market making fees** - Soup.xyz liquidity provision
+10. **Oracle reputation** - Trusted resolution attracts traders
+11. **Miyomi Markets brand** - Licensing and IP monetization
+12. **NFT collectibles** - Greatest trade moments as collectibles
 
 ### Phase 3: Token Launch → Royalty Distribution (Dec 2025/Jan 2026)
 

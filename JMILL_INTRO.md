@@ -24,7 +24,7 @@ I'm building **Miyomi** - an AI agent that trades prediction markets with a cont
 
 ## What is Miyomi?
 
-**Concept:** NYC downtown trader who bets against crowd consensus
+**Concept:** The **Maria Bartiromo of prediction markets** - NYC downtown trader personality who becomes the go-to influencer/commentator for the prediction market space (like Jim Cramer for stocks, Dave Portnoy for sports betting).
 
 ```
 Market: "Will Bitcoin hit $100k by Dec 31?"
@@ -34,33 +34,42 @@ Video: "Everyone's moon boy delusion is peaking..."
 Result: BTC closes at $94k → Miyomi wins
 ```
 
+**Visual Identity:**
+- Using Eden LoRA: [Yeah by iflookscouldkill](https://app.eden.art/models/67ef2bba6e91dc8e0efc2f1c)
+- Edgy aesthetic: tattoos, piercings, black hair, striking makeup
+- Alternative finance personality (not suits, not boring)
+
 **Personality Mix:**
 - Sophisticated market analysis + chaos energy
 - "The crowd is always wrong at extremes"
 - References bodega wisdom + Fed meetings
 - Confident contrarian takes
+- Built-in media personality for prediction markets
 
 ---
 
 ## Why This is Interesting
 
 ### For You
-1. **Eden showcase** - Real production use case for video generation
+1. **Eden showcase** - Real production use case for video generation with custom LoRA
 2. **Prediction markets** - You mentioned you like this space
 3. **Spirit Protocol** - First prediction market Spirit with proven revenue
 4. **Interesting tech stack** - Claude 4.5 + Eden + Soup.xyz + Base L2
+5. **Media personality** - AI influencer model (not just trading bot)
 
 ### For Eden
 1. **Spirit Protocol validation** - Tokens = royalty rights (not speculation)
-2. **Revenue proof** - Real trading profits → USDC distributions
-3. **Content creation** - 3+ videos per week ongoing
+2. **Revenue proof** - Multiple streams (trading, ads, affiliates) → USDC distributions
+3. **Content creation** - 3+ videos per week using Eden LoRA
 4. **New vertical** - Prediction market community exposure
+5. **Influencer model** - Shows AI agents as media personalities (Jim Cramer/Dave Portnoy for prediction markets)
 
 ### For Miyomi
-1. **Real revenue** - Trading profits flow to $MIYOMI token holders
-2. **Aligned community** - Token holders want her to win trades
-3. **Sustainable model** - Not dependent on hype cycles
-4. **First mover** - First profitable prediction market Spirit
+1. **Media personality** - The face of prediction markets (like Maria Bartiromo for finance)
+2. **Multiple revenue streams** - Trading + sponsorships + affiliates + market making + content licensing
+3. **Aligned community** - Token holders want her to win trades AND grow audience
+4. **Sustainable model** - Diversified income, not just trading profits
+5. **First mover** - First profitable prediction market personality Spirit
 
 ---
 
@@ -81,10 +90,12 @@ Result: BTC closes at $94k → Miyomi wins
 Example monthly flow:
 ```
 Miyomi earns $10,000/month from:
-  • Trading profits: $5,000
-  • Market making fees: $2,000
-  • Content revenue: $1,000
-  • Subscriptions: $500
+  • Trading profits: $3,000
+  • Advertising/sponsorships: $2,500
+  • Affiliate fees (Polymarket/Kalshi signups): $1,500
+  • Market making fees (Soup.xyz): $1,000
+  • Premium subscriptions: $1,000
+  • Content licensing: $500
   • NFT sales: $500
 
 → 75% to token holders: $7,500
@@ -96,6 +107,9 @@ If you own 10%: $750/month USDC
 ```
 
 **Why this matters:** First AI agent with proven revenue BEFORE token launch. Not speculation - ownership of creative output.
+
+**The Influencer Model:**
+Like Jim Cramer's "Mad Money" or Dave Portnoy's sports betting content, Miyomi becomes THE personality for prediction markets. Every trade is content. Every contrarian take drives engagement. Every affiliate signup earns revenue. But unlike traditional influencers, ALL revenue flows to token holders.
 
 ---
 
@@ -155,13 +169,16 @@ All Revenue → Token Holders
 - Built Polymarket + Kalshi clients
 - Built contrarian detection logic
 - Ready to generate thesis videos
+- Have Eden LoRA for Miyomi's visual identity: [Yeah by iflookscouldkill](https://app.eden.art/models/67ef2bba6e91dc8e0efc2f1c)
 
 **Need:**
-1. Eden API endpoint + authentication
-2. Parameters for 30-60s videos
-3. How to handle async generation
-4. Best practices / examples
-5. Rate limits / cost considerations
+1. Eden API endpoint + authentication for video generation
+2. How to use custom LoRA (Yeah model) in video generation
+3. Parameters for 30-60s videos (aspect ratio, style, motion)
+4. How to handle async generation (polling, webhooks)
+5. Best practices / examples using custom LoRA
+6. Rate limits / cost considerations
+7. How to maintain consistent character across videos
 
 ### Secondary: Spirit Protocol Guidance
 
