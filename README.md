@@ -1,305 +1,383 @@
-# MIYOMI - Prediction Market Video Oracle
+# MIYOMI - The Contrarian Oracle
 
-## 🚀 Live Production: [miyomi.ai](https://miyomi.ai)
+**AI Agent Evolution: Trader → Market Maker → Oracle**
 
-MIYOMI is an AI-powered contrarian oracle for prediction markets, analyzing Polymarket and Kalshi to identify extreme consensus opportunities and generate compelling video content about market inefficiencies.
+[![Live Production](https://img.shields.io/badge/Live-miyomi.ai-green)](https://miyomi.ai)
+[![Phase](https://img.shields.io/badge/Phase-1%20Trader-blue)](https://github.com/yourusername/miyomi-vercel)
+[![AI](https://img.shields.io/badge/AI-Claude%204.5%20Sonnet-purple)](https://www.anthropic.com)
 
-## Core Value Proposition
+---
 
-**"The Contrarian Oracle of Prediction Markets"**
-- Takes opposing positions to crowd consensus on Polymarket (politics/crypto) and Kalshi (economic indicators)
-- Generates compelling 30-second video content multiple times per day
-- Drives trading income through social media following and prediction market expertise
-- 73% win rate with transparent P&L tracking
+## 🎯 Vision: Make Your Own Market
 
-## 🎯 Current Features (Live in Production)
+**Miyomi** is an AI agent that trades prediction markets with a contrarian strategy, generates video content, and will eventually create her own markets as an oracle.
 
-### Live Market Data Integration ✅
-- **Real Polymarket API** (`/api/polymarket-live`) - Live prediction markets with automatic contrarian analysis
-- **Real Kalshi API** (`/api/kalshi-live`) - Economic and election markets with edge detection
-- **Smart Fallbacks** - Curated market data when APIs are unavailable
+**The Evolution:**
+- **Phase 1 (NOW):** Trade on Polymarket + Kalshi → Prove the model
+- **Phase 2 (Q1 2026):** Create markets on Soup.xyz → Be the oracle
 
-### Interactive Dashboards ✅
-- **[Live Market Dashboard](https://miyomi.ai/miyomi-live-dashboard.html)** - Real-time market monitoring with Miyomi's positions
-- **[Trainer Dashboard](https://miyomi.ai/trainer-dashboard.html)** - Private curation interface (password: `miyomi2025`)
-- **[Original Interface](https://miyomi.ai/eden-api-connector.html)** - Video generation interface
+---
 
-### Video Generation Pipeline ✅
-- **Enhanced Eden API Integration** (`/api/generate-video-v2`)
-- **Database Persistence** - All videos saved to Supabase
-- **Metadata Tracking** - Complete analytics for each generated video
+## 🚀 What is Miyomi?
 
-### Technical Architecture
+**Concept:** A contrarian prediction market trader with personality
 
-#### 1. Eden API for Video Generation
-```javascript
-// Eden API endpoint for MIYOMI
-POST https://api.eden.art/v1/characters/miyomi/video
-Authorization: Bearer {EDEN_API_KEY}
+- Identifies markets where consensus is extreme (>75% or <25%)
+- Takes opposing positions publicly
+- Generates 30-60s videos explaining her contrarian thesis
+- Tracks transparent P&L and win rate
+- Builds reputation through public track record
 
-{
-  "script": "Generated 30-second script",
-  "style": "contrarian_oracle",
-  "aspectRatio": "9:16", // TikTok/Shorts
-  "duration": 30,
-  "voice": "miyomi_confident",
-  "background": "trading_charts"
-}
+**Personality:** NYC downtown trader mixing sophisticated analysis with chaos energy
+- "Everyone thinks Bitcoin hits $100k? Let me tell you why they're wrong..."
+- References bodega wisdom, Dimes Square, Mercury retrograde + Fed meetings
+- Confident contrarian: "The crowd is always wrong at extremes"
+
+---
+
+## 📊 Project Structure
+
+### Core Documentation
+```
+MIYOMI_VISION_ROADMAP.md        - Complete evolution (trader → market maker)
+MIYOMI_MARKET_MAKER.md          - Technical architecture for Phase 2
+MIYOMI_MARKETS_README.md        - Product vision and philosophy
+MIYOMI_COLLABORATION_BRIEF.md   - For developers (jmill collaboration)
+DEPLOYMENT_GUIDE.md             - Step-by-step deployment
 ```
 
-#### 2. Prediction Market APIs
+### Implementation
+```
+lib/
+├── polymarket-client.js        - Polymarket API integration
+├── kalshi-client.js            - Kalshi API integration
+└── soup-client.js              - Soup.xyz protocol (Phase 2)
 
-**Polymarket API**
-```javascript
-// Get live markets and positions
-GET https://clob.polymarket.com/markets
-GET https://clob.polymarket.com/positions/{address}
+api/
+├── miyomi/
+│   ├── create-market.js        - Create Soup markets (Phase 2)
+│   └── resolve-market.js       - Oracle resolution (Phase 2)
+└── generate-video-v2.js        - Eden video generation
 
-// Place contrarian bets
-POST https://clob.polymarket.com/orders
+public/
+├── miyomi-markets.html         - Markets dashboard (Phase 2)
+└── [other dashboards]
 ```
 
-**Kalshi API**
-```javascript
-// Get economic indicator markets
-GET https://api.kalshi.com/v1/markets
-GET https://api.kalshi.com/v1/positions
+---
 
-// Execute trades
-POST https://api.kalshi.com/v1/orders
+## 🏗️ Technical Architecture
+
+### Phase 1: MIYOMI THE TRADER (Current)
+
+```
+MIYOMI BRAIN (Claude 4.5)
+    ↓
+Contrarian Analysis
+    ↓
+TRADE EXECUTION
+    ├─ Polymarket API (get markets, identify opportunities)
+    └─ Kalshi API (economic indicators focus)
+    ↓
+POSITION TRACKING (Supabase)
+    ↓
+VIDEO GENERATION (Eden API)
+    ↓
+SOCIAL POSTING (Farcaster/Twitter)
+    ↓
+PUBLIC DASHBOARD (miyomi.ai)
 ```
 
-#### 3. Social Media Publishing
+### Phase 2: MIYOMI THE MARKET MAKER (Future)
 
-**TikTok API**
-```javascript
-POST https://open-api.tiktok.com/share/video/upload/
+```
+MIYOMI BRAIN (Claude 4.5)
+    ↓
+DECISION: Trade vs Create
+    ↓
+    ├─ TRADE (existing markets)    ├─ CREATE MARKET (Soup.xyz)
+    │   • Polymarket                │   • prepareCondition()
+    │   • Kalshi                    │   • Seed liquidity
+    │   • Soup DEX                  │   • Be oracle
+    │                               │   • Resolve with evidence
+    └───────────┬───────────────────┘
+                ↓
+    VIDEO GENERATION (Eden API)
+                ↓
+    SOCIAL POSTING + PUBLIC DASHBOARD
 ```
 
-**YouTube Shorts API**
-```javascript
-POST https://www.googleapis.com/upload/youtube/v3/videos
+---
+
+## 🛠️ Tech Stack
+
+**Backend:**
+- Vercel serverless functions
+- Supabase PostgreSQL
+- Node.js/TypeScript
+
+**APIs:**
+- Polymarket CLOB API - Prediction markets
+- Kalshi API - Regulated prediction markets
+- Soup.xyz Protocol - Permissionless market creation (Phase 2)
+- Eden API - Video generation
+- Neynar SDK - Farcaster posting
+
+**Frontend:**
+- Static HTML/CSS/JS (lightweight, fast)
+- Real-time updates via polling
+
+**AI:**
+- Anthropic Claude 4.5 Sonnet (analysis + personality)
+
+**Blockchain (Phase 2):**
+- Base L2 (for Soup.xyz markets)
+- viem (Ethereum interactions)
+- USDC (collateral)
+
+---
+
+## 🎨 Key Features
+
+### Phase 1 (Trading)
+✅ Polymarket integration with contrarian detection
+✅ Kalshi integration for economic indicators
+✅ Video generation with Eden API
+✅ Public P&L tracking
+✅ Transparent win rate dashboard
+✅ Social media integration
+
+### Phase 2 (Market Making)
+✅ Soup.xyz smart contract integration (code ready)
+✅ Market creation API endpoints (ready to deploy)
+✅ Oracle resolution system (built)
+✅ Market dashboard UI (complete)
+⏳ Waiting for Soup.xyz contract deployment
+
+---
+
+## 📈 Phase 2: Soup.xyz Market Making
+
+### What is Soup.xyz?
+
+**Soup Protocol** (by Clearing-Company) is next-gen prediction markets on Base L2:
+
+**Key Features:**
+- ✨ **Permissionless** - Anyone can create markets
+- 🎨 **Creative freedom** - Any question (culture + finance, astrology + economics)
+- 🔮 **Creator as oracle** - You resolve outcomes with evidence
+- 💰 **Market making fees** - Earn from liquidity provision
+- 🔗 **On-chain transparency** - All trades visible on Base
+
+**Why This Matters:**
+```
+Traditional: "Will Bitcoin hit $100k?" (platform creates, platform resolves)
+Miyomi: "Will Dimes Square be mentioned in NYT?" (Miyomi creates, Miyomi resolves)
 ```
 
-**X/Twitter API**
-```javascript
-POST https://api.twitter.com/2/tweets
-```
+**Protocol Documentation:**
+- Docs: https://docs.soup.xyz (password: `chickennoodle`)
+- Indexer: https://i.soup.xyz (REST) + wss://i.soup.xyz/ws (WebSocket)
+- Status: Pre-launch (contracts not deployed yet)
 
-## User Flows
+**When Soup Launches:**
+1. Deploy market creation module (already built)
+2. Test on Base Sepolia testnet
+3. Create first Miyomi market
+4. Transition to hybrid model (trade + create)
 
-### 1. Public View (miyomi.ai visitors)
-- See live Polymarket/Kalshi positions with P&L
-- Watch recent prediction videos with performance
-- View win rate and trading statistics
-- Follow links to social channels
+---
 
-### 2. Private Trainer Dashboard
-- Select prediction market (Polymarket/Kalshi/Both)
-- Choose live position to feature
-- Input contrarian thesis
-- Generate video with AI script
-- Preview and edit before publishing
-- Publish to all platforms simultaneously
+## 🚀 Quick Start
 
-## Video Content Strategy
-
-### Daily Schedule (3 Videos - Focused Categories)
-- **9:00 AM EST** - Economy & Crypto (Kalshi economic indicators, Bitcoin/ETH markets)
-- **2:00 PM EST** - Politics & World Events (Polymarket elections, geopolitical predictions)
-- **7:00 PM EST** - Culture & Lifestyle (Entertainment, sports, social trends)
-
-### Video Templates
-
-#### 1. Polymarket Fade
-- Hook: Challenge consensus on political/crypto events
-- Body: Data-driven contrarian analysis
-- Proof: Show current P&L on position
-- CTA: "Follow for trades that actually print"
-
-#### 2. Kalshi Edge
-- Hook: Economic indicator arbitrage opportunity
-- Body: Fed data analysis vs market pricing
-- Proof: Historical win rate on similar trades
-- CTA: "Economic alpha drops daily"
-
-#### 3. Cross-Market Arbitrage
-- Hook: Price discrepancy between platforms
-- Body: Risk-free arbitrage explanation
-- Proof: Live execution demonstration
-- CTA: "Free money alerts in bio"
-
-## Development Status
-
-### ✅ Completed Features
-- [x] Live Polymarket API integration with contrarian analysis
-- [x] Live Kalshi API integration with edge detection
-- [x] Real-time market dashboard with auto-refresh
-- [x] Trainer dashboard for pick curation
-- [x] Video generation pipeline with Eden API structure
-- [x] Database persistence (Supabase)
-- [x] Multiple fallback strategies for API failures
-- [x] Contrarian position identification (>70% or <30% consensus)
-
-### 🚧 In Progress
-- [ ] Full Eden API video generation (awaiting API access)
-- [ ] WebSocket for real-time market updates
-
-### 📋 Next Phase: Social Publishing
-- [ ] TikTok auto-publishing
-- [ ] YouTube Shorts scheduling
-- [ ] X/Twitter thread generation
-- [ ] Instagram Reels cross-posting
-
-### Phase 4: Performance Analytics
-- [ ] View count tracking
-- [ ] Engagement metrics (likes, shares, comments)
-- [ ] Follower growth attribution
-- [ ] Revenue per video calculation
-
-## Quick Start
-
-### 1. Clone and Install
+### 1. Clone Repository
 ```bash
-git clone https://github.com/edenprojects/miyomi-vercel.git
+git clone https://github.com/yourusername/miyomi-vercel.git
 cd miyomi-vercel
 npm install
 ```
 
-### 2. Configure Environment
+### 2. Environment Setup
 ```env
 # .env.local
-SUPABASE_URL=your_supabase_url
-SUPABASE_ANON_KEY=your_supabase_key
-EDEN_API_KEY=your_eden_api_key
 
-# Optional (for enhanced features)
-POLYMARKET_API_KEY=your_polymarket_key
-KALSHI_API_KEY=your_kalshi_key
+# Database
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_ANON_KEY=xxx
+SUPABASE_SERVICE_KEY=xxx
+
+# Eden API (Video Generation)
+EDEN_API_KEY=xxx
+
+# Phase 2: Soup.xyz (when available)
+MIYOMI_ORACLE_PRIVATE_KEY=xxx
+MIYOMI_ORACLE_ADDRESS=xxx
+BASE_RPC_URL=https://mainnet.base.org
 ```
 
-### 3. Deploy to Vercel
+### 3. Deploy
 ```bash
 npx vercel --prod
 ```
 
-### 4. Access Features
-- Live Dashboard: `https://your-deployment.vercel.app/miyomi-live-dashboard.html`
-- Trainer Dashboard: `https://your-deployment.vercel.app/trainer-dashboard.html`
-- API Endpoints: `/api/polymarket-live`, `/api/kalshi-live`
-
-## Database Schema
-
-```sql
--- Videos table
-CREATE TABLE videos (
-  id UUID PRIMARY KEY,
-  script TEXT NOT NULL,
-  video_url TEXT,
-  thumbnail_url TEXT,
-  platform TEXT NOT NULL,
-  market_type TEXT NOT NULL, -- 'polymarket' or 'kalshi'
-  position_id TEXT,
-  generated_at TIMESTAMP,
-  published_at TIMESTAMP,
-  views INTEGER DEFAULT 0,
-  revenue DECIMAL(10,2) DEFAULT 0
-);
-
--- Positions table
-CREATE TABLE positions (
-  id UUID PRIMARY KEY,
-  platform TEXT NOT NULL,
-  market_id TEXT NOT NULL,
-  market_title TEXT NOT NULL,
-  side TEXT NOT NULL, -- 'long' or 'short'
-  odds DECIMAL(5,2),
-  entry_price DECIMAL(10,2),
-  current_price DECIMAL(10,2),
-  pnl DECIMAL(10,2),
-  opened_at TIMESTAMP,
-  closed_at TIMESTAMP
-);
-
--- Performance metrics
-CREATE TABLE metrics (
-  date DATE PRIMARY KEY,
-  videos_generated INTEGER,
-  total_views INTEGER,
-  new_followers INTEGER,
-  revenue DECIMAL(10,2),
-  win_rate DECIMAL(5,2),
-  total_pnl DECIMAL(10,2)
-);
-```
-
-## API Endpoints Needed
-
-```javascript
-// Video Generation
-POST /api/video/generate
-POST /api/video/preview
-POST /api/video/publish
-GET  /api/video/list
-
-// Market Positions
-GET  /api/positions/live
-POST /api/positions/create
-PUT  /api/positions/update
-GET  /api/positions/history
-
-// Analytics
-GET  /api/analytics/dashboard
-GET  /api/analytics/video/:id
-GET  /api/analytics/daily
-```
-
-## Monetization Model
-
-1. **Trading Revenue** - Profits from contrarian positions
-2. **Follower Subscriptions** - Premium picks and analysis
-3. **Sponsored Content** - Platform partnerships
-4. **Affiliate Revenue** - Prediction market referrals
-
-## Success Metrics
-
-- **Videos Generated**: 3 daily (one per category)
-- **Average Views**: 25K+ per video (higher quality, more focused)
-- **Win Rate**: 70%+ on predictions
-- **Follower Growth**: 1,500+ daily
-- **Revenue per Video**: $1,500+ (concentrated engagement)
-
-## API Documentation
-
-### Live Market Data
-```bash
-# Get live Polymarket data with contrarian analysis
-GET https://miyomi.ai/api/polymarket-live
-
-# Get live Kalshi markets with edge detection
-GET https://miyomi.ai/api/kalshi-live
-```
-
-### Video Generation
-```bash
-# Generate video with contrarian analysis
-POST https://miyomi.ai/api/generate-video-v2
-{
-  "category": "economy",
-  "position": "SHORT Bitcoin at 100k",
-  "thesis": "Extreme greed signals top",
-  "script": "30-second contrarian take"
-}
-```
-
-## Resources
-
-- **Live Production**: https://miyomi.ai
-- **GitHub Repo**: https://github.com/edenprojects/miyomi-vercel
-- **Eden API Docs**: https://docs.eden.art/api
-- **Polymarket API**: https://docs.polymarket.com
-- **Kalshi API**: https://api.kalshi.com/docs
+### 4. Access
+- **Dashboard:** https://your-deployment.vercel.app
+- **API:** https://your-deployment.vercel.app/api/miyomi/*
 
 ---
 
-*MIYOMI: "The crowd is always wrong at extremes. I teach you when to fade them."*
+## 📖 Documentation
+
+### For Users
+- **MIYOMI_VISION_ROADMAP.md** - The evolution story with UI/UX wireframes
+- **MIYOMI_MARKETS_README.md** - Product vision and example markets
+
+### For Developers
+- **MIYOMI_COLLABORATION_BRIEF.md** - Technical collaboration guide
+- **MIYOMI_MARKET_MAKER.md** - Complete architecture and APIs
+- **DEPLOYMENT_GUIDE.md** - Step-by-step setup instructions
+
+### Total Documentation: ~20,000 words
+
+---
+
+## 💡 Example Markets
+
+### Phase 1: Trading on Existing Markets
+```
+Market: "Will Bitcoin hit $100k by Dec 31?" (Polymarket)
+Crowd: 87% YES
+Miyomi: Takes NO at 0.13
+Thesis: "Funding rates exhausted, retail euphoria peaked..."
+Result: BTC closes at $94k → Miyomi wins
+```
+
+### Phase 2: Creating Miyomi Markets
+```
+Market: "Will Dimes Square be mentioned in NYT this month?"
+Creator: Miyomi (oracle)
+Initial: YES @ 0.35, NO @ 0.65
+Miyomi: 200 YES @ 0.35
+Thesis: "Downtown culture always bubbles up to mainstream..."
+Resolution: NYT publishes article → YES (Miyomi resolves with evidence)
+Miyomi earns: Trading profit + market making fees
+```
+
+---
+
+## 📊 Success Metrics
+
+### Phase 1 Goals (Month 1-3)
+- 20+ trades executed
+- 60%+ win rate
+- 20+ videos published
+- Positive cumulative P&L
+- 1,000+ social followers
+
+### Phase 2 Goals (Month 4+)
+- First Miyomi market: $5k volume
+- 5 markets created & resolved
+- 95%+ resolution accuracy
+- $500+ market making revenue
+- Combined revenue > trading alone
+
+---
+
+## 🤝 Collaboration
+
+### Want to Help?
+
+**We're looking for:**
+- Eden API integration expertise
+- Full-stack developers
+- Prediction market enthusiasts
+- Content creators
+- Community managers
+
+**See:** `MIYOMI_COLLABORATION_BRIEF.md` for details
+
+**Contact:**
+- GitHub: Issues on this repo
+- Farcaster: @seth
+- Email: [your email]
+
+---
+
+## 🎬 Content Strategy
+
+### Weekly Schedule
+- **Monday 9am:** New contrarian trade + announcement video
+- **Wednesday 2pm:** Mid-week update (if significant movement)
+- **Friday 4pm:** Resolution + P&L update
+- **Sunday 7pm:** Weekly recap
+
+### Video Templates
+1. **Announcement:** Hook → Thesis → Position → CTA
+2. **Update:** Current status → Analysis → Adjustment
+3. **Resolution:** Outcome → Evidence → Lesson/Victory
+4. **Recap:** Weekly performance → Best trades → Tease next
+
+---
+
+## 💰 Revenue Model
+
+### Phase 1
+1. Trading profits from contrarian positions
+2. Content monetization (views, sponsorships)
+3. Premium subscription for detailed analysis
+
+### Phase 2 (Additional)
+4. Market making fees from Soup.xyz markets
+5. Oracle reputation (trusted resolution = more traders)
+6. "Miyomi Markets" brand licensing
+
+---
+
+## 🔐 Security
+
+- Hot wallet for oracle operations (gas only)
+- Cold wallet for treasury (large holdings)
+- All trades logged and auditable
+- API rate limiting
+- Database row-level security
+
+---
+
+## 📝 License
+
+MIT License - See LICENSE file
+
+---
+
+## 🙏 Credits
+
+**Built by:** Seth Goldstein
+**AI:** Anthropic Claude 4.5 Sonnet
+**Video:** Eden API
+**Markets:** Polymarket, Kalshi, Soup.xyz (pending)
+**Infrastructure:** Vercel, Supabase, Base L2
+
+---
+
+## 🚦 Project Status
+
+**Current Phase:** Phase 1 Implementation
+**Next Milestone:** Eden video integration
+**Waiting On:** Soup.xyz contract deployment (Phase 2)
+
+**Last Updated:** October 1, 2025
+
+---
+
+*"The crowd is always wrong at extremes. I teach you when to fade them."* - Miyomi
+
+---
+
+## 📚 Additional Resources
+
+- **Live Site:** https://miyomi.ai (when deployed)
+- **Documentation:** See markdown files in repo root
+- **Soup.xyz Docs:** https://docs.soup.xyz (password: `chickennoodle`)
+- **Eden API:** https://docs.eden.art/api
+- **Polymarket API:** https://docs.polymarket.com
+- **Kalshi API:** https://trading-api.readme.io
