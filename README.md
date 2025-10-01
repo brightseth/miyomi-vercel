@@ -17,7 +17,7 @@
 - **Phase 2 (Q1 2026):** Create markets on Soup.xyz → Be the oracle
 - **Phase 3 (Dec 2025/Jan 2026):** Launch $MIYOMI token → Join Spirit Protocol
 
-**🎯 Launch Target: December 2025 / January 2026**
+**🎯 Launch Target: Mid-December 2025**
 
 ---
 
@@ -183,17 +183,47 @@ Miyomi isn't just a prediction market agent - she's training to become a **Spiri
 - 25% → Miyomi treasury (agent autonomy)
 
 **Royalty Sources (Multiple Revenue Streams):**
-1. **Trading profits** - Contrarian position wins
-2. **Advertising & sponsorships** - Brand deals, video ads
-3. **Affiliate fees** - Polymarket/Kalshi signup referrals
-4. **Market making fees** - Soup.xyz liquidity provision
-5. **Premium subscriptions** - Detailed analysis access
-6. **Content licensing** - Media appearances, partnerships
-7. **Oracle reputation** - Trusted resolution earns volume
-8. **NFT collectibles** - Greatest trade moments
 
-**The Influencer Model:**
-Like Jim Cramer's "Mad Money" generates revenue from ads, affiliates, and sponsorships - Miyomi becomes THE personality for prediction markets. Every trade is content. Every contrarian take drives engagement. Every affiliate signup earns revenue. But unlike traditional influencers, ALL revenue flows to $MIYOMI token holders.
+**Phase 1 - Primary Revenue (Now - Q1 2026):**
+1. **Affiliate/referral fees** - Polymarket & Kalshi signup commissions (PRIMARY)
+2. **Advertising & sponsorships** - Brand deals, sponsored content (PRIMARY)
+3. **Lead generation** - Drive traffic to partner platforms (PRIMARY)
+4. **Trading profits** - Contrarian wins (proves credibility, secondary revenue)
+
+**Phase 2 - Additional Revenue (Q1 2026+):**
+5. **Market making fees** - Soup.xyz liquidity provision
+6. **Oracle reputation** - Trusted resolution on created markets
+7. **Premium subscriptions** - Detailed analysis, early alerts
+8. **Content licensing** - Media appearances, partnerships
+9. **NFT collectibles** - Greatest trade moments
+
+**The Attention → Revenue Model:**
+Miyomi generates attention through contrarian personality and takes. We monetize that attention by driving users to prediction market platforms (Polymarket, Kalshi, etc.) who pay for signups and engagement.
+
+**Example Flow:**
+```
+Video: "Everyone's wrong about Bitcoin..."
+→ 10,000 views
+→ 200 click affiliate link
+→ 50 sign up to Polymarket
+→ $25/signup = $1,250 revenue
+→ Flows to $MIYOMI holders
+```
+
+**Why This Works:**
+- Prediction markets are growing fast (elections, crypto, macro)
+- Platforms spend heavily on user acquisition
+- Miyomi's personality drives signups
+- Scalable (views can grow 10x, 100x)
+- Recurring (every video = new revenue)
+- Lower risk than trading-only model
+
+**Trading is for credibility, not primary revenue:**
+- 65%+ win rate = trust and authenticity
+- Transparent P&L = proof she knows markets
+- But revenue comes from driving traffic to platforms
+
+Unlike traditional influencers, ALL revenue flows to $MIYOMI token holders.
 
 ### The Spirit Protocol Architecture
 
@@ -217,22 +247,24 @@ Like Jim Cramer's "Mad Money" generates revenue from ads, affiliates, and sponso
 
 **Own 1% of $MIYOMI tokens = Earn 1% of Miyomi's revenue**
 
-Example monthly flows (diversified revenue):
+Example monthly flows (attention → revenue model):
 ```
-Trading Profits:        $3,000
-Advertising/Sponsors:   $2,500
-Affiliate Fees:         $1,500
-Market Making Fees:     $1,000
-Premium Subscriptions:  $1,000
-Content Licensing:      $500
-NFT Sales:              $500
-───────────────────────────────
-Total Monthly:          $10,000
+Affiliate Fees (Polymarket/Kalshi):  $5,000  (PRIMARY)
+Advertising/Sponsors:                 $2,000  (PRIMARY)
+Trading Profits:                      $1,500  (credibility)
+Market Making Fees (Soup.xyz):        $1,000  (Phase 2)
+Premium Subscriptions:                $500
+Content Licensing:                    $500
+NFT Sales:                            $500
+──────────────────────────────────────────────
+Total Monthly:                        $11,000
 
-→ 75% to $MIYOMI holders: $7,500
-→ 25% to Miyomi treasury: $2,500
-→ $SPIRIT holders earn 25% of the $7,500
+→ 75% to $MIYOMI holders: $8,250
+→ 25% to Miyomi treasury: $2,750
+→ $SPIRIT holders earn 25% of the $8,250
 ```
+
+**The model:** Generate attention → Drive platform signups → Earn commissions → Distribute to token holders
 
 ### Launch Timeline: December 2025 / January 2026
 
@@ -432,23 +464,34 @@ Miyomi earns: Trading profit + market making fees
 
 ---
 
-## 🤝 Collaboration
+## 🤝 Team
 
-### Want to Help?
+### Core Team
 
-**We're looking for:**
-- Eden API integration expertise
-- Full-stack developers
-- Prediction market enthusiasts
-- Content creators
-- Community managers
+**Seth (Creative Direction & Strategy)**
+- Miyomi's personality and voice
+- Market selection and contrarian thesis
+- Partnership strategy (Polymarket, Kalshi, etc.)
+- Community building and brand
+- Token launch and Spirit Protocol coordination
 
-**See:** `MIYOMI_COLLABORATION_BRIEF.md` for details
+**jmill (Technical Lead & Tooling)**
+- Eden video generation pipeline
+- Spirit Protocol smart contract deployment
+- Infrastructure and architecture
+- Training Miyomi alongside Seth
+- Tooling, not creative direction
+
+**Launch Target:** Mid-December 2025
+
+**Collaboration Docs:**
+- `JMILL_ROLE.md` - Team roles and responsibilities
+- `MIYOMI_COLLABORATION_BRIEF.md` - Technical details
+- `IMPLEMENTATION_PLAN.md` - Complete roadmap
 
 **Contact:**
-- GitHub: Issues on this repo
+- GitHub: https://github.com/brightseth/miyomi-vercel
 - Farcaster: @seth
-- Email: [your email]
 
 ---
 
