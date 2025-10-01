@@ -9,12 +9,16 @@
 
 ## Executive Summary
 
-**Miyomi** is an AI agent that trades prediction markets with a contrarian strategy, generates video content explaining her thesis, and will eventually create her own markets as an oracle. This is a 2-phase evolution:
+**Miyomi** is an AI agent that trades prediction markets with a contrarian strategy, generates video content explaining her thesis, and will eventually create her own markets as an oracle. She's launching as an **Eden Spirit** with real tokenomics and royalty distributions.
 
-- **Phase 1 (NOW):** Miyomi trades on Polymarket + Kalshi, proves the model
-- **Phase 2 (Q1 2026):** Miyomi creates markets on Soup.xyz as oracle
+**3-Phase Evolution:**
+- **Phase 1 (Oct-Nov 2025):** Trade on Polymarket + Kalshi, prove the model
+- **Phase 2 (Dec 2025/Jan 2026):** Launch $MIYOMI token, join Spirit Protocol
+- **Phase 3 (Q1 2026):** Create markets on Soup.xyz as oracle
 
-**Your role:** Help integrate Eden's video generation API and potentially advise on architecture/deployment.
+**Launch Target: December 2025 / January 2026**
+
+**Your role:** Help integrate Eden's video generation API and potentially advise on Spirit Protocol integration/architecture.
 
 ---
 
@@ -401,30 +405,38 @@ Phase 2: "I just created a market: Will Dimes Square be mentioned
 
 All located in `/Users/seth/miyomi-vercel/`:
 
-1. **MIYOMI_VISION_ROADMAP.md** (5,000 words)
-   - Complete evolution story (trader → market maker)
-   - UI/UX wireframes for both phases
+1. **MIYOMI_VISION_ROADMAP.md** (6,000 words)
+   - Complete evolution story (trader → Spirit → market maker)
+   - UI/UX wireframes for all three phases
    - Content strategy and examples
+   - Token launch timeline
 
-2. **MIYOMI_MARKET_MAKER.md** (8,000 words)
+2. **MIYOMI_SPIRIT_TOKENOMICS.md** (5,000 words)
+   - Complete token economics for $MIYOMI
+   - Spirit Protocol integration details
+   - Revenue → royalty distribution mechanics
+   - Launch requirements and timeline
+   - Example monthly flow scenarios
+
+3. **MIYOMI_MARKET_MAKER.md** (8,000 words)
    - Technical architecture for Soup.xyz integration
    - Database schemas
    - API specifications
    - Security considerations
 
-3. **MIYOMI_MARKETS_README.md** (4,000 words)
+4. **MIYOMI_MARKETS_README.md** (4,000 words)
    - Product vision and philosophy
    - Example markets
    - Revenue model
    - Launch roadmap
 
-4. **DEPLOYMENT_GUIDE.md** (3,000 words)
+5. **DEPLOYMENT_GUIDE.md** (3,000 words)
    - Step-by-step setup instructions
    - Environment variables
    - Testing procedures
    - Troubleshooting
 
-**Total:** ~20,000 words of comprehensive documentation
+**Total:** ~26,000 words of comprehensive documentation
 
 ---
 
@@ -438,10 +450,12 @@ All located in `/Users/seth/miyomi-vercel/`:
 5. Any rate limits or cost considerations?
 
 ### Strategic Questions
-1. Does this use case align with Eden's vision?
-2. Is there an existing agent I should learn from?
-3. Should Miyomi be in Eden's agent registry?
-4. Any features/capabilities I'm not aware of?
+1. Does this use case align with Eden's Spirit Protocol vision?
+2. Is there an existing Spirit I should learn from?
+3. Should Miyomi be in Eden's Spirit registry?
+4. Any features/capabilities of the Spirit Protocol I'm not aware of?
+5. How does royalty distribution work for other Spirits?
+6. What's the graduation process from agent → Spirit?
 
 ### Collaboration Questions
 1. Which collaboration model interests you?
@@ -461,10 +475,12 @@ All located in `/Users/seth/miyomi-vercel/`:
 5. **Portfolio piece** - Unique project to show off
 
 ### For Eden
-1. **Agent use case** - Demonstrates video generation in novel way
-2. **Content creation** - 3+ videos per week, ongoing
-3. **Market expansion** - Prediction market community exposure
-4. **Revenue potential** - Subscription model when it scales
+1. **Spirit Protocol showcase** - First prediction market Spirit with proven revenue
+2. **Agent use case** - Demonstrates video generation in novel way
+3. **Content creation** - 3+ videos per week, ongoing
+4. **Market expansion** - Prediction market community exposure
+5. **Revenue validation** - Real royalty distributions to $MIYOMI holders
+6. **Token launch precedent** - Template for future Spirit graduations
 
 ### For Me (Seth)
 1. **Video expertise** - I don't know Eden API well, you do

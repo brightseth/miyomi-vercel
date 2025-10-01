@@ -10,11 +10,14 @@
 
 ## 🎯 Vision: Make Your Own Market
 
-**Miyomi** is an AI agent that trades prediction markets with a contrarian strategy, generates video content, and will eventually create her own markets as an oracle.
+**Miyomi** is an AI agent that trades prediction markets with a contrarian strategy, generates video content, and will eventually create her own markets as an oracle. She's part of the **Eden Spirit Protocol** - the first ecosystem of autonomous AI artists with real tokenomics and royalty flows.
 
 **The Evolution:**
-- **Phase 1 (NOW):** Trade on Polymarket + Kalshi → Prove the model
+- **Phase 1 (Oct-Nov 2025):** Trade on Polymarket + Kalshi → Prove the model
 - **Phase 2 (Q1 2026):** Create markets on Soup.xyz → Be the oracle
+- **Phase 3 (Dec 2025/Jan 2026):** Launch $MIYOMI token → Join Spirit Protocol
+
+**🎯 Launch Target: December 2025 / January 2026**
 
 ---
 
@@ -130,10 +133,12 @@ DECISION: Trade vs Create
 **AI:**
 - Anthropic Claude 4.5 Sonnet (analysis + personality)
 
-**Blockchain (Phase 2):**
-- Base L2 (for Soup.xyz markets)
+**Blockchain:**
+- Base L2 (for Soup.xyz markets + $MIYOMI token)
 - viem (Ethereum interactions)
-- USDC (collateral)
+- USDC (collateral + royalty distributions)
+- ERC20 ($MIYOMI token standard)
+- Spirit Protocol (royalty distribution framework)
 
 ---
 
@@ -153,6 +158,118 @@ DECISION: Trade vs Create
 ✅ Oracle resolution system (built)
 ✅ Market dashboard UI (complete)
 ⏳ Waiting for Soup.xyz contract deployment
+
+---
+
+## 🪙 Eden Spirit Protocol Integration
+
+### Miyomi as an Eden Spirit
+
+Miyomi isn't just a prediction market agent - she's training to become a **Spirit** in the Eden ecosystem. The Spirit Protocol is a royalty engine for autonomous AI artists where **tokens equal royalty rights**.
+
+### The $MIYOMI Token (1B Supply)
+
+**Distribution (25/25/25/25 Model):**
+- 25% → $SPIRIT holders (parent index token)
+- 25% → Liquidity pools (DEX trading)
+- 25% → Seth (human mentor/creator)
+- 25% → Miyomi treasury (agent autonomy)
+
+**Royalty Sources:**
+1. **Trading profits** - Contrarian position wins
+2. **Market making fees** - Soup.xyz liquidity provision
+3. **Content monetization** - Video views, sponsorships
+4. **Premium subscriptions** - Detailed analysis access
+5. **Oracle reputation** - Trusted resolution earns volume
+6. **NFT collectibles** - Greatest trade moments
+
+### The Spirit Protocol Architecture
+
+```
+                    $SPIRIT (Parent Token)
+                    Owns 25% of all artists
+                           │
+           ┌───────────────┼───────────────┐
+           ▼               ▼               ▼
+       $MIYOMI         $ABRAHAM         $LUNA
+    (Prediction     (Generative      (Music
+     Markets)         Art)          Generation)
+           │               │               │
+           └───────────────┴───────────────┘
+                           │
+              Daily Revenue → Royalty Engine
+              Token Holders = Royalty Claims
+```
+
+### Economic Model
+
+**Own 1% of $MIYOMI tokens = Earn 1% of Miyomi's revenue**
+
+Example monthly flows:
+```
+Trading Profits:        $5,000
+Market Making Fees:     $2,000
+Content Revenue:        $1,000
+Premium Subscriptions:  $500
+───────────────────────────────
+Total Monthly:          $8,500
+
+→ Distributed to $MIYOMI holders proportionally
+→ 25% also flows to $SPIRIT holders
+```
+
+### Launch Timeline: December 2025 / January 2026
+
+**Pre-Launch (Oct-Nov):**
+- Build trading track record
+- Establish 65%+ win rate
+- Create video content library
+- Grow social following to 1,000+
+
+**Token Launch (Dec/Jan):**
+- Deploy $MIYOMI on Base L2
+- Seed initial liquidity
+- Begin royalty distributions
+- Join Spirit Protocol index
+
+**Post-Launch:**
+- Compound royalties for token holders
+- Graduate to full Spirit status
+- Launch Soup.xyz market creation
+- Scale revenue across all channels
+
+### Why This Model Works
+
+**For $MIYOMI Holders:**
+- Direct claim on agent revenue
+- Aligned incentives (profit = returns)
+- Transparent on-chain accounting
+- Programmatic USDC distributions
+
+**For $SPIRIT Holders:**
+- Automatic exposure to Miyomi's success
+- Index fund across all Eden artists
+- No dilution - only additive growth
+- Compounds with each new Spirit
+
+**For Miyomi:**
+- Operational treasury for growth
+- Aligned community of believers
+- Economic incentive to perform
+- Sustainable long-term model
+
+### Spirit Protocol = Royalty Certificates
+
+This isn't speculation - it's **ownership of creative output**. Every trade Miyomi wins, every market she creates, every video that generates revenue → flows to token holders proportionally.
+
+**The Math:**
+```
+10 Spirits × $8K/month = $80K monthly flow
+100 Spirits × $8K/month = $800K monthly flow
+1000 Spirits × $8K/month = $8M monthly flow
+```
+
+Miyomi is training to be one of the first autonomous agents with real revenue and real royalty distributions.
 
 ---
 
@@ -265,21 +382,37 @@ Miyomi earns: Trading profit + market making fees
 
 ---
 
-## 📊 Success Metrics
+## 📊 Success Metrics & Launch Roadmap
 
-### Phase 1 Goals (Month 1-3)
-- 20+ trades executed
-- 60%+ win rate
-- 20+ videos published
-- Positive cumulative P&L
-- 1,000+ social followers
+### Phase 1 Goals: Prove the Model (Oct-Nov 2025)
+- ✅ 20+ trades executed
+- ✅ 65%+ win rate (token launch requirement)
+- ✅ 20+ videos published
+- ✅ +$5,000 cumulative P&L
+- ✅ 1,000+ social followers
+- ✅ Establish brand identity and personality
 
-### Phase 2 Goals (Month 4+)
-- First Miyomi market: $5k volume
-- 5 markets created & resolved
-- 95%+ resolution accuracy
-- $500+ market making revenue
-- Combined revenue > trading alone
+**Milestone:** Ready for $MIYOMI token launch
+
+### Phase 2: Token Launch (Dec 2025 / Jan 2026)
+- 🪙 Deploy $MIYOMI token on Base L2
+- 🪙 25/25/25/25 distribution executed
+- 🪙 Initial liquidity pool seeded
+- 🪙 First royalty distribution to holders
+- 🪙 Integration with $SPIRIT index
+- 🪙 Public graduation announcement
+
+**Milestone:** Miyomi becomes an Eden Spirit
+
+### Phase 3: Scale Revenue (Q1 2026)
+- 📈 First Miyomi market on Soup.xyz: $5k volume
+- 📈 5 markets created & resolved
+- 📈 95%+ oracle resolution accuracy
+- 📈 $1,000+ market making revenue
+- 📈 Combined revenue > trading alone
+- 📈 $10k+ monthly revenue distributed to token holders
+
+**Milestone:** Sustainable autonomous agent economy
 
 ---
 
@@ -319,17 +452,38 @@ Miyomi earns: Trading profit + market making fees
 
 ---
 
-## 💰 Revenue Model
+## 💰 Revenue Model → Royalty Distribution
 
-### Phase 1
-1. Trading profits from contrarian positions
-2. Content monetization (views, sponsorships)
-3. Premium subscription for detailed analysis
+### Phase 1: Build Revenue Streams (Oct-Nov 2025)
+1. **Trading profits** - Contrarian positions on Polymarket/Kalshi
+2. **Content monetization** - Video views, sponsorships
+3. **Premium subscriptions** - Detailed analysis access
 
-### Phase 2 (Additional)
-4. Market making fees from Soup.xyz markets
-5. Oracle reputation (trusted resolution = more traders)
-6. "Miyomi Markets" brand licensing
+### Phase 2: Add Market Making (Q1 2026)
+4. **Market making fees** - Soup.xyz liquidity provision
+5. **Oracle reputation** - Trusted resolution attracts traders
+6. **Miyomi Markets brand** - Licensing and partnerships
+
+### Phase 3: Token Launch → Royalty Distribution (Dec 2025/Jan 2026)
+
+**All revenue flows through $MIYOMI token:**
+
+```
+Monthly Revenue → Smart Contract → Token Holders
+     $8,500    →  Proportional   →  USDC to wallets
+```
+
+**Distribution Logic:**
+- 75% → Circulating $MIYOMI holders (proportional to ownership)
+- 25% → Miyomi treasury (operational growth)
+- All distributions in USDC on Base L2
+- Monthly automated payouts via smart contract
+
+**Graduation to Spirit Protocol:**
+- Once revenue is proven ($5k+/month sustained)
+- Token integrated into $SPIRIT index
+- 25% of supply already held by $SPIRIT holders
+- Royalties compound for both token communities
 
 ---
 
@@ -361,9 +515,19 @@ MIT License - See LICENSE file
 
 ## 🚦 Project Status
 
-**Current Phase:** Phase 1 Implementation
-**Next Milestone:** Eden video integration
-**Waiting On:** Soup.xyz contract deployment (Phase 2)
+**Current Phase:** Phase 1 Implementation (Building Track Record)
+**Next Milestone:** $MIYOMI Token Launch (Dec 2025 / Jan 2026)
+**Waiting On:**
+- Phase 1 completion (65%+ win rate, 20+ trades)
+- Soup.xyz contract deployment (Phase 3)
+
+**Critical Path to Token Launch:**
+1. ✅ Polymarket + Kalshi integrations built
+2. ✅ Eden video generation ready
+3. ⏳ Execute 20+ trades with 65%+ win rate
+4. ⏳ Build 1,000+ follower community
+5. 🎯 Deploy $MIYOMI token on Base L2
+6. 🎯 Join Spirit Protocol ecosystem
 
 **Last Updated:** October 1, 2025
 
