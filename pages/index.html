@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI - Contrarian Prediction Market Intelligence</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .header {
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 48px;
+      font-weight: 300;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .header .subtitle {
+      font-size: 16px;
+      color: #888;
+      font-weight: 300;
+    }
+
+    .stats {
+      max-width: 1200px;
+      margin: 0 auto 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .stat-card {
+      background: #111;
+      border: 1px solid #222;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-card .value {
+      font-size: 32px;
+      font-weight: 300;
+      margin-bottom: 5px;
+    }
+
+    .stat-card .label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .opportunities {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .opportunity {
+      background: #111;
+      border: 1px solid #222;
+      padding: 25px;
+      margin-bottom: 15px;
+      transition: border-color 0.2s;
+    }
+
+    .opportunity:hover {
+      border-color: #444;
+    }
+
+    .opportunity .platform {
+      display: inline-block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .opportunity .question {
+      font-size: 20px;
+      font-weight: 300;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+
+    .opportunity .consensus {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .opportunity .consensus-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .opportunity .consensus-item .label {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .opportunity .consensus-item .value {
+      font-size: 18px;
+      font-weight: 300;
+    }
+
+    .opportunity .thesis {
+      background: #0a0a0a;
+      border-left: 2px solid #fff;
+      padding: 15px;
+      margin: 15px 0;
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .opportunity .meta {
+      display: flex;
+      gap: 15px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .opportunity .meta-item {
+      display: flex;
+      gap: 5px;
+    }
+
+    .opportunity .meta-item .label {
+      color: #444;
+    }
+
+    .opportunity a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      transition: border-color 0.2s;
+    }
+
+    .opportunity a:hover {
+      border-color: #fff;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .error {
+      background: #2a0000;
+      border: 1px solid #500;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      text-align: center;
+      color: #ff6666;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 8px;
+    }
+
+    .tag.yes { border-color: #0f5; color: #0f5; }
+    .tag.no { border-color: #f50; color: #f50; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>MIYOMI</h1>
+    <div class="subtitle">Contrarian Intelligence for Prediction Markets</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="value" id="stat-total">-</div>
+      <div class="label">Opportunities</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" id="stat-avg-edge">-</div>
+      <div class="label">Avg Edge</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" id="stat-volume">-</div>
+      <div class="label">Total Volume</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" id="stat-updated">-</div>
+      <div class="label">Last Updated</div>
+    </div>
+  </div>
+
+  <div class="opportunities" id="opportunities">
+    <div class="loading">Loading opportunities...</div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const supabase = createClient(
+      'https://aeflqgydcrlszgbpduyk.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFlZmxxZ3lkY3Jsc3pnYnBkdXlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwMzA4ODcsImV4cCI6MjA3MzYwNjg4N30.DZh-LX5fD5Lz0-bvoc13-UqZvHEI8Ir4UDxaBMG1uv8'
+    );
+
+    async function loadOpportunities() {
+      try {
+        const { data, error } = await supabase
+          .from('opportunities')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        if (data.length === 0) {
+          document.getElementById('opportunities').innerHTML = `
+            <div class="loading">No opportunities found yet. Run the scanner to populate.</div>
+          `;
+          return;
+        }
+
+        // Update stats
+        const totalVolume = data.reduce((sum, o) => sum + (o.volume || 0), 0);
+        const avgEdge = data.reduce((sum, o) => sum + (o.edge || 0), 0) / data.length;
+        const latestUpdate = new Date(data[0].created_at);
+        const timeAgo = getTimeAgo(latestUpdate);
+
+        document.getElementById('stat-total').textContent = data.length;
+        document.getElementById('stat-avg-edge').textContent = `${(avgEdge * 100).toFixed(1)}%`;
+        document.getElementById('stat-volume').textContent = `$${(totalVolume / 1000).toFixed(0)}k`;
+        document.getElementById('stat-updated').textContent = timeAgo;
+
+        // Render opportunities
+        const html = data.map(opp => `
+          <div class="opportunity">
+            <div class="platform">${opp.platform}</div>
+            <div class="question">${opp.question}</div>
+
+            <div class="consensus">
+              <div class="consensus-item">
+                <div class="label">Market Consensus</div>
+                <div class="value">
+                  <span class="tag ${opp.consensus.toLowerCase()}">${opp.consensus}</span>
+                  ${((opp.consensus === 'YES' ? opp.yes_price : opp.no_price) * 100).toFixed(1)}%
+                </div>
+              </div>
+              <div class="consensus-item">
+                <div class="label">Miyomi's Play</div>
+                <div class="value">
+                  <span class="tag ${opp.contrarian.toLowerCase()}">${opp.contrarian}</span>
+                  ${opp.recommended_size ? `$${opp.recommended_size.toFixed(0)}` : 'TBD'}
+                </div>
+              </div>
+              <div class="consensus-item">
+                <div class="label">Edge</div>
+                <div class="value">${(opp.edge * 100).toFixed(1)}%</div>
+              </div>
+            </div>
+
+            ${opp.miyomi_thesis ? `
+              <div class="thesis">${opp.miyomi_thesis}</div>
+            ` : ''}
+
+            <div class="meta">
+              ${opp.liquidity ? `
+                <div class="meta-item">
+                  <span class="label">Liquidity:</span>
+                  <span>$${opp.liquidity.toLocaleString()}</span>
+                </div>
+              ` : ''}
+              ${opp.volume ? `
+                <div class="meta-item">
+                  <span class="label">Volume:</span>
+                  <span>$${opp.volume.toLocaleString()}</span>
+                </div>
+              ` : ''}
+              ${opp.url ? `
+                <div class="meta-item">
+                  <a href="${opp.url}" target="_blank">View on ${opp.platform}</a>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `).join('');
+
+        document.getElementById('opportunities').innerHTML = html;
+
+      } catch (error) {
+        console.error('Error loading opportunities:', error);
+        document.getElementById('opportunities').innerHTML = `
+          <div class="error">Failed to load opportunities: ${error.message}</div>
+        `;
+      }
+    }
+
+    function getTimeAgo(date) {
+      const seconds = Math.floor((new Date() - date) / 1000);
+      if (seconds < 60) return `${seconds}s ago`;
+      const minutes = Math.floor(seconds / 60);
+      if (minutes < 60) return `${minutes}m ago`;
+      const hours = Math.floor(minutes / 60);
+      if (hours < 24) return `${hours}h ago`;
+      const days = Math.floor(hours / 24);
+      return `${days}d ago`;
+    }
+
+    loadOpportunities();
+    // Reload every 30 seconds
+    setInterval(loadOpportunities, 30000);
+  </script>
+</body>
+</html>
