@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miyomi Trainer Onboarding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a1a1a;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Password Gate */
+        #password-gate {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .password-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .password-card h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+
+        .password-card p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .password-card input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: border 0.3s;
+        }
+
+        .password-card input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .password-card button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .password-card button:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            color: #e53e3e;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Main Content */
+        #main-content {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        header .tagline {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .tldr {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .tldr h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tldr ul {
+            list-style: none;
+            font-size: 1.1rem;
+        }
+
+        .tldr ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .tldr ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .workflow-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .workflow-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .workflow-card ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .workflow-card ul li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        .token-box {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .token-box .big-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .token-box .description {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 2rem 0;
+        }
+
+        .timeline:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: -2.4rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+
+        .timeline-item h4 {
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item ul {
+            color: #555;
+        }
+
+        .highlight-box {
+            background: #f0f9ff;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-card .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-section h2 {
+            color: white;
+            border: none;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: #1a1a1a;
+            color: #f0f0f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .workflow {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Gate -->
+    <div id="password-gate">
+        <div class="password-card">
+            <h1>🔒 Miyomi Trainer</h1>
+            <p>Enter password to access onboarding</p>
+            <input type="password" id="password-input" placeholder="Password" autocomplete="off">
+            <button onclick="checkPassword()">Access Onboarding</button>
+            <p class="error-message" id="error-message">Incorrect password. Try again.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <header>
+            <h1>🎯 Miyomi Trainer Onboarding</h1>
+            <p class="tagline">Welcome to the Prediction Market Oracle Team</p>
+            <p style="color: #999; font-size: 0.9rem;">Confidential • For: Trainer Role • October 2025</p>
+        </header>
+
+        <!-- TL;DR Section -->
+        <div class="tldr">
+            <h2>TL;DR - The Opportunity</h2>
+            <ul>
+                <li><strong>Role:</strong> Trainer for Miyomi (prediction market oracle)</li>
+                <li><strong>Time:</strong> 15-30 minutes/day</li>
+                <li><strong>Compensation:</strong> 75M $MIYOMI tokens (30% of team allocation)</li>
+                <li><strong>Timeline:</strong> 10 weeks to token launch (Dec 16, 2025)</li>
+                <li><strong>Your Edge:</strong> Prediction market expertise is THE critical asset</li>
+            </ul>
+        </div>
+
+        <!-- Who Is Miyomi -->
+        <div class="section">
+            <h2>Who Is Miyomi?</h2>
+            <p><strong>Miyomi = 22-year-old prediction market oracle who creates viral content about contrarian opportunities.</strong></p>
+
+            <div class="highlight-box">
+                <p><strong>She's NOT a trader executing positions.</strong> She's an <strong>oracle/influencer</strong> (think Maria Bartiromo meets Gen-Z prediction markets) who:</p>
+                <ul>
+                    <li>Highlights interesting contrarian market opportunities</li>
+                    <li>Creates 30-60 sec TikTok videos with "Markets whisper..." mystique</li>
+                    <li>Builds audience through prediction accuracy + personality</li>
+                    <li>Revenue from attention (affiliate links + subscriptions), not trading P&L</li>
+                </ul>
+            </div>
+
+            <h3>Her Voice</h3>
+            <ul>
+                <li>Fast-talking NYC energy (ESTP personality)</li>
+                <li>Gen-Z slang mixed with probabilistic analysis</li>
+                <li>"Markets whisper to those who listen..." catchphrase</li>
+                <li>Contrarian but not cynical - confident but not arrogant</li>
+            </ul>
+
+            <h3>Core Thesis</h3>
+            <p><strong>"The crowd is always wrong at extremes"</strong></p>
+            <ul>
+                <li>Identifies markets with >70% or <30% consensus</li>
+                <li>Highlights asymmetric risk/reward opportunities</li>
+                <li>Tracks accuracy publicly (target: 65%+ correct)</li>
+            </ul>
+        </div>
+
+        <!-- What You Do -->
+        <div class="section">
+            <h2>What You Do (15-30 min/day)</h2>
+
+            <div class="workflow">
+                <div class="workflow-card">
+                    <h4>🌅 Morning (10 min)</h4>
+                    <p><strong>9:00 AM - Review AI Brief</strong></p>
+                    <ul>
+                        <li>AI scans Polymarket/Kalshi overnight</li>
+                        <li>Presents 3 contrarian opportunities</li>
+                        <li>You select most interesting one</li>
+                        <li>Edit script if needed (AI does first draft)</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-card">
+                    <h4>☀️ Midday (10 min)</h4>
+                    <p><strong>11:00 AM - Approve & Post</strong></p>
+                    <ul>
+                        <li>Review generated video (Eden AI + audio)</li>
+                        <li>Approve or request regeneration</li>
+                        <li>Post to TikTok with affiliate link</li>
+                        <li>Cross-post to Twitter/Farcaster</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-card">
+                    <h4>🌆 Afternoon (10 min)</h4>
+                    <p><strong>2:00 PM - Engage</strong></p>
+                    <ul>
+                        <li>Respond to comments</li>
+                        <li>Track engagement metrics</li>
+                        <li>Note what's working for next day</li>
+                        <li>Quick update to team in async chat</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Why Your Expertise Matters</h3>
+                <p><strong>AI can scan markets. Only YOU can:</strong></p>
+                <ul>
+                    <li>Validate which opportunities are real vs noise</li>
+                    <li>Understand resolution edge cases</li>
+                    <li>Know what gets volume vs what's just hype</li>
+                    <li>Spot when crowd is truly wrong vs temporarily wrong</li>
+                    <li>Bring credibility from actual PM trading experience</li>
+                </ul>
+                <p style="margin-top: 1rem;"><strong>Without you:</strong> Miyomi is just another bot posting predictions<br>
+                <strong>With you:</strong> Miyomi is a credible oracle with expert curation</p>
+            </div>
+        </div>
+
+        <!-- Compensation -->
+        <div class="section">
+            <h2>How You Get Paid</h2>
+
+            <div class="token-box">
+                <div class="big-number">75M $MIYOMI</div>
+                <div class="description">30% of Team Allocation • Equal to Dev</div>
+            </div>
+
+            <h3>Token Allocation Breakdown</h3>
+            <pre>$MIYOMI Token (1 billion total supply):
+├─ 25% → $SPIRIT holders (Spirit Protocol graduation)
+├─ 25% → Liquidity pool
+├─ 25% → Team (250M tokens):
+│        ├─ 40% Founder (100M) - Vision, IP, strategy
+│        ├─ 30% Dev (75M) - Technical platform
+│        └─ 30% Trainer (75M) - Daily ops + PM expertise ← YOU
+└─ 25% → Miyomi treasury (agent allocation)</pre>
+
+            <h3>Why 30% (Equal to Dev)?</h3>
+            <ul>
+                <li>Your Polymarket/prediction market expertise = as valuable as building the platform</li>
+                <li>Daily operational commitment = ongoing value creation</li>
+                <li>Content curation = where the magic happens</li>
+                <li>Team recognizes specialized PM knowledge as critical</li>
+            </ul>
+
+            <h3>How Royalties Work (Spirit Protocol)</h3>
+            <ol>
+                <li>Revenue (affiliates, subs, etc.) → RevenueRouter</li>
+                <li>Swapped to $SPIRIT via Uniswap</li>
+                <li>Distributed weekly via Superfluid Money Streaming</li>
+                <li>To pledgers of $MIYOMI token</li>
+            </ol>
+
+            <div class="highlight-box">
+                <h4>Your Tokens Auto-Pledged 12 Months:</h4>
+                <ul>
+                    <li><strong>Locked:</strong> Can't sell for 12 months</li>
+                    <li><strong>Benefit:</strong> 12× royalty multiplier</li>
+                    <li><strong>Earnings:</strong> 76-83% of revenue initially (team's weighted share)</li>
+                    <li><strong>After 12 months:</strong> Re-pledge for 24×-36× multiplier OR sell</li>
+                </ul>
+            </div>
+
+            <h3>Example Financial Projection (Month 18)</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="number">$3,000</div>
+                    <div class="label">Miyomi Monthly Revenue</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">76.9%</div>
+                    <div class="label">Team Share (Weighted)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">$2,307</div>
+                    <div class="label">Team Monthly Royalties</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">$692</div>
+                    <div class="label">Your Share (30%)</div>
+                </div>
+            </div>
+            <p style="text-align: center; color: #666; margin-top: 1rem;">Plus: Token appreciation if Miyomi succeeds + Optional trainer fee ($1k-2k/mo from treasury once revenue permits)</p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="section">
+            <h2>Timeline: 10 Weeks to Token Launch</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Week 1 (Oct 7-13): Foundation</h4>
+                    <ul>
+                        <li>Review character docs (Miyomi's personality)</li>
+                        <li>Test trainer dashboard once Dev builds it</li>
+                        <li>Understand workflow and tools</li>
+                        <li>Give feedback on UX</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Ready to start daily operations</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 2-3 (Oct 14-27): First Videos</h4>
+                    <ul>
+                        <li>Create first 5-10 oracle videos</li>
+                        <li>Find contrarian opportunities on Polymarket</li>
+                        <li>Test what content works</li>
+                        <li>Track initial metrics</li>
+                    </ul>
+                    <p><strong>Target:</strong> 200+ followers, first affiliate clicks</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 4-6 (Oct 28 - Nov 17): Growth</h4>
+                    <ul>
+                        <li>Continue 3-4 videos per week (every other day)</li>
+                        <li>Engage with growing community</li>
+                        <li>Refine content based on performance</li>
+                        <li>Hit 500+ followers</li>
+                    </ul>
+                    <p><strong>Target:</strong> Consistent engagement rate (10%+), growing audience</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 7-10 (Nov 18 - Dec 15): Launch Prep</h4>
+                    <ul>
+                        <li>Scale to 25-30+ total videos</li>
+                        <li>Build to 1,000+ followers</li>
+                        <li>Validate affiliate revenue model</li>
+                        <li>Prepare for token launch</li>
+                    </ul>
+                    <p><strong>Target:</strong> Economic viability proven, ready for Spirit Academy</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 11 (Dec 16, 2025): 🚀 Token Launch</h4>
+                    <ul>
+                        <li>$MIYOMI minted via Spirit Protocol</li>
+                        <li>Your 75M tokens distributed</li>
+                        <li>Auto-pledged for 12 months</li>
+                        <li>Royalty income starts flowing</li>
+                    </ul>
+                    <p><strong>Milestone:</strong> Miyomi officially graduated</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Metrics -->
+        <div class="section">
+            <h2>Success Metrics</h2>
+
+            <h3>Month 1 Goals</h3>
+            <ul>
+                <li>✓ 10 oracle videos posted</li>
+                <li>✓ 200+ followers</li>
+                <li>✓ First $10 affiliate revenue</li>
+                <li>✓ Daily workflow established</li>
+            </ul>
+
+            <h3>Month 2 Goals</h3>
+            <ul>
+                <li>✓ 20 total videos</li>
+                <li>✓ 500+ followers</li>
+                <li>✓ 10+ premium subscribers (if launched)</li>
+                <li>✓ Dome integration working</li>
+            </ul>
+
+            <h3>Month 3 Goals (Token Launch)</h3>
+            <ul>
+                <li>✓ 30+ total videos</li>
+                <li>✓ 1,000+ followers</li>
+                <li>✓ $500+ MRR (affiliates + subs)</li>
+                <li>✓ 65%+ prediction accuracy</li>
+                <li>✓ Token launch ready</li>
+            </ul>
+
+            <h3>Your Personal KPIs</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="number">10%+</div>
+                    <div class="label">Engagement Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">65%+</div>
+                    <div class="label">Prediction Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">5%+</div>
+                    <div class="label">Affiliate CTR</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">+50-100</div>
+                    <div class="label">Followers/Week</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Structure -->
+        <div class="section">
+            <h2>Team Structure</h2>
+
+            <h3>Three-Person Team:</h3>
+
+            <div class="workflow">
+                <div class="workflow-card">
+                    <h4>Founder (Creator/Producer)</h4>
+                    <ul>
+                        <li>Vision and strategy</li>
+                        <li>Character development</li>
+                        <li>Business decisions</li>
+                        <li>Partnership approvals</li>
+                        <li>Token launch planning</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-card">
+                    <h4>Dev (Full Stack Developer)</h4>
+                    <ul>
+                        <li>Builds entire platform (Next.js)</li>
+                        <li>API integrations (Eden, Dome, Polymarket)</li>
+                        <li>Deployment and scaling</li>
+                        <li>Technical optimization</li>
+                        <li>Has Eden insider access</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-card" style="border-left-color: #ffd700;">
+                    <h4>Trainer (You - Daily Operations)</h4>
+                    <ul>
+                        <li>Market opportunity selection</li>
+                        <li>Content curation and quality</li>
+                        <li>Community engagement</li>
+                        <li>Miyomi's voice consistency</li>
+                        <li>Performance tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Communication</h3>
+            <ul>
+                <li><strong>Daily:</strong> Async updates in team chat</li>
+                <li><strong>Weekly:</strong> 30 min sync call</li>
+                <li><strong>Tools:</strong> Discord/Telegram + GitHub</li>
+            </ul>
+        </div>
+
+        <!-- Competitive Advantages -->
+        <div class="section">
+            <h2>Why This Is Unique</h2>
+
+            <h3>Competitive Advantages</h3>
+
+            <div class="highlight-box">
+                <h4>1. Dome API Intelligence (Proprietary)</h4>
+                <ul>
+                    <li>Order flow analysis</li>
+                    <li>Smart money tracking</li>
+                    <li>Momentum exhaustion signals</li>
+                    <li><strong>No one else has this data publicly</strong></li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>2. Soup.xyz Market Creation (Unique)</h4>
+                <ul>
+                    <li>Create custom markets</li>
+                    <li>Control resolution as oracle</li>
+                    <li>Market-making revenue potential</li>
+                    <li><strong>Platform independence</strong></li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>3. Your Expertise (Critical)</h4>
+                <ul>
+                    <li>Real PM trading experience</li>
+                    <li>Industry insider knowledge</li>
+                    <li>Content creation skills</li>
+                    <li><strong>Credibility and network</strong></li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>4. Spirit Protocol (Legitimacy)</h4>
+                <ul>
+                    <li>Professional token infrastructure</li>
+                    <li>Automatic $SPIRIT holder distribution</li>
+                    <li>Graduation path to autonomy</li>
+                    <li><strong>Regulatory-conscious design</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2>Ready to Build?</h2>
+            <p><strong>We have:</strong> Clear vision • Working technology • Competitive advantages • Token infrastructure • 10-week timeline</p>
+            <p><strong>We need:</strong> Your prediction market expertise • Your daily curation • Your quality control • Your commitment</p>
+            <p style="font-size: 1.5rem; margin: 2rem 0;"><strong>Let's make Miyomi the definitive prediction market oracle. 🚀</strong></p>
+            <a href="mailto:seth@miyomi.ai" class="cta-button">Let's Talk This Week</a>
+        </div>
+    </div>
+
+    <script>
+        // Password protection
+        const correctPassword = 'miyomi2025';
+
+        function checkPassword() {
+            const input = document.getElementById('password-input');
+            const error = document.getElementById('error-message');
+
+            if (input.value === correctPassword) {
+                document.getElementById('password-gate').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                window.scrollTo(0, 0);
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Allow Enter key to submit password
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Focus password input on load
+        window.addEventListener('load', function() {
+            document.getElementById('password-input').focus();
+        });
+    </script>
+</body>
+</html>

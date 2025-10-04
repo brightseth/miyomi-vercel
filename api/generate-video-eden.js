@@ -6,7 +6,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const EDEN_API_KEY = process.env.EDEN_API_KEY || 'db10962875d98d2a2dafa8599a89c850766f39647095c002';
+  const EDEN_API_KEY = process.env.EDEN_API_KEY;
+  if (!EDEN_API_KEY) {
+    return res.status(500).json({ error: 'EDEN_API_KEY not configured' });
+  }
   const EDEN_API_BASE = 'https://api.eden.art/v2';
 
   try {
