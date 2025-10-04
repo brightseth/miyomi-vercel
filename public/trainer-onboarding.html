@@ -800,24 +800,45 @@
             <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">How Miyomi's revenue scales with audience growth over 18 months:</p>
 
             <h3>The Attention Flywheel</h3>
-            <div class="tech-stack-diagram" style="color: #0f0; font-size: 0.8rem;">
-┌─────────────────────────────────────────────────────────┐
-│                  ATTENTION FLYWHEEL                     │
-└─────────────────────────────────────────────────────────┘
+            <div class="highlight-box" style="background: #000; border: 1px solid #fff; padding: 32px;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center;">
+                    <div>
+                        <div style="font-size: 2rem; margin-bottom: 8px;">01</div>
+                        <div style="font-weight: bold; margin-bottom: 8px; color: #0f0;">CONTENT QUALITY</div>
+                        <div style="font-weight: normal; font-size: 0.85rem; color: #888;">Your expert curation + Dome intelligence</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; margin-bottom: 8px;">02</div>
+                        <div style="font-weight: bold; margin-bottom: 8px; color: #0f0;">VIEWS & ENGAGEMENT</div>
+                        <div style="font-weight: normal; font-size: 0.85rem; color: #888;">Accurate predictions → shares & comments</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; margin-bottom: 8px;">03</div>
+                        <div style="font-weight: bold; margin-bottom: 8px; color: #0f0;">ALGORITHM BOOST</div>
+                        <div style="font-weight: normal; font-size: 0.85rem; color: #888;">TikTok/Twitter push to For You page</div>
+                    </div>
+                </div>
 
-  Content Quality (Your Curation)
-           ↓
-  More Views & Engagement
-           ↓
-  Algorithm Boost (TikTok/Twitter)
-           ↓
-  Follower Growth
-           ↓
-  Higher Affiliate Conversion
-           ↓
-  More Revenue → Better Content → REPEAT
-           ↓
-  Brand Partnerships & Sponsorships</div>
+                <div style="text-align: center; margin: 24px 0; font-size: 1.5rem; color: #0f0;">↓</div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center;">
+                    <div>
+                        <div style="font-size: 2rem; margin-bottom: 8px;">04</div>
+                        <div style="font-weight: bold; margin-bottom: 8px; color: #0f0;">FOLLOWER GROWTH</div>
+                        <div style="font-weight: normal; font-size: 0.85rem; color: #888;">Exponential audience building</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; margin-bottom: 8px;">05</div>
+                        <div style="font-weight: bold; margin-bottom: 8px; color: #0f0;">REVENUE</div>
+                        <div style="font-weight: normal; font-size: 0.85rem; color: #888;">Affiliates + Subs + Sponsors</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; margin-bottom: 8px;">06</div>
+                        <div style="font-weight: bold; margin-bottom: 8px; color: #0f0;">REPEAT ∞</div>
+                        <div style="font-weight: normal; font-size: 0.85rem; color: #888;">Better content → More revenue</div>
+                    </div>
+                </div>
+            </div>
 
             <h3>18-Month Revenue Projection</h3>
 
@@ -1395,116 +1416,84 @@
         <div class="section">
             <h2>Tech Stack & System Architecture</h2>
 
-            <h3>Market Intelligence Layer</h3>
-            <div class="tech-stack-diagram">┌─────────────────────────────────────────────────────────────┐
-│                    MIYOMI ORACLE SYSTEM                     │
-└─────────────────────────────────────────────────────────────┘
+            <h3>System Architecture</h3>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">Clean visual breakdown of how everything connects:</p>
 
-┌──────────────── MARKET DATA SOURCES ─────────────────┐
-│                                                       │
-│  POLYMARKET          KALSHI           SOUP.XYZ       │
-│  ├─ Presidential    ├─ Fed Rates     ├─ Custom      │
-│  ├─ Elections       ├─ Recession     │   Markets     │
-│  ├─ Crypto          ├─ Economic      ├─ Oracle      │
-│  └─ World Events    └─ Indicators    │   Control     │
-│                                      └─ Resolution   │
-│                                                       │
-└───────────────────────┬───────────────────────────────┘
-                        │
-                        ▼
-┌──────────────── PROPRIETARY INTELLIGENCE ────────────┐
-│                                                       │
-│  DOME API                                            │
-│  ├─ Order Flow Analysis (Smart Money)                │
-│  ├─ Momentum Exhaustion Detection                    │
-│  ├─ Volume Distribution Analysis                     │
-│  └─ Market Maker Activity Tracking                   │
-│                                                       │
-│  NO ONE ELSE HAS ACCESS TO THIS DATA                 │
-│                                                       │
-└───────────────────────┬───────────────────────────────┘
-                        │
-                        ▼
-┌──────────────── MIYOMI AI ENGINE ────────────────────┐
-│                                                       │
-│  ANALYSIS                                            │
-│  ├─ Consensus Detection (>70% or <30%)               │
-│  ├─ Edge Calculation (Asymmetric Risk/Reward)        │
-│  ├─ Contrarian Thesis Generation                     │
-│  └─ Confidence Scoring                               │
-│                                                       │
-│  TRAINER CURATION ←─────────────── YOU               │
-│  ├─ Market Selection                                 │
-│  ├─ Script Editing                                   │
-│  ├─ Quality Control                                  │
-│  └─ Voice Consistency                                │
-│                                                       │
-└───────────────────────┬───────────────────────────────┘
-                        │
-                        ▼
-┌──────────────── CONTENT GENERATION ──────────────────┐
-│                                                       │
-│  EDEN AI (Video Generation)                          │
-│  ├─ Yeah LoRA Character Model                        │
-│  ├─ 30-60sec Vertical Video                          │
-│  └─ 2-5 minute generation time                       │
-│                                                       │
-│  ELEVENLABS (Audio Synthesis)                        │
-│  ├─ Miyomi Voice Clone                               │
-│  ├─ Fast-talking NYC energy                          │
-│  └─ 20-30 second voiceover                           │
-│                                                       │
-│  FFMPEG (Combination)                                │
-│  └─ Merge video + audio (5-10 seconds)               │
-│                                                       │
-└───────────────────────┬───────────────────────────────┘
-                        │
-                        ▼
-┌──────────────── DISTRIBUTION ────────────────────────┐
-│                                                       │
-│  TIKTOK (Primary)                                    │
-│  ├─ 30-60sec vertical videos                         │
-│  ├─ Affiliate links in bio                           │
-│  └─ Viral potential                                  │
-│                                                       │
-│  TWITTER/X (Secondary)                               │
-│  ├─ Video + thread format                            │
-│  └─ PM community engagement                          │
-│                                                       │
-│  FARCASTER (Web3)                                    │
-│  └─ Crypto-native audience                           │
-│                                                       │
-└───────────────────────┬───────────────────────────────┘
-                        │
-                        ▼
-┌──────────────── REVENUE CAPTURE ─────────────────────┐
-│                                                       │
-│  AFFILIATES                                          │
-│  ├─ Polymarket referrals                             │
-│  ├─ Kalshi referrals                                 │
-│  └─ Commission per signup/trade                      │
-│                                                       │
-│  SUBSCRIPTIONS (Future)                              │
-│  ├─ $10/mo premium tier                              │
-│  ├─ Early access to picks                            │
-│  └─ Deeper analysis                                  │
-│                                                       │
-│  SOUP.XYZ MARKETS (Future)                           │
-│  ├─ Market-making revenue                            │
-│  └─ Oracle fees                                      │
-│                                                       │
-└───────────────────────┬───────────────────────────────┘
-                        │
-                        ▼
-┌──────────────── SPIRIT PROTOCOL ─────────────────────┐
-│                                                       │
-│  TOKENOMICS                                          │
-│  ├─ $MIYOMI token (1B supply)                        │
-│  ├─ Revenue → $SPIRIT → Royalties                    │
-│  ├─ 75M tokens to YOU (30% team)                     │
-│  └─ 12-month auto-pledge → 12× multiplier            │
-│                                                       │
-└───────────────────────────────────────────────────────┘</div>
+            <div class="workflow-diagram">
+                <div class="workflow-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h4>Market Data Sources</h4>
+                        <p><strong>Polymarket:</strong> Presidential, elections, crypto, world events<br>
+                        <strong>Kalshi:</strong> Fed rates, recession, economic indicators<br>
+                        <strong>Soup.xyz:</strong> Custom markets, oracle control</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h4>Proprietary Intelligence (Dome API)</h4>
+                        <p><strong>Order flow analysis</strong> (smart money tracking)<br>
+                        <strong>Momentum exhaustion detection</strong><br>
+                        <strong>Volume distribution analysis</strong><br>
+                        <span style="color: #0f0;">→ NO ONE ELSE HAS THIS DATA</span></p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h4>AI Analysis + Your Curation</h4>
+                        <p><strong>AI does:</strong> Consensus detection, edge calculation, thesis generation<br>
+                        <strong>You do:</strong> Market selection, script editing, quality control<br>
+                        <span style="color: #0f0;">→ YOUR EXPERTISE = THE SECRET SAUCE</span></p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h4>Content Generation (Automated)</h4>
+                        <p><strong>Eden AI:</strong> 30-60sec video (2-5 min generation)<br>
+                        <strong>ElevenLabs:</strong> Miyomi voice clone (20-30 sec)<br>
+                        <strong>FFmpeg:</strong> Merge video + audio (5-10 sec)<br>
+                        <span style="color: #0f0;">→ TOTAL: 3-6 MINUTES PER VIDEO</span></p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <h4>Distribution (Multi-Platform)</h4>
+                        <p><strong>TikTok:</strong> Primary (30-60sec vertical, viral potential)<br>
+                        <strong>Twitter/X:</strong> Video + threads (PM community)<br>
+                        <strong>Farcaster:</strong> Web3 native audience</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">06</div>
+                    <div class="step-content">
+                        <h4>Revenue Capture</h4>
+                        <p><strong>Affiliates:</strong> Polymarket + Kalshi commissions<br>
+                        <strong>Subscriptions:</strong> $10/mo premium tier<br>
+                        <strong>Sponsors:</strong> Crypto/PM brand partnerships<br>
+                        <strong>Soup.xyz:</strong> Market-making + oracle fees</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">07</div>
+                    <div class="step-content">
+                        <h4>Spirit Protocol (Tokenomics)</h4>
+                        <p><strong>Revenue → $SPIRIT → Royalties</strong><br>
+                        75M tokens to YOU (30% of team)<br>
+                        12-month auto-pledge → 12× multiplier<br>
+                        <span style="color: #0f0;">→ 76-83% OF REVENUE TO TEAM INITIALLY</span></p>
+                    </div>
+                </div>
+            </div>
 
             <h3>Daily Workflow System</h3>
             <div class="workflow-diagram">
