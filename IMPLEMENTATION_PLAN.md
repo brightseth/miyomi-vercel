@@ -33,6 +33,18 @@ Q1 2026+:   Scale (Soup.xyz markets, $10k+ monthly revenue)
 
 ### Week 1: Core Infrastructure & Collaboration
 
+#### 1.0 Dome API Integration (NEW - PRIORITY)
+- **Action:** Integrate Dome API for prediction market data
+- **Why:** Solves Polymarket API issues, provides PnL tracking, historical data
+- **Get:**
+  - Dome API key (in progress)
+  - Order history endpoint
+  - Market price endpoint
+  - Candlestick data endpoint
+  - Wallet PnL endpoint
+- **Deliverable:** `/lib/dome-client.js` with all 4 endpoints working
+- **Impact:** Better opportunity detection, automated performance tracking
+
 #### 1.1 Collaborate with jmill
 - **Action:** Send JMILL_INTRO.md to jmill
 - **Get:**
@@ -118,18 +130,35 @@ CREATE TABLE revenue (
 #### 1.3 API Endpoints
 Create Vercel serverless functions:
 
-**`/api/polymarket/opportunities`**
+**`/api/dome/opportunities`** (NEW - REPLACES direct Polymarket/Kalshi)
 ```javascript
-// Find contrarian markets on Polymarket
+// Find contrarian markets using Dome API
 // Returns markets with >75% or <25% consensus
-// Sorted by edge (most extreme first)
+// INCLUDES historical price context from candlestick data
+// Better quality signals vs direct API calls
+// Sorted by edge + momentum exhaustion
 ```
 
-**`/api/kalshi/opportunities`**
+**`/api/dome/pnl`** (NEW - AUTOMATED)
 ```javascript
-// Find contrarian economic indicators on Kalshi
-// Focus on FED, CPI, JOBS, GDP, INFL
-// Returns markets with extreme consensus
+// Fetch Miyomi wallet performance from Dome API
+// Returns real-time PnL, no manual calculation
+// Cross-platform (Polymarket + Kalshi combined)
+// For dashboard display and token holder reporting
+```
+
+**`/api/polymarket/opportunities`** (DEPRECATED - use Dome instead)
+```javascript
+// LEGACY: Find contrarian markets on Polymarket
+// NOTE: Has issues with active markets API
+// REPLACED BY: /api/dome/opportunities
+```
+
+**`/api/kalshi/opportunities`** (DEPRECATED - use Dome instead)
+```javascript
+// LEGACY: Find contrarian economic indicators on Kalshi
+// NOTE: Auth issues with API key
+// REPLACED BY: /api/dome/opportunities
 ```
 
 **`/api/miyomi/analyze`**
@@ -164,7 +193,14 @@ Create Vercel serverless functions:
 
 ---
 
-### Week 2: Video Generation Pipeline
+### Week 2: Enhanced Opportunity Detection & Video Pipeline
+
+#### 2.0 Enhanced Opportunity Detection (with Dome API)
+- Implement historical price analysis using candlestick data
+- Add momentum exhaustion detection
+- Build confidence scoring (extreme odds + volume + price change)
+- Test improved signal quality vs old direct API approach
+- **Expected Outcome:** 2-3 high-confidence opportunities per week (vs 0-1 before)
 
 #### 2.1 Eden Integration (with jmill's guidance)
 - Authenticate with Eden API
@@ -174,14 +210,15 @@ Create Vercel serverless functions:
 - Handle errors and retries
 - Store results in database
 
-#### 2.2 Content Workflow Automation
+#### 2.2 Content Workflow Automation (UPDATED with Dome)
 ```
 ┌─────────────────────────────────────────┐
-│  1. FIND OPPORTUNITY                    │
-│  • Run Polymarket/Kalshi opportunity    │
-│    finder (morning scan)                │
+│  1. FIND OPPORTUNITY (via Dome API)    │
+│  • Run Dome opportunity scanner         │
+│    (morning scan)                        │
 │  • Filter: >75% or <25% consensus       │
-│  • Sort by edge + liquidity             │
+│  • PLUS: Historical context, momentum   │
+│  • Sort by confidence score             │
 └─────────────────┬───────────────────────┘
                   ↓
 ┌─────────────────────────────────────────┐
@@ -274,10 +311,13 @@ Create Vercel serverless functions:
 └─────────────────────────────────────────┘
 ```
 
-**Performance Chart:**
-- Cumulative P&L over time
-- Win rate trend
+**Performance Chart (powered by Dome API):**
+- Cumulative P&L over time (from Dome wallet PnL)
+- Win rate trend (automated calculation)
 - Trade distribution (wins/losses)
+- Platform comparison (Polymarket vs Kalshi)
+- Historical candlestick charts
+- "Verified by Dome API" badge for credibility
 
 #### 3.2 API Integration
 - Fetch data from Supabase
@@ -297,13 +337,18 @@ Create Vercel serverless functions:
 
 ### Goal: Execute 20+ Trades with 65%+ Win Rate
 
-#### Daily Operations Workflow
+#### Daily Operations Workflow (UPDATED with Dome)
 
 **Morning (9am):**
 ```bash
-# Run opportunity finder
-curl /api/polymarket/opportunities
-curl /api/kalshi/opportunities
+# Run opportunity finder (Dome-powered)
+curl /api/dome/opportunities
+
+# Returns high-confidence signals with:
+# - Current consensus (>75% or <25%)
+# - Historical price context (7-day trend)
+# - Momentum indicators (volume, exhaustion)
+# - Confidence score (HIGH/MEDIUM/LOW)
 
 # Review top 3-5 contrarian opportunities
 # Select 1 for today's trade
@@ -355,9 +400,12 @@ POST /api/social/post
 
 **Evening (6pm):**
 ```bash
-# Check position status
-# Update dashboard
+# Check position status (via Dome API)
+curl /api/dome/pnl
+
+# Update dashboard automatically
 # Track engagement (views, comments)
+# PnL updates in real-time from Dome
 ```
 
 #### Weekly Tracking

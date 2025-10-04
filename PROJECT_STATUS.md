@@ -1,7 +1,31 @@
 # MIYOMI - Project Status
 
-**As of:** October 1, 2025
+**As of:** October 3, 2025
 **Launch Target:** Mid-December 2025
+
+---
+
+## 🔥 NEW: Dome API Integration (Game Changer)
+
+**Status:** Waiting for API key, integration plan complete
+
+**What It Is:**
+Dome API is a specialized prediction market data service providing order history, real-time prices, candlestick data, and automated PnL tracking across Polymarket AND Kalshi.
+
+**Why This Matters:**
+1. **Solves Polymarket API issues** - We've had trouble getting truly active markets
+2. **Automated PnL tracking** - No more manual calculation from database
+3. **Historical context** - Candlestick data enables better contrarian signal detection
+4. **Cross-platform analytics** - Single API for both Polymarket and Kalshi
+5. **Credibility boost** - Third-party verified performance data for token launch
+
+**Impact:**
+- 🎯 Better opportunity detection (2-3 high-confidence signals per week vs 0-1)
+- 🎯 Automated performance dashboard with real-time PnL
+- 🎯 Professional-grade analytics for token holders
+- 🎯 Removes current blockers preventing first video production
+
+**Integration Plan:** `/DOME_INTEGRATION_PLAN.md` (5-day implementation once API key received)
 
 ---
 
@@ -20,16 +44,24 @@
 
 **Total:** ~30,000 words of comprehensive documentation
 
-### Core Libraries (90%)
-- [x] **lib/polymarket-client.js** - Polymarket API integration
+### Core Libraries (95%)
+- [x] **lib/polymarket-client.js** - Polymarket API integration (legacy)
   - getMarkets(), getOrderBook(), findContrarianOpportunities()
   - MiyomiPolymarketAnalyzer class
   - Contrarian detection logic (>75% or <25%)
+  - ⚠️ NOTE: Has issues with active markets, will be replaced by Dome API
 
-- [x] **lib/kalshi-client.js** - Kalshi API integration
+- [x] **lib/kalshi-client.js** - Kalshi API integration (legacy)
   - Economic indicators focus (FED, CPI, JOBS, GDP, INFL)
   - MiyomiKalshiAnalyzer class
   - Category-based opportunity finding
+  - ⚠️ NOTE: Auth issues, will be replaced by Dome API
+
+- [ ] **lib/dome-client.js** - Dome API integration (NEW - IN PROGRESS)
+  - Order history, market prices, candlestick data, wallet PnL
+  - Replaces both Polymarket and Kalshi direct integrations
+  - Better data quality and historical context
+  - ⏳ Waiting for API key
 
 - [x] **lib/soup-client.js** - Soup.xyz protocol (Phase 2 ready)
   - SoupIndexerClient, SoupProtocolClient
@@ -87,24 +119,36 @@
 
 ## 🟡 IN PROGRESS / NEEDS COMPLETION
 
-### Priority 1: Video Pipeline (jmill)
+### Priority 0: Dome API Integration (Seth) - UNBLOCKS EVERYTHING
+- [ ] **Get Dome API key** - In progress (critical blocker)
+- [ ] **Build /lib/dome-client.js** - 4 endpoints (5-day implementation)
+- [ ] **Create /api/dome/opportunities** - Enhanced contrarian finder
+- [ ] **Create /api/dome/pnl** - Automated performance tracking
+- [ ] **Test end-to-end** - Verify all endpoints working
+- [ ] **Update dashboard** - Display Dome-powered analytics
+- **Expected Impact:** Solves Polymarket API issues, enables first video production
+
+### Priority 1: Video Pipeline (jmill) - BLOCKED by opportunity detection
 - [ ] **Eden Yeah LoRA integration** - Configure custom character model
 - [ ] **Video generation testing** - Test with sample scripts
 - [ ] **Async polling mechanism** - Handle video completion
 - [ ] **Character consistency** - Ensure Miyomi looks the same across videos
 - [ ] **Error handling** - Retry logic for failed generations
 - [ ] **Cost optimization** - Understand Eden API pricing
+- ⚠️ Can't test video until we have real contrarian opportunities from Dome API
 
-### Priority 2: Database Schema (Seth)
-- [ ] **Complete schema design** - Trades, videos, performance, revenue tables
-- [ ] **Supabase table creation** - Execute SQL from IMPLEMENTATION_PLAN.md
+### Priority 2: Database Schema (Seth) - PARTIALLY COMPLETE
+- [x] **Complete schema design** - Trades, videos, performance, revenue tables
+- [x] **Supabase table creation** - 6 tables deployed and working
+- [x] **Basic workflow tested** - Opportunity scan → save working
 - [ ] **Revenue tracking** - System for affiliate/ad revenue
-- [ ] **Performance metrics** - Win rate, P&L calculation
+- [ ] **Performance metrics** - Win rate, P&L calculation (will use Dome API)
 - [ ] **Video metadata** - Link videos to trades
 
-### Priority 3: Opportunity Finder API (Seth)
-- [ ] **Polymarket opportunities endpoint** - Find >75% or <25% markets
-- [ ] **Kalshi opportunities endpoint** - Economic indicators
+### Priority 3: Opportunity Finder API (Seth) - REVISED with Dome
+- [x] **Polymarket opportunities endpoint** - Built but has API issues
+- [ ] **Dome opportunities endpoint** - Will replace Polymarket/Kalshi (NEW)
+- [ ] **Historical analysis** - Use Dome candlestick data for better signals
 - [ ] **Claude analysis integration** - Generate contrarian thesis
 - [ ] **Position size calculator** - Based on confidence + liquidity
 - [ ] **Timing assessment** - Market close time evaluation
@@ -166,36 +210,41 @@
 
 ---
 
-## 📊 What We Need to Do NEXT
+## 📊 What We Need to Do NEXT (UPDATED with Dome API)
 
-### Week 1 (This Week - Oct 1-7):
+### Week 1 (Oct 3-9 - REVISED):
 
-**jmill:**
+**Seth (CRITICAL PATH):**
+1. ✅ Set up Supabase project
+2. ✅ Create database tables (6 tables deployed)
+3. ✅ Test workflow (scan → save working)
+4. 🔥 **GET DOME API KEY** (critical blocker for everything else)
+5. 🔥 **Build /lib/dome-client.js** once key arrives (5-day plan ready)
+6. 🔥 **Create /api/dome/opportunities** (replaces Polymarket/Kalshi)
+7. 🔥 **Test Dome-powered opportunity detection**
+
+**jmill (BLOCKED until Dome integration):**
 1. Review all documentation (README, IMPLEMENTATION_PLAN, JMILL_ROLE)
 2. Set up development environment
-3. Configure Eden API with Yeah LoRA
-4. Test video generation with sample script
-5. Build polling/storage pipeline
-
-**Seth:**
-1. Set up Supabase project
-2. Create database tables (use SQL from IMPLEMENTATION_PLAN)
-3. Build `/api/opportunities/polymarket` endpoint
-4. Build `/api/opportunities/kalshi` endpoint
-5. Test contrarian opportunity detection
+3. ⏳ Configure Eden API with Yeah LoRA (waiting for real opportunities)
+4. ⏳ Test video generation (need contrarian thesis from Dome data)
+5. ⏳ Build polling/storage pipeline (can't test without opportunity)
 
 **Together:**
 1. Sync on progress (mid-week)
-2. Plan first video test (end of week)
+2. ⏳ Plan first video test (waiting for Dome API key)
 
-### Week 2 (Oct 8-14):
+### Week 2 (Oct 10-16 - REVISED):
 
-**Focus:** First end-to-end test
-1. Find real contrarian opportunity
-2. Generate Claude analysis + script
-3. Create video with Eden/Yeah LoRA
-4. Test posting workflow
-5. Review quality and iterate
+**Focus:** Dome Integration + First end-to-end test
+1. 🔥 Complete Dome API integration (5 days)
+2. Find real contrarian opportunity (with historical context)
+3. Generate Claude analysis + script (with Dome data)
+4. Create video with Eden/Yeah LoRA
+5. Test posting workflow
+6. Review quality and iterate
+
+**NEW TIMELINE:** Dome integration takes 5 days once API key received, then video pipeline
 
 ### Week 3 (Oct 15-21):
 
@@ -276,34 +325,39 @@
 4. **Affiliate deals** - Secure partnerships early
 5. **Execution cadence** - Need to ship consistently
 
-### Biggest Risks:
-1. **Video quality/consistency** - Yeah LoRA must work well
-2. **Time to mid-December** - Only 10 weeks, need to move fast
-3. **Affiliate partnerships** - May take time to negotiate
-4. **Audience building** - 1,000 followers in 10 weeks is aggressive
-5. **Win rate pressure** - Need 65%+ for token launch
+### Biggest Risks (UPDATED):
+1. **Dome API key delay** - Critical blocker for everything (HIGHEST RISK)
+2. **Video quality/consistency** - Yeah LoRA must work well
+3. **Time to mid-December** - Only 10 weeks, need to move fast
+4. **Affiliate partnerships** - May take time to negotiate
+5. **Audience building** - 1,000 followers in 10 weeks is aggressive
+6. **Win rate pressure** - Need 65%+ for token launch
 
-### Mitigation Strategies:
-1. **Start video testing immediately** - Don't wait
-2. **Weekly sprints** - Ship something every week
-3. **Parallel work** - Seth + jmill work independently where possible
-4. **Lower quality bar initially** - Iterate quickly, perfect later
-5. **Focus on attention first** - Revenue will follow eyeballs
+### Mitigation Strategies (UPDATED):
+1. **Prioritize Dome API key** - Follow up daily, this unblocks everything
+2. **Dome integration plan ready** - Can implement in 5 days once key arrives
+3. **Weekly sprints** - Ship something every week
+4. **Parallel work** - Seth + jmill work independently where possible (but blocked)
+5. **Lower quality bar initially** - Iterate quickly, perfect later
+6. **Focus on attention first** - Revenue will follow eyeballs
+7. **NEW: Better signal quality** - Dome's historical data should improve win rate
 
 ---
 
 ## 📈 Progress Tracking
 
-**Overall Project:** 35% complete
+**Overall Project:** 42% complete (UP from 35% - documentation + Dome plan)
 
 - Documentation: ████████████████████ 100%
-- Core Libraries: ██████████████████░░ 90%
-- Infrastructure: ████████████░░░░░░░░ 60%
+- Core Libraries: ███████████████████░ 95% (Dome plan complete)
+- Infrastructure: ███████████████░░░░░ 75% (Database deployed)
 - Content/Audience: ░░░░░░░░░░░░░░░░░░░░ 0%
 - Trading Record: ░░░░░░░░░░░░░░░░░░░░ 0%
 - Token Prep: ░░░░░░░░░░░░░░░░░░░░ 0%
 
-**Next Milestone:** First video produced (Target: Oct 14)
+**CRITICAL BLOCKER:** Waiting for Dome API key
+**Next Milestone:** Dome integration complete (Target: 5 days after API key)
+**Then:** First video produced (Target: ~Oct 20-24)
 
 ---
 

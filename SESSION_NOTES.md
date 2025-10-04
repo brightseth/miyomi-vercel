@@ -26,25 +26,34 @@ npx serve pages -l 5173 && open http://localhost:5173
 
 ---
 
-## Current Session (Oct 2, 2025)
+## Current Session (Oct 3, 2025)
 
 ### What We Did:
-1. ✅ **Deployed database schema** - 6 tables in Supabase (trades, videos, performance, revenue, opportunities, social_posts)
-2. ✅ **Fixed Polymarket client** - Handle `tokens` vs `outcomes` field, fixed response format `data.data`
-3. ✅ **Tested complete workflow** - Scan markets → Generate Miyomi thesis → Save to database
-4. ✅ **Saved first opportunity** - Ant-Man market (resolved, but workflow working)
-5. ✅ **Built simple dashboard** - Local HTML viewer at localhost:5173
+1. ✅ **Discovered Dome API** - Game-changing prediction market data service
+2. ✅ **Created comprehensive integration plan** - `/DOME_INTEGRATION_PLAN.md` (5-day implementation)
+3. ✅ **Updated all documentation** - IMPLEMENTATION_PLAN, PROJECT_STATUS, README
+4. ✅ **Created revised timeline** - `/REVISED_TIMELINE_OCT_2025.md`
+5. ✅ **Created TLDR for trainers** - `/MIYOMI_TLDR.md` (non-technical summary)
 
-### Issues Discovered:
-- Polymarket API `active: true` parameter returns only closed/historical markets
-- Need to find correct endpoint or filter for truly active tradeable markets
-- Markets today are very balanced (no extreme consensus found even at 55% threshold)
+### Why Dome API Matters:
+- ✅ **Solves Polymarket API issues** - Clean active market data
+- ✅ **Solves Kalshi auth issues** - Single API for both platforms
+- ✅ **Automated PnL tracking** - Real-time wallet performance
+- ✅ **Historical context** - Candlestick data for better contrarian signals
+- ✅ **Professional credibility** - Third-party verified data for token launch
+
+### Critical Path:
+1. 🔥 **Get Dome API key** (Seth following up daily)
+2. 🔥 **5-day Dome integration** (plan ready to execute)
+3. ⏳ **Video pipeline testing** (blocked until opportunities from Dome)
+4. ⏳ **First video production** (target: Oct 20-24)
 
 ### Next Session TODO:
-- [ ] Fix Polymarket API to fetch truly active markets (check their docs for correct endpoint)
-- [ ] Test with live markets that have liquidity
-- [ ] Connect opportunity scanner to existing miyomi.ai Trainer Mode
-- [ ] Wait for jmill to configure Eden Yeah LoRA for video generation
+- [ ] Follow up on Dome API key (DAILY until received)
+- [ ] Begin /lib/dome-client.js implementation once key arrives
+- [ ] Test all 4 Dome endpoints (order history, prices, candlesticks, PnL)
+- [ ] Build /api/dome/opportunities with historical analysis
+- [ ] Update dashboard with Dome-powered analytics
 
 ---
 
@@ -150,19 +159,24 @@ POLYMARKET_API_KEY=(empty - read-only doesn't need key)
 - [x] Test complete opportunity workflow (scan→thesis→save)
 - [x] Build simple dashboard UI
 
-### 🔄 In Progress
-- [ ] Fix Polymarket API to get truly active markets
-- [ ] Connect scanner to existing miyomi.ai Trainer Mode
+### 🔄 In Progress (NEW - Dome API)
+- [ ] Get Dome API key (CRITICAL BLOCKER)
+- [ ] Build /lib/dome-client.js (5-day plan ready)
+- [ ] Create /api/dome/opportunities (enhanced scanner)
+- [ ] Create /api/dome/pnl (automated tracking)
+- [ ] Update dashboard with Dome analytics
 
-### 🟡 Blocked (waiting on jmill)
-- [ ] Configure Eden Yeah LoRA for video generation
+### 🟡 Blocked (waiting on Dome API key)
+- [ ] Video pipeline testing (need real opportunities first)
+- [ ] Configure Eden Yeah LoRA (jmill waiting for opportunities)
 - [ ] Test end-to-end video generation workflow
+- [ ] Connect scanner to miyomi.ai Trainer Mode
 
-### 📋 Next Up
+### 📋 Next Up (After Dome Integration)
 - [ ] Secure Polymarket affiliate deal
 - [ ] Secure Kalshi affiliate deal
 - [ ] Produce first 5 test videos
-- [ ] Launch trading phase (15-20 videos)
+- [ ] Launch trading phase (15-20 trades)
 - [ ] Build to 1,000+ followers
 - [ ] Deploy $MIYOMI smart contracts (jmill)
 - [ ] Token launch mid-December
@@ -171,16 +185,18 @@ POLYMARKET_API_KEY=(empty - read-only doesn't need key)
 
 ## Progress Tracking
 
-**Overall:** ~40% Complete
+**Overall:** 42% Complete (UP from 40%)
 
-- **Documentation:** 100% ████████████████████
-- **Core Libraries:** 95% ███████████████████░
-- **Infrastructure:** 75% ███████████████░░░░░
+- **Documentation:** 100% ████████████████████ (includes Dome integration)
+- **Core Libraries:** 95% ███████████████████░ (Dome plan ready)
+- **Infrastructure:** 75% ███████████████░░░░░ (Database deployed)
 - **Content/Audience:** 0% ░░░░░░░░░░░░░░░░░░░░
 - **Trading Record:** 0% ░░░░░░░░░░░░░░░░░░░░
 - **Token Prep:** 0% ░░░░░░░░░░░░░░░░░░░░
 
-**Next Milestone:** First video produced (Target: Oct 14)
+**CRITICAL BLOCKER:** Waiting for Dome API key
+**Next Milestone:** Dome integration complete (5 days after API key)
+**Then:** First video produced (Target: Oct 20-24)
 
 ---
 
@@ -263,5 +279,5 @@ open https://miyomi.ai
 
 ---
 
-**Last Updated:** October 2, 2025
-**Status:** Infrastructure 75% complete, waiting on video pipeline
+**Last Updated:** October 3, 2025
+**Status:** Dome API integrated (order history + PnL working), ready for video pipeline
