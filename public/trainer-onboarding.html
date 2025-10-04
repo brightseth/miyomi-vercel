@@ -431,6 +431,112 @@
             color: #fff;
         }
 
+        /* Visual Media */
+        .hero-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            display: block;
+            margin: 24px auto;
+            border: 1px solid #fff;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 1px solid #333;
+            transition: border 0.2s;
+        }
+
+        .image-gallery img:hover {
+            border-color: #fff;
+        }
+
+        .video-container {
+            max-width: 600px;
+            margin: 24px auto;
+            border: 1px solid #fff;
+            background: #000;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .video-caption {
+            padding: 16px;
+            text-align: center;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+            font-weight: normal;
+        }
+
+        .tech-stack-diagram {
+            background: #111;
+            border: 1px solid #333;
+            padding: 32px;
+            margin: 24px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #0f0;
+            overflow-x: auto;
+        }
+
+        .workflow-diagram {
+            background: #111;
+            border: 1px solid #333;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .workflow-step {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #333;
+        }
+
+        .workflow-step:last-child {
+            border-bottom: none;
+        }
+
+        .workflow-step .step-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            padding-top: 8px;
+        }
+
+        .workflow-step .step-content h4 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .workflow-step .step-content p {
+            font-weight: normal;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 16px;
@@ -503,6 +609,16 @@
             <h2>Who Is Miyomi?</h2>
             <p><strong>Miyomi = 22-year-old prediction market oracle who creates viral content about contrarian opportunities.</strong></p>
 
+            <img src="/eden-images/miyomi-neon.jpg" alt="Miyomi" class="hero-image">
+
+            <div class="video-container">
+                <video controls>
+                    <source src="/miyomi-bitcoin-test.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-caption">Example Oracle Video — Bitcoin Market Analysis</div>
+            </div>
+
             <div class="highlight-box">
                 <p><strong>She's NOT a trader executing positions.</strong> She's an <strong>oracle/influencer</strong> (think Maria Bartiromo meets Gen-Z prediction markets) who:</p>
                 <ul>
@@ -528,6 +644,14 @@
                 <li>Highlights asymmetric risk/reward opportunities</li>
                 <li>Tracks accuracy publicly (target: 65%+ correct)</li>
             </ul>
+
+            <h3>Visual Identity</h3>
+            <div class="image-gallery">
+                <img src="/eden-images/miyomi-contrarian.png" alt="Miyomi Contrarian">
+                <img src="/eden-images/miyomi-analysis.png" alt="Miyomi Analysis">
+                <img src="/eden-images/miyomi-boardroom.jpg" alt="Miyomi Boardroom">
+                <img src="/eden-images/miyomi-victory.png" alt="Miyomi Victory">
+            </div>
         </div>
 
         <!-- What You Do -->
@@ -810,6 +934,178 @@
                 <li><strong>Weekly:</strong> 30 min sync call</li>
                 <li><strong>Tools:</strong> Discord/Telegram + GitHub</li>
             </ul>
+        </div>
+
+        <!-- Tech Stack & System Architecture -->
+        <div class="section">
+            <h2>Tech Stack & System Architecture</h2>
+
+            <h3>Market Intelligence Layer</h3>
+            <div class="tech-stack-diagram">┌─────────────────────────────────────────────────────────────┐
+│                    MIYOMI ORACLE SYSTEM                     │
+└─────────────────────────────────────────────────────────────┘
+
+┌──────────────── MARKET DATA SOURCES ─────────────────┐
+│                                                       │
+│  POLYMARKET          KALSHI           SOUP.XYZ       │
+│  ├─ Presidential    ├─ Fed Rates     ├─ Custom      │
+│  ├─ Elections       ├─ Recession     │   Markets     │
+│  ├─ Crypto          ├─ Economic      ├─ Oracle      │
+│  └─ World Events    └─ Indicators    │   Control     │
+│                                      └─ Resolution   │
+│                                                       │
+└───────────────────────┬───────────────────────────────┘
+                        │
+                        ▼
+┌──────────────── PROPRIETARY INTELLIGENCE ────────────┐
+│                                                       │
+│  DOME API                                            │
+│  ├─ Order Flow Analysis (Smart Money)                │
+│  ├─ Momentum Exhaustion Detection                    │
+│  ├─ Volume Distribution Analysis                     │
+│  └─ Market Maker Activity Tracking                   │
+│                                                       │
+│  NO ONE ELSE HAS ACCESS TO THIS DATA                 │
+│                                                       │
+└───────────────────────┬───────────────────────────────┘
+                        │
+                        ▼
+┌──────────────── MIYOMI AI ENGINE ────────────────────┐
+│                                                       │
+│  ANALYSIS                                            │
+│  ├─ Consensus Detection (>70% or <30%)               │
+│  ├─ Edge Calculation (Asymmetric Risk/Reward)        │
+│  ├─ Contrarian Thesis Generation                     │
+│  └─ Confidence Scoring                               │
+│                                                       │
+│  TRAINER CURATION ←─────────────── YOU               │
+│  ├─ Market Selection                                 │
+│  ├─ Script Editing                                   │
+│  ├─ Quality Control                                  │
+│  └─ Voice Consistency                                │
+│                                                       │
+└───────────────────────┬───────────────────────────────┘
+                        │
+                        ▼
+┌──────────────── CONTENT GENERATION ──────────────────┐
+│                                                       │
+│  EDEN AI (Video Generation)                          │
+│  ├─ Yeah LoRA Character Model                        │
+│  ├─ 30-60sec Vertical Video                          │
+│  └─ 2-5 minute generation time                       │
+│                                                       │
+│  ELEVENLABS (Audio Synthesis)                        │
+│  ├─ Miyomi Voice Clone                               │
+│  ├─ Fast-talking NYC energy                          │
+│  └─ 20-30 second voiceover                           │
+│                                                       │
+│  FFMPEG (Combination)                                │
+│  └─ Merge video + audio (5-10 seconds)               │
+│                                                       │
+└───────────────────────┬───────────────────────────────┘
+                        │
+                        ▼
+┌──────────────── DISTRIBUTION ────────────────────────┐
+│                                                       │
+│  TIKTOK (Primary)                                    │
+│  ├─ 30-60sec vertical videos                         │
+│  ├─ Affiliate links in bio                           │
+│  └─ Viral potential                                  │
+│                                                       │
+│  TWITTER/X (Secondary)                               │
+│  ├─ Video + thread format                            │
+│  └─ PM community engagement                          │
+│                                                       │
+│  FARCASTER (Web3)                                    │
+│  └─ Crypto-native audience                           │
+│                                                       │
+└───────────────────────┬───────────────────────────────┘
+                        │
+                        ▼
+┌──────────────── REVENUE CAPTURE ─────────────────────┐
+│                                                       │
+│  AFFILIATES                                          │
+│  ├─ Polymarket referrals                             │
+│  ├─ Kalshi referrals                                 │
+│  └─ Commission per signup/trade                      │
+│                                                       │
+│  SUBSCRIPTIONS (Future)                              │
+│  ├─ $10/mo premium tier                              │
+│  ├─ Early access to picks                            │
+│  └─ Deeper analysis                                  │
+│                                                       │
+│  SOUP.XYZ MARKETS (Future)                           │
+│  ├─ Market-making revenue                            │
+│  └─ Oracle fees                                      │
+│                                                       │
+└───────────────────────┬───────────────────────────────┘
+                        │
+                        ▼
+┌──────────────── SPIRIT PROTOCOL ─────────────────────┐
+│                                                       │
+│  TOKENOMICS                                          │
+│  ├─ $MIYOMI token (1B supply)                        │
+│  ├─ Revenue → $SPIRIT → Royalties                    │
+│  ├─ 75M tokens to YOU (30% team)                     │
+│  └─ 12-month auto-pledge → 12× multiplier            │
+│                                                       │
+└───────────────────────────────────────────────────────┘</div>
+
+            <h3>Daily Workflow System</h3>
+            <div class="workflow-diagram">
+                <div class="workflow-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h4>Overnight Market Scan</h4>
+                        <p>AI analyzes Polymarket + Kalshi + Dome data → Identifies 3-5 contrarian opportunities with >15% edge → Generates thesis for each → Queues for Trainer review</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h4>Morning Curation (You — 10 min)</h4>
+                        <p>Review AI brief at 9 AM → Select most interesting opportunity (your PM expertise) → Edit script if needed → Approve oracle take → Validate with Dome intelligence</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h4>Video Generation (Automated)</h4>
+                        <p>Eden AI generates 30-60sec video (2-5 min) → ElevenLabs creates voiceover (30 sec) → FFmpeg combines (10 sec) → Total: 3-6 minutes → Video ready for review</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h4>Approval & Distribution (You — 10 min)</h4>
+                        <p>Review video at 11 AM → Approve or regenerate → Post to TikTok with affiliate link → Cross-post to Twitter + Farcaster → Track initial performance</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <h4>Community Engagement (You — 10 min)</h4>
+                        <p>Respond to comments at 2 PM → Track metrics (views, clicks, engagement) → Note what's working → Report to team → Prepare for next day</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Your Role in the System</h3>
+            <div class="highlight-box">
+                <p><strong>You are the critical validation layer between AI analysis and public content.</strong></p>
+                <ul>
+                    <li><strong>Market Selection:</strong> AI generates options, you pick winners (PM expertise)</li>
+                    <li><strong>Quality Control:</strong> Ensure Miyomi's voice stays authentic</li>
+                    <li><strong>Community Trust:</strong> Your curation = credibility</li>
+                    <li><strong>Performance Optimization:</strong> Track what resonates, iterate daily</li>
+                </ul>
+                <p style="margin-top: 16px;"><strong>Without you:</strong> Just another prediction bot<br>
+                <strong>With you:</strong> Credible oracle with expert validation</p>
+            </div>
         </div>
 
         <!-- Competitive Advantages -->
