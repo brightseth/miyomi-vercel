@@ -1410,8 +1410,8 @@
 
         <!-- Application Questions -->
         <div class="section">
-            <h2>Help Us Build This Right</h2>
-            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">You know this space better than we do. Before we talk, share your honest thoughts - what we're missing, what could be better, what you've seen work (or fail) elsewhere. Your expertise is exactly why we need you.</p>
+            <h2>Your Turn - What Do You Think?</h2>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">You know prediction markets way better than we do. What are we missing? What have you seen work (or totally fail)? Any other PM agents/tools we should be studying? Your honest take helps us build this right.</p>
 
             <div class="highlight-box">
                 <h4>1. What's Miyomi's biggest opportunity in the next 6 months?</h4>
@@ -1426,15 +1426,15 @@
             </div>
 
             <div class="highlight-box">
-                <h4>3. What are we getting wrong? What's missing?</h4>
-                <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Be brutally honest - what concerns do you have? What have other PM agents/tools done that we should know about? What assumptions seem off?</p>
-                <textarea id="question3" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Critical feedback welcome..."></textarea>
+                <h4>3. What are we getting wrong?</h4>
+                <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Real talk - what concerns do you have? What assumptions seem off? What have other PM agents/tools done that we should know about?</p>
+                <textarea id="question3" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Your honest take..."></textarea>
             </div>
 
             <div class="highlight-box">
-                <h4>4. What other PM agents/tools should we be studying? (Optional)</h4>
-                <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Any prediction market bots, AI agents, content creators, or tools doing interesting things? What can we learn from them?</p>
-                <textarea id="question4" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Examples of what's working (or not working) in the space..."></textarea>
+                <h4>4. What other PM stuff should we be studying? (Optional)</h4>
+                <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Any bots, agents, content creators, or tools doing interesting things? What's working or failing out there?</p>
+                <textarea id="question4" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Examples from the space..."></textarea>
             </div>
 
             <button onclick="submitApplication()" style="width: 100%; padding: 16px; background: #0f0; color: #000; border: 1px solid #0f0; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; font-family: 'Helvetica Neue', Arial, sans-serif; transition: all 0.2s; margin-top: 24px;">
@@ -1604,6 +1604,38 @@
             calculateRevenue();
         }
 
+        // Auto-save responses to localStorage as user types
+        function autoSaveResponses() {
+            const responses = {
+                q1: document.getElementById('question1').value,
+                q2: document.getElementById('question2').value,
+                q3: document.getElementById('question3').value,
+                q4: document.getElementById('question4').value,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('miyomi_trainer_responses', JSON.stringify(responses));
+        }
+
+        // Restore saved responses on page load
+        function restoreResponses() {
+            const saved = localStorage.getItem('miyomi_trainer_responses');
+            if (saved) {
+                const responses = JSON.parse(saved);
+                document.getElementById('question1').value = responses.q1 || '';
+                document.getElementById('question2').value = responses.q2 || '';
+                document.getElementById('question3').value = responses.q3 || '';
+                document.getElementById('question4').value = responses.q4 || '';
+            }
+        }
+
+        // Add auto-save listeners
+        window.addEventListener('load', function() {
+            restoreResponses();
+            ['question1', 'question2', 'question3', 'question4'].forEach(id => {
+                document.getElementById(id).addEventListener('input', autoSaveResponses);
+            });
+        });
+
         // Application submission
         function submitApplication() {
             const q1 = document.getElementById('question1').value.trim();
@@ -1619,22 +1651,32 @@
                 return;
             }
 
+            // Save to localStorage as backup
+            const responses = {
+                q1, q2, q3, q4,
+                submitted: true,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('miyomi_trainer_submission', JSON.stringify(responses));
+
+            // Also log to console for backup
+            console.log('MIYOMI TRAINER RESPONSES SAVED:', responses);
+
             // Construct email body
-            const subject = 'Miyomi Trainer - Feedback & Interest from Jacob Goldy';
+            const subject = 'Miyomi Trainer - Feedback from Jacob Goldy';
             const body = encodeURIComponent(
-                `MIYOMI TRAINER - STRATEGIC FEEDBACK\n\n` +
+                `MIYOMI TRAINER - FEEDBACK\n\n` +
                 `From: Jacob Goldy (@goldytalks)\n\n` +
                 `---\n\n` +
                 `1. What's Miyomi's biggest opportunity in the next 6 months?\n\n${q1 || '(Not answered)'}\n\n` +
                 `---\n\n` +
                 `2. What contrarian market would you pick for Miyomi's first video?\n\n${q2 || '(Not answered)'}\n\n` +
                 `---\n\n` +
-                `3. What are we getting wrong? What's missing?\n\n${q3 || '(Not answered)'}\n\n` +
+                `3. What are we getting wrong?\n\n${q3 || '(Not answered)'}\n\n` +
                 `---\n\n` +
-                `4. What other PM agents/tools should we be studying?\n\n${q4 || '(Not answered)'}\n\n` +
+                `4. What other PM stuff should we be studying?\n\n${q4 || '(Not answered)'}\n\n` +
                 `---\n\n` +
-                `Submitted from: Trainer Onboarding Page\n` +
-                `Timestamp: ${new Date().toISOString()}`
+                `Submitted: ${new Date().toISOString()}`
             );
 
             // Open email client
@@ -1643,7 +1685,7 @@
             // Show success message
             status.style.display = 'block';
             status.style.color = '#0f0';
-            status.textContent = '✓ Opening your email client... Send the email to complete your submission!';
+            status.textContent = '✓ Opening your email... Your responses are also saved locally as backup!';
         }
     </script>
 </body>
