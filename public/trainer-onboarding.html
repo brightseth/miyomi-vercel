@@ -541,6 +541,131 @@
             font-size: 0.9rem;
         }
 
+        /* Interactive Calculator */
+        .calculator-container {
+            background: #111;
+            border: 1px solid #333;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fff;
+        }
+
+        .input-group input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .input-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .input-group input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            cursor: pointer;
+            border: none;
+        }
+
+        .input-group .value-display {
+            font-size: 1.2rem;
+            color: #0f0;
+            font-weight: bold;
+        }
+
+        .calculator-results {
+            background: #000;
+            border: 1px solid #fff;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .result-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+            padding-top: 24px;
+            margin-top: 16px;
+            border-top: 2px solid #fff;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .result-value.highlight {
+            font-size: 1.8rem;
+            color: #0f0;
+        }
+
+        .scenario-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .scenario-button {
+            padding: 12px 24px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .scenario-button:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 16px;
@@ -862,6 +987,111 @@
                 <li><strong>Proprietary edge:</strong> Dome intelligence + expert curation = differentiated content</li>
                 <li><strong>Compounding:</strong> Each accurate prediction builds credibility → more followers → higher conversion</li>
             </ul>
+
+            <h3>Interactive Revenue Calculator</h3>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">Plug in your own assumptions based on your PM experience and see how revenue scales:</p>
+
+            <div class="calculator-container">
+                <div class="scenario-buttons">
+                    <button class="scenario-button" onclick="loadScenario('conservative')">Conservative</button>
+                    <button class="scenario-button" onclick="loadScenario('moderate')">Moderate (Base Case)</button>
+                    <button class="scenario-button" onclick="loadScenario('aggressive')">Aggressive</button>
+                </div>
+
+                <div class="calculator-inputs">
+                    <div class="input-group">
+                        <label for="followers">Followers at Month 18</label>
+                        <input type="range" id="followers" min="10000" max="200000" step="10000" value="100000" oninput="calculateRevenue()">
+                        <div class="value-display" id="followersValue">100,000</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="avgViews">Avg Views per Video</label>
+                        <input type="range" id="avgViews" min="5000" max="500000" step="5000" value="100000" oninput="calculateRevenue()">
+                        <div class="value-display" id="avgViewsValue">100,000</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="affiliateCtr">Affiliate Click-Through Rate</label>
+                        <input type="range" id="affiliateCtr" min="1" max="10" step="0.5" value="5" oninput="calculateRevenue()">
+                        <div class="value-display" id="affiliateCtrValue">5.0%</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="affiliateCpa">Affiliate CPA (per signup)</label>
+                        <input type="range" id="affiliateCpa" min="20" max="150" step="10" value="75" oninput="calculateRevenue()">
+                        <div class="value-display" id="affiliateCpaValue">$75</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="subConversion">Premium Sub Conversion</label>
+                        <input type="range" id="subConversion" min="0.5" max="5" step="0.25" value="2" oninput="calculateRevenue()">
+                        <div class="value-display" id="subConversionValue">2.0%</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="subPrice">Premium Sub Price</label>
+                        <input type="range" id="subPrice" min="5" max="25" step="5" value="10" oninput="calculateRevenue()">
+                        <div class="value-display" id="subPriceValue">$10/mo</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sponsors">Brand Sponsors</label>
+                        <input type="range" id="sponsors" min="0" max="5" step="1" value="2" oninput="calculateRevenue()">
+                        <div class="value-display" id="sponsorsValue">2</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sponsorRate">Avg Sponsor Rate/Month</label>
+                        <input type="range" id="sponsorRate" min="1000" max="8000" step="500" value="2500" oninput="calculateRevenue()">
+                        <div class="value-display" id="sponsorRateValue">$2,500</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="videosPerWeek">Videos per Week</label>
+                        <input type="range" id="videosPerWeek" min="1" max="7" step="1" value="3" oninput="calculateRevenue()">
+                        <div class="value-display" id="videosPerWeekValue">3</div>
+                    </div>
+                </div>
+
+                <div class="calculator-results">
+                    <h4 style="margin-bottom: 16px; color: #fff;">MONTH 18 PROJECTIONS</h4>
+
+                    <div class="result-row">
+                        <span class="result-label">Affiliate Revenue</span>
+                        <span class="result-value" id="affiliateRevenue">$0</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Premium Subscriptions</span>
+                        <span class="result-value" id="subRevenue">$0</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Brand Sponsorships</span>
+                        <span class="result-value" id="sponsorRevenue">$0</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Soup.xyz Markets</span>
+                        <span class="result-value" id="soupRevenue">$1,000</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Total Monthly Revenue</span>
+                        <span class="result-value highlight" id="totalRevenue">$0</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Your Monthly Royalty (30% of 76% team)</span>
+                        <span class="result-value highlight" id="yourRoyalty">$0</span>
+                    </div>
+                </div>
+
+                <p style="margin-top: 24px; font-size: 0.85rem; color: #666; font-weight: normal;">
+                    <strong>Note:</strong> These are projections based on your assumptions. Actual results depend on content quality, timing, market conditions, and execution. The calculator helps you model different scenarios—test your own numbers based on your prediction market expertise.
+                </p>
+            </div>
         </div>
 
         <!-- Who Is Miyomi -->
@@ -1453,7 +1683,118 @@
         // Focus password input on load
         window.addEventListener('load', function() {
             document.getElementById('password-input').focus();
+            calculateRevenue(); // Initialize calculator
         });
+
+        // Revenue Calculator
+        function formatNumber(num) {
+            return num.toLocaleString('en-US');
+        }
+
+        function formatCurrency(num) {
+            return '$' + Math.round(num).toLocaleString('en-US');
+        }
+
+        function calculateRevenue() {
+            // Get all input values
+            const followers = parseInt(document.getElementById('followers').value);
+            const avgViews = parseInt(document.getElementById('avgViews').value);
+            const affiliateCtr = parseFloat(document.getElementById('affiliateCtr').value) / 100;
+            const affiliateCpa = parseInt(document.getElementById('affiliateCpa').value);
+            const subConversion = parseFloat(document.getElementById('subConversion').value) / 100;
+            const subPrice = parseInt(document.getElementById('subPrice').value);
+            const sponsors = parseInt(document.getElementById('sponsors').value);
+            const sponsorRate = parseInt(document.getElementById('sponsorRate').value);
+            const videosPerWeek = parseInt(document.getElementById('videosPerWeek').value);
+
+            // Update display values
+            document.getElementById('followersValue').textContent = formatNumber(followers);
+            document.getElementById('avgViewsValue').textContent = formatNumber(avgViews);
+            document.getElementById('affiliateCtrValue').textContent = (affiliateCtr * 100).toFixed(1) + '%';
+            document.getElementById('affiliateCpaValue').textContent = '$' + affiliateCpa;
+            document.getElementById('subConversionValue').textContent = (subConversion * 100).toFixed(1) + '%';
+            document.getElementById('subPriceValue').textContent = '$' + subPrice + '/mo';
+            document.getElementById('sponsorsValue').textContent = sponsors;
+            document.getElementById('sponsorRateValue').textContent = formatCurrency(sponsorRate);
+            document.getElementById('videosPerWeekValue').textContent = videosPerWeek;
+
+            // Calculate monthly metrics
+            const videosPerMonth = videosPerWeek * 4;
+            const totalMonthlyViews = avgViews * videosPerMonth;
+            const affiliateClicks = totalMonthlyViews * affiliateCtr;
+            const affiliateSignups = affiliateClicks * 0.15; // 15% signup conversion
+
+            // Revenue calculations
+            const affiliateRevenue = affiliateSignups * affiliateCpa;
+            const premiumSubs = followers * subConversion;
+            const subRevenue = premiumSubs * subPrice;
+            const sponsorRevenue = sponsors * sponsorRate;
+            const soupRevenue = 1000; // Fixed for now
+
+            const totalRevenue = affiliateRevenue + subRevenue + sponsorRevenue + soupRevenue;
+
+            // Calculate trainer royalty (76% team share * 30% trainer allocation)
+            const trainerRoyalty = totalRevenue * 0.76 * 0.30;
+
+            // Update results display
+            document.getElementById('affiliateRevenue').textContent = formatCurrency(affiliateRevenue);
+            document.getElementById('subRevenue').textContent = formatCurrency(subRevenue);
+            document.getElementById('sponsorRevenue').textContent = formatCurrency(sponsorRevenue);
+            document.getElementById('soupRevenue').textContent = formatCurrency(soupRevenue);
+            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
+            document.getElementById('yourRoyalty').textContent = formatCurrency(trainerRoyalty);
+        }
+
+        function loadScenario(scenario) {
+            const scenarios = {
+                conservative: {
+                    followers: 50000,
+                    avgViews: 25000,
+                    affiliateCtr: 3,
+                    affiliateCpa: 50,
+                    subConversion: 1,
+                    subPrice: 10,
+                    sponsors: 1,
+                    sponsorRate: 1500,
+                    videosPerWeek: 3
+                },
+                moderate: {
+                    followers: 100000,
+                    avgViews: 100000,
+                    affiliateCtr: 5,
+                    affiliateCpa: 75,
+                    subConversion: 2,
+                    subPrice: 10,
+                    sponsors: 2,
+                    sponsorRate: 2500,
+                    videosPerWeek: 3
+                },
+                aggressive: {
+                    followers: 150000,
+                    avgViews: 250000,
+                    affiliateCtr: 7,
+                    affiliateCpa: 100,
+                    subConversion: 3,
+                    subPrice: 15,
+                    sponsors: 3,
+                    sponsorRate: 4000,
+                    videosPerWeek: 4
+                }
+            };
+
+            const values = scenarios[scenario];
+            document.getElementById('followers').value = values.followers;
+            document.getElementById('avgViews').value = values.avgViews;
+            document.getElementById('affiliateCtr').value = values.affiliateCtr;
+            document.getElementById('affiliateCpa').value = values.affiliateCpa;
+            document.getElementById('subConversion').value = values.subConversion;
+            document.getElementById('subPrice').value = values.subPrice;
+            document.getElementById('sponsors').value = values.sponsors;
+            document.getElementById('sponsorRate').value = values.sponsorRate;
+            document.getElementById('videosPerWeek').value = values.videosPerWeek;
+
+            calculateRevenue();
+        }
     </script>
 </body>
 </html>
