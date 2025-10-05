@@ -94,16 +94,17 @@
         }
 
         .tldr {
-            background: #0f0;
-            color: #000;
+            background: #111;
+            color: #fff;
             padding: 24px;
             border-radius: 0;
+            border: 2px solid #0f0;
             margin-bottom: 48px;
         }
 
         .tldr h2 {
-            color: #000;
-            border-bottom: 1px solid #000;
+            color: #0f0;
+            border-bottom: 1px solid #0f0;
             margin-top: 0;
         }
 
@@ -112,8 +113,20 @@
         }
 
         .tldr li {
-            color: #000;
-            font-weight: bold;
+            color: #ccc;
+            font-weight: normal;
+        }
+
+        .tldr li strong {
+            color: #0f0;
+        }
+
+        .tldr p {
+            color: #ccc;
+        }
+
+        .tldr p strong {
+            color: #fff;
         }
 
         .highlight-box {
@@ -181,16 +194,27 @@
         }
 
         .cta-section {
-            background: #fff;
-            color: #000;
+            background: #111;
+            color: #fff;
             padding: 48px 32px;
             text-align: center;
             margin-top: 64px;
+            border: 1px solid #333;
         }
 
         .cta-section h2 {
-            color: #000;
-            border-bottom: none;
+            color: #0f0;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        .cta-section h3 {
+            color: #fff;
+        }
+
+        .cta-section p {
+            color: #ccc;
         }
 
         .cta-button {
@@ -350,62 +374,62 @@
                 <h2>What's Already Built (Your Foundation)</h2>
                 <p>2+ months of vibecoding. Now we consolidate:</p>
 
-                <h3>✅ Working Video Pipeline</h3>
+                <h3>✅ Video Generation (Use Eden SDK)</h3>
                 <div class="highlight-box">
-                    <h4>Complete end-to-end generation (3-6 minutes total):</h4>
-                    <ul>
-                        <li><strong>Eden API:</strong> Video generation (Kling model + Yeah LoRA) — 2-5 min</li>
-                        <li><strong>ElevenLabs TTS:</strong> Audio voiceover (Rachel voice) — 20-30 sec</li>
-                        <li><strong>FFmpeg:</strong> Video + audio combination — 5-10 sec</li>
-                    </ul>
+                    <h4>Simple approach - Let Eden handle everything:</h4>
+                    <div class="code-block" style="margin-top: 16px;">// Just use Eden's video generation
+// No need for ElevenLabs + FFmpeg - Eden does it all
+
+POST https://api.eden.art/v2/tasks/create
+{
+  "tool": "create",
+  "args": {
+    "prompt": "Miyomi's 30-second contrarian take",
+    "output": "video",
+    "model_preference": "kling"  // or veo, runway
+  }
+}
+
+// Then poll for completion
+GET https://api.eden.art/v2/tasks/{taskId}
+
+// That's it. Video URL returned when done.</div>
+                    <p style="margin-top: 16px; color: #ccc;"><strong>Ignore the FFmpeg stuff in the repo.</strong> Over-engineered. Eden SDK handles video generation end-to-end.</p>
                 </div>
 
-                <div class="file-tree">lib/
-  eden-client.js          # Eden API wrapper (working)
-  ffmpeg-helper.js        # Audio/video combination
-  dome-client.js          # Dome API for market intelligence
+                <h3>✅ Miyomi Claude Agent (Already Set Up)</h3>
+                <div class="highlight-box">
+                    <p><strong>We already have a Claude agent SDK instance for Miyomi.</strong> Use this for:</p>
+                    <ul>
+                        <li><strong>Polymarket API:</strong> Fetch markets, analyze consensus, identify contrarian opportunities</li>
+                        <li><strong>Kalshi API:</strong> Economic indicator markets, event contracts</li>
+                        <li><strong>Dome API:</strong> Order flow intelligence, smart money tracking</li>
+                        <li><strong>Market analysis:</strong> Generate contrarian theses using Claude's reasoning</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Agent handles:</strong> API calls, data parsing, opportunity identification. You build the UI/database around it.</p>
+                </div>
 
-test-full-audio-pipeline.js   # Complete working test
-combine-video-audio.sh         # FFmpeg automation</div>
-
-                <h3>✅ API Integrations</h3>
-                <table>
-                    <tr>
-                        <th>API</th>
-                        <th>Status</th>
-                        <th>Purpose</th>
-                    </tr>
-                    <tr>
-                        <td>Eden (video generation)</td>
-                        <td class="status-good">✓ Working</td>
-                        <td>30-60sec oracle videos</td>
-                    </tr>
-                    <tr>
-                        <td>ElevenLabs (TTS)</td>
-                        <td class="status-good">✓ Working</td>
-                        <td>Miyomi's voice</td>
-                    </tr>
-                    <tr>
-                        <td>Polymarket</td>
-                        <td class="status-good">✓ Connected</td>
-                        <td>Market data + affiliate links</td>
-                    </tr>
-                    <tr>
-                        <td>Kalshi</td>
-                        <td class="status-good">✓ Connected</td>
-                        <td>Market data + affiliate links</td>
-                    </tr>
-                    <tr>
-                        <td>Dome API</td>
-                        <td class="status-good">✓ Connected</td>
-                        <td>Order flow intelligence (proprietary edge)</td>
-                    </tr>
-                    <tr>
-                        <td>Soup.xyz</td>
-                        <td class="status-warning">⚠ Planned</td>
-                        <td>Custom market creation (Phase 2)</td>
-                    </tr>
-                </table>
+                <h3>Architecture Split</h3>
+                <div class="highlight-box">
+                    <div class="code-block" style="background: #0a0a0a;">┌─────────────────────────────────────────┐
+│         YOUR NEXT.JS PLATFORM            │
+│  (UI, Database, Trainer Dashboard)       │
+└─────────────────────────────────────────┘
+              ↓                    ↓
+    ┌─────────────────┐   ┌──────────────────┐
+    │  CLAUDE AGENT   │   │    EDEN API      │
+    │   (Miyomi)      │   │  (Video Gen)     │
+    └─────────────────┘   └──────────────────┘
+            ↓
+    ┌───────────────────────────┐
+    │  PM Market APIs           │
+    │  • Polymarket             │
+    │  • Kalshi                 │
+    │  • Dome (intelligence)    │
+    │  • Soup.xyz (Phase 2)     │
+    └───────────────────────────┘</div>
+                    <p style="margin-top: 16px;"><strong>Your job:</strong> Build the platform layer. Agent + Eden are already working.</p>
+                </div>
 
                 <h3>✅ Character Definition</h3>
                 <p>Complete personality profile in <code>lib/personality/miyomi-persona.ts</code>:</p>
@@ -444,18 +468,32 @@ combine-video-audio.sh         # FFmpeg automation</div>
                     </ul>
                 </div>
 
-                <h4>Database Schema (Supabase):</h4>
-                <div class="code-block">-- oracle_picks table
-id: uuid
-created_at: timestamp
-market_title: text
-market_url: text
-consensus: numeric (0-100)
-miyomi_take: text (contrarian thesis)
-video_url: text (Eden generated)
-status: enum (PENDING, APPROVED, LIVE, RESOLVED)
-outcome: enum (CORRECT, INCORRECT, PUSH)
-trainer_notes: text</div>
+                <h4>Database Schema (Keep It Simple):</h4>
+                <div class="highlight-box">
+                    <p><strong>One main table: <code>oracle_picks</code></strong></p>
+                    <div class="code-block" style="margin-top: 16px;">CREATE TABLE oracle_picks (
+  id              UUID PRIMARY KEY,
+  created_at      TIMESTAMP DEFAULT NOW(),
+
+  -- Market data
+  market_title    TEXT NOT NULL,
+  market_url      TEXT NOT NULL,
+  consensus       INTEGER,  -- 0-100%
+
+  -- Miyomi's take
+  miyomi_thesis   TEXT NOT NULL,
+  video_url       TEXT,
+
+  -- Workflow
+  status          TEXT DEFAULT 'draft',
+    -- draft → pending → approved → live → resolved
+
+  -- Results tracking
+  outcome         TEXT,  -- correct | incorrect | push
+  trainer_notes   TEXT
+);</div>
+                    <p style="margin-top: 16px; color: #888;">That's it. Start simple. Add indexes/relationships later if needed.</p>
+                </div>
 
                 <h4>Key Technical Requirements:</h4>
                 <ul>
