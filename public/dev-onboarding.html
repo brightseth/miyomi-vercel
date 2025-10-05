@@ -724,6 +724,83 @@ import { combineVideoAudio } from './lib/ffmpeg-helper.js';</div>
                 </ul>
             </div>
 
+            <!-- Who Is Miyomi (Visual) -->
+            <div class="section">
+                <h2>Who Is Miyomi?</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px;">
+                    <img src="/eden-images/miyomi-main.png" alt="Miyomi" style="width: 100%; border: 1px solid #333; border-radius: 0;">
+                    <img src="/eden-images/miyomi-neon.jpg" alt="Miyomi neon" style="width: 100%; border: 1px solid #333; border-radius: 0;">
+                    <img src="/eden-images/miyomi-contrarian.png" alt="Miyomi contrarian" style="width: 100%; border: 1px solid #333; border-radius: 0;">
+                </div>
+
+                <div class="highlight-box">
+                    <p><strong>22-year-old prediction market oracle from Queens → LES.</strong></p>
+                    <ul style="margin-top: 16px;">
+                        <li><strong>Personality:</strong> Fast-talking NYC energy (ESTP), Gen-Z slang + probabilistic analysis</li>
+                        <li><strong>Aesthetic:</strong> Pink/cyan neon, oversized hoodies, "Markets whisper..." mystique</li>
+                        <li><strong>Content:</strong> 30-60 sec TikTok videos highlighting contrarian opportunities</li>
+                        <li><strong>Revenue model:</strong> Attention (affiliates + subs), not trading P&L</li>
+                        <li><strong>Core thesis:</strong> "The crowd is always wrong at extremes"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="section">
+                <h2>FAQ - Anticipated Questions</h2>
+
+                <div class="highlight-box">
+                    <h4>Q: "Why do you need me? Just use Claude to build this."</h4>
+                    <p>27 HTML prototypes proved what Miyomi is. Production needs real architecture (database, auth, deployment pipeline, trainer workflow). AI can't make strategic tech decisions or own a codebase long-term.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "This is way more than 4 weeks of work."</h4>
+                    <p>You're right. Scope is flexible. Week 4 MVP = working trainer dashboard + one working video post. Nice-to-haves (mobile app, analytics) come later if you want to continue. Just need minimum viable platform for trainer to start.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "Why not just use Replit/v0/Bolt and ship this in a day?"</h4>
+                    <p>Tried that. Those tools great for landing pages, bad for multi-user workflows with database state. Need proper Next.js app with Supabase/Postgres. Your call on stack though.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "What happens if the trainer sucks or quits?"</h4>
+                    <p>You still own 30% (75M tokens). Platform works without trainer (could hire replacement or automate more). Your equity isn't dependent on Jacob specifically.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "Spirit Protocol sounds complicated. Do I need to learn Solidity?"</h4>
+                    <p>No. Spirit handles all token/royalty logic. You just build the web app. Revenue gets deposited to contract address, Spirit distributes automatically. Zero blockchain code required from you.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "What if Eden API changes or goes down?"</h4>
+                    <p>Fair risk. Eden is in production with paying customers. We have insider access (dev is Eden employee). Worst case: swap to Runway/Kling API (same interface). Video generation is commodity now.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "Why not just post to TikTok manually? Why build a whole platform?"</h4>
+                    <p>Need to track picks, resolution outcomes, accuracy stats. Trainer needs morning brief workflow. Community needs public oracle page. Can't scale manual posting. Platform = credibility + data.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "How do I get paid before token launch?"</h4>
+                    <p>You don't. This is equity-only until token launches (Week 10). After that, royalty income flows monthly. If you need upfront payment, we can discuss different arrangement.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "What if Miyomi doesn't work and the token is worthless?"</h4>
+                    <p>Then we all made a bad bet. It's startup equity risk. That's why split is 40/30/30 - founder takes most risk. You're only committing 4 weeks initially to test viability.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>Q: "Why can't Seth just finish the vibecoding?"</h4>
+                    <p>Because I hit the limit of what prototyping can do. Need real database, proper state management, deployment pipeline. Vibecoding proved the concept. Now need engineering to make it production-ready. That's you.</p>
+                </div>
+            </div>
+
             <!-- Questions for You -->
             <div class="section">
                 <h2>Quick Feedback (Optional)</h2>
