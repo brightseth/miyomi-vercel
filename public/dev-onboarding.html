@@ -298,20 +298,57 @@
 
             <!-- TL;DR Section -->
             <div class="tldr">
-                <h2>TL;DR - The Build</h2>
+                <h2>TL;DR - What I Need From You</h2>
                 <ul>
-                    <li><strong>Role:</strong> Full stack developer (Next.js platform)</li>
-                    <li><strong>What exists:</strong> Video pipeline, APIs, 27 HTML prototypes, character docs</li>
-                    <li><strong>What you build:</strong> Consolidated production oracle platform</li>
-                    <li><strong>Compensation:</strong> 75M $MIYOMI tokens (30% of team allocation)</li>
-                    <li><strong>Timeline:</strong> 4 weeks to MVP, 10 weeks to token launch</li>
+                    <li><strong>The ask:</strong> Build ONE production platform from 27 HTML prototypes</li>
+                    <li><strong>What works:</strong> Video pipeline (Eden+FFmpeg), APIs, all tested</li>
+                    <li><strong>What doesn't:</strong> No database, no trainer workflow, everything's static HTML</li>
+                    <li><strong>Timeline:</strong> 4 weeks to MVP, trainer starts testing Week 5</li>
+                    <li><strong>Your call:</strong> Tech stack, architecture, how to build it</li>
                 </ul>
+                <p style="margin-top: 16px; color: #000;"><strong>Bottom line:</strong> I vibecoded prototypes to figure out what Miyomi is. Now we need production engineering. Your show.</p>
+            </div>
+
+            <!-- Action Items -->
+            <div class="section">
+                <h2>Action Items For You</h2>
+
+                <div class="highlight-box" style="border-left-color: #f00;">
+                    <h4>Week 1 (This Week):</h4>
+                    <ol>
+                        <li>Review repo: <code>github.com/brightseth/miyomi-vercel</code></li>
+                        <li>Run <code>node test-full-audio-pipeline.js</code> (verify video generation works)</li>
+                        <li>Cherry-pick best UI patterns from 27 HTML prototypes in <code>/public</code></li>
+                        <li>Propose tech stack (Next.js + Supabase? Your call.)</li>
+                    </ol>
+                </div>
+
+                <div class="highlight-box" style="border-left-color: #ff0;">
+                    <h4>Week 2-3:</h4>
+                    <ol>
+                        <li>Build MVP: Public oracle page + Trainer dashboard</li>
+                        <li>Database schema for oracle picks (Supabase or whatever you prefer)</li>
+                        <li>Integrate Eden API for video generation</li>
+                        <li>Deploy to miyomi.ai (domain already configured)</li>
+                    </ol>
+                </div>
+
+                <div class="highlight-box" style="border-left-color: #0f0;">
+                    <h4>Week 4:</h4>
+                    <ol>
+                        <li>Trainer workflow: Morning brief → Approve → Generate → Post</li>
+                        <li>Trainer tests with first 5 videos</li>
+                        <li>Iterate based on feedback</li>
+                    </ol>
+                </div>
+
+                <p style="margin-top: 24px;"><strong>You decide:</strong> Architecture, database, deployment strategy. I trust your judgment. Just needs to work reliably and be maintainable.</p>
             </div>
 
             <!-- What's Already Built -->
             <div class="section">
                 <h2>What's Already Built (Your Foundation)</h2>
-                <p>2+ months of vibecoding got us here. Now we need production engineering:</p>
+                <p>2+ months of vibecoding. Now we consolidate:</p>
 
                 <h3>✅ Working Video Pipeline</h3>
                 <div class="highlight-box">
@@ -651,35 +688,26 @@ import { combineVideoAudio } from './lib/ffmpeg-helper.js';</div>
 
             <!-- Questions for You -->
             <div class="section">
-                <h2>Your Turn - Technical Questions</h2>
-                <p>Before we talk, share your thoughts on the technical approach:</p>
+                <h2>Quick Feedback (Optional)</h2>
+                <p>Or just text me if you prefer. Whatever's easier.</p>
 
                 <div class="highlight-box">
-                    <h4>1. What's your take on the tech stack?</h4>
-                    <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Next.js + Supabase + Vercel recommended. Would you change anything? Why?</p>
-                    <textarea id="question1" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Your tech stack thoughts..."></textarea>
+                    <h4>1. Tech stack - change anything?</h4>
+                    <textarea id="question1" style="width: 100%; min-height: 80px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Next.js + Supabase recommended, but your call..."></textarea>
                 </div>
 
                 <div class="highlight-box">
-                    <h4>2. What's the biggest technical risk you see?</h4>
-                    <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Video generation speed? Real-time updates? Database scaling? What could go wrong?</p>
-                    <textarea id="question2" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Technical risks..."></textarea>
+                    <h4>2. Biggest risk?</h4>
+                    <textarea id="question2" style="width: 100%; min-height: 80px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="What could go wrong?"></textarea>
                 </div>
 
                 <div class="highlight-box">
-                    <h4>3. What's missing from this spec?</h4>
-                    <p style="font-weight: normal; color: #888; margin-bottom: 16px;">What technical details are unclear? What would you need to know before starting?</p>
-                    <textarea id="question3" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Questions or concerns..."></textarea>
-                </div>
-
-                <div class="highlight-box">
-                    <h4>4. Timeline realistic? (Optional)</h4>
-                    <p style="font-weight: normal; color: #888; margin-bottom: 16px;">4 weeks to MVP, 10 weeks to token launch. Doable or aggressive?</p>
-                    <textarea id="question4" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Timeline thoughts..."></textarea>
+                    <h4>3. What's unclear?</h4>
+                    <textarea id="question3" style="width: 100%; min-height: 80px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Missing context or details..."></textarea>
                 </div>
 
                 <button onclick="submitFeedback()" style="width: 100%; padding: 16px; background: #0f0; color: #000; border: 1px solid #0f0; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; font-family: 'Helvetica Neue', Arial, sans-serif; transition: all 0.2s; margin-top: 24px;">
-                    Submit & Schedule Call
+                    Send Feedback
                 </button>
                 <p id="submit-status" style="text-align: center; margin-top: 16px; color: #0f0; display: none;"></p>
             </div>
@@ -706,7 +734,7 @@ import { combineVideoAudio } from './lib/ffmpeg-helper.js';</div>
 
     <script>
         // Password protection
-        const correctPassword = 'pastrami';
+        const correctPassword = 'chickennoodle';
 
         function checkPassword() {
             const input = document.getElementById('password-input').value;
@@ -745,7 +773,7 @@ import { combineVideoAudio } from './lib/ffmpeg-helper.js';</div>
         // Add auto-save listeners
         window.addEventListener('load', function() {
             restoreResponses();
-            ['question1', 'question2', 'question3', 'question4'].forEach(id => {
+            ['question1', 'question2', 'question3'].forEach(id => {
                 document.getElementById(id).addEventListener('input', autoSaveResponses);
             });
         });
@@ -755,19 +783,19 @@ import { combineVideoAudio } from './lib/ffmpeg-helper.js';</div>
             const q1 = document.getElementById('question1').value.trim();
             const q2 = document.getElementById('question2').value.trim();
             const q3 = document.getElementById('question3').value.trim();
-            const q4 = document.getElementById('question4').value.trim();
             const status = document.getElementById('submit-status');
 
-            if (!q1 && !q2 && !q3 && !q4) {
+            if (!q1 && !q2 && !q3) {
                 status.style.display = 'block';
                 status.style.color = '#f00';
-                status.textContent = 'Please answer at least one question.';
+                status.textContent = 'Or just text/call me if easier.';
+                setTimeout(() => status.style.display = 'none', 3000);
                 return;
             }
 
             // Save to localStorage as backup
             const responses = {
-                q1, q2, q3, q4,
+                q1, q2, q3,
                 submitted: true,
                 timestamp: new Date().toISOString()
             };
@@ -777,19 +805,13 @@ import { combineVideoAudio } from './lib/ffmpeg-helper.js';</div>
             console.log('MIYOMI DEV RESPONSES SAVED:', responses);
 
             // Construct email body
-            const subject = 'Miyomi Dev - Technical Feedback';
+            const subject = 'Miyomi - Quick Tech Feedback';
             const body = encodeURIComponent(
-                `MIYOMI DEV - TECHNICAL FEEDBACK\n\n` +
-                `---\n\n` +
-                `1. What's your take on the tech stack?\n\n${q1 || '(Not answered)'}\n\n` +
-                `---\n\n` +
-                `2. What's the biggest technical risk you see?\n\n${q2 || '(Not answered)'}\n\n` +
-                `---\n\n` +
-                `3. What's missing from this spec?\n\n${q3 || '(Not answered)'}\n\n` +
-                `---\n\n` +
-                `4. Timeline realistic?\n\n${q4 || '(Not answered)'}\n\n` +
-                `---\n\n` +
-                `Submitted: ${new Date().toISOString()}`
+                `MIYOMI TECH FEEDBACK\n\n` +
+                `1. Tech stack thoughts:\n${q1 || '-'}\n\n` +
+                `2. Biggest risk:\n${q2 || '-'}\n\n` +
+                `3. What's unclear:\n${q3 || '-'}\n\n` +
+                `Sent: ${new Date().toISOString()}`
             );
 
             // Open email client
@@ -798,7 +820,7 @@ import { combineVideoAudio } from './lib/ffmpeg-helper.js';</div>
             // Show success message
             status.style.display = 'block';
             status.style.color = '#0f0';
-            status.textContent = '✓ Opening your email... Your responses are also saved locally as backup!';
+            status.textContent = '✓ Saved locally + opening email';
         }
     </script>
 </body>
