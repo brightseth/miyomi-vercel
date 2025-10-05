@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miyomi - Dev Onboarding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: bold;
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            color: #0f0;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #888;
+            font-weight: normal;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 48px 0 24px;
+            color: #0f0;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 32px 0 16px;
+            color: #fff;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin: 24px 0 12px;
+            color: #ccc;
+        }
+
+        p, li {
+            font-weight: normal;
+            color: #ccc;
+            margin-bottom: 16px;
+        }
+
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .tldr {
+            background: #0f0;
+            color: #000;
+            padding: 24px;
+            border-radius: 0;
+            margin-bottom: 48px;
+        }
+
+        .tldr h2 {
+            color: #000;
+            border-bottom: 1px solid #000;
+            margin-top: 0;
+        }
+
+        .tldr ul {
+            margin-left: 24px;
+        }
+
+        .tldr li {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .highlight-box {
+            background: #111;
+            border-left: 4px solid #0f0;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .code-block {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 16px 0;
+            color: #0f0;
+        }
+
+        .file-tree {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #0f0;
+            white-space: pre;
+            margin: 16px 0;
+        }
+
+        .status-good {
+            color: #0f0;
+        }
+
+        .status-warning {
+            color: #ff0;
+        }
+
+        .status-needed {
+            color: #f00;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #111;
+            color: #0f0;
+            font-weight: bold;
+        }
+
+        td {
+            font-weight: normal;
+            color: #ccc;
+        }
+
+        .cta-section {
+            background: #fff;
+            color: #000;
+            padding: 48px 32px;
+            text-align: center;
+            margin-top: 64px;
+        }
+
+        .cta-section h2 {
+            color: #000;
+            border-bottom: none;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 48px;
+            background: #0f0;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+            border: 1px solid #0f0;
+            transition: all 0.2s;
+            margin-top: 24px;
+        }
+
+        .cta-button:hover {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+        }
+
+        #password-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .password-card {
+            background: #111;
+            border: 1px solid #0f0;
+            padding: 48px;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .password-card h1 {
+            margin-bottom: 16px;
+        }
+
+        .password-card p {
+            margin-bottom: 24px;
+        }
+
+        .password-card input {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .password-card button {
+            width: 100%;
+            padding: 12px;
+            background: #0f0;
+            color: #000;
+            border: 1px solid #0f0;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .password-card button:hover {
+            background: #000;
+            color: #0f0;
+        }
+
+        #content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="password-gate">
+        <div class="password-card">
+            <h1>Miyomi Dev</h1>
+            <p>Enter password to access technical docs</p>
+            <input type="password" id="password-input" placeholder="Password" onkeypress="if(event.key === 'Enter') checkPassword()">
+            <button onclick="checkPassword()">Access Docs</button>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+            <header>
+                <h1>Miyomi Developer</h1>
+                <p class="tagline">Technical Onboarding - Full Stack Build</p>
+                <p style="color: #666; font-size: 0.8rem; font-weight: normal;">Confidential — For: Dev Role — October 2025</p>
+            </header>
+
+            <!-- TL;DR Section -->
+            <div class="tldr">
+                <h2>TL;DR - The Build</h2>
+                <ul>
+                    <li><strong>Role:</strong> Full stack developer (Next.js platform)</li>
+                    <li><strong>What exists:</strong> Video pipeline, APIs, 27 HTML prototypes, character docs</li>
+                    <li><strong>What you build:</strong> Consolidated production oracle platform</li>
+                    <li><strong>Compensation:</strong> 75M $MIYOMI tokens (30% of team allocation)</li>
+                    <li><strong>Timeline:</strong> 4 weeks to MVP, 10 weeks to token launch</li>
+                </ul>
+            </div>
+
+            <!-- What's Already Built -->
+            <div class="section">
+                <h2>What's Already Built (Your Foundation)</h2>
+                <p>2+ months of vibecoding got us here. Now we need production engineering:</p>
+
+                <h3>✅ Working Video Pipeline</h3>
+                <div class="highlight-box">
+                    <h4>Complete end-to-end generation (3-6 minutes total):</h4>
+                    <ul>
+                        <li><strong>Eden API:</strong> Video generation (Kling model + Yeah LoRA) — 2-5 min</li>
+                        <li><strong>ElevenLabs TTS:</strong> Audio voiceover (Rachel voice) — 20-30 sec</li>
+                        <li><strong>FFmpeg:</strong> Video + audio combination — 5-10 sec</li>
+                    </ul>
+                </div>
+
+                <div class="file-tree">lib/
+  eden-client.js          # Eden API wrapper (working)
+  ffmpeg-helper.js        # Audio/video combination
+  dome-client.js          # Dome API for market intelligence
+
+test-full-audio-pipeline.js   # Complete working test
+combine-video-audio.sh         # FFmpeg automation</div>
+
+                <h3>✅ API Integrations</h3>
+                <table>
+                    <tr>
+                        <th>API</th>
+                        <th>Status</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>Eden (video generation)</td>
+                        <td class="status-good">✓ Working</td>
+                        <td>30-60sec oracle videos</td>
+                    </tr>
+                    <tr>
+                        <td>ElevenLabs (TTS)</td>
+                        <td class="status-good">✓ Working</td>
+                        <td>Miyomi's voice</td>
+                    </tr>
+                    <tr>
+                        <td>Polymarket</td>
+                        <td class="status-good">✓ Connected</td>
+                        <td>Market data + affiliate links</td>
+                    </tr>
+                    <tr>
+                        <td>Kalshi</td>
+                        <td class="status-good">✓ Connected</td>
+                        <td>Market data + affiliate links</td>
+                    </tr>
+                    <tr>
+                        <td>Dome API</td>
+                        <td class="status-good">✓ Connected</td>
+                        <td>Order flow intelligence (proprietary edge)</td>
+                    </tr>
+                    <tr>
+                        <td>Soup.xyz</td>
+                        <td class="status-warning">⚠ Planned</td>
+                        <td>Custom market creation (Phase 2)</td>
+                    </tr>
+                </table>
+
+                <h3>✅ Character Definition</h3>
+                <p>Complete personality profile in <code>lib/personality/miyomi-persona.ts</code>:</p>
+                <ul>
+                    <li>Full backstory (Queens → NYU dropout → LES oracle)</li>
+                    <li>ESTP personality with fast-talking NYC energy</li>
+                    <li>Platform-specific voice (TikTok vs Twitter vs Farcaster)</li>
+                    <li>Visual identity (pink/cyan neon, oversized hoodies)</li>
+                    <li>"Markets whisper..." catchphrase + contrarian thesis</li>
+                </ul>
+
+                <h3>⚠️ 27 HTML Prototypes (Consolidation Needed)</h3>
+                <p>Various dashboard experiments exist. <strong>You need to cherry-pick best patterns and build ONE production platform.</strong></p>
+                <div class="file-tree">public/
+  index.html                        # Main site
+  miyomi-live.html                  # Live oracle dashboard
+  trainer-streamlined.html          # Simplified workflow
+  miyomi-video-dashboard.html       # Video management
+  ...23 more iterations</div>
+
+                <p><strong>Key insight from prototypes:</strong> Three-panel layout works best (hero + content feed + live status). Trading dashboards were a dead end.</p>
+            </div>
+
+            <!-- What You Need to Build -->
+            <div class="section">
+                <h2>What You Need to Build</h2>
+
+                <h3>Week 1-2: MVP Platform (Next.js)</h3>
+                <div class="highlight-box">
+                    <h4>Core Routes:</h4>
+                    <ul>
+                        <li><code>/</code> - Public oracle page (Miyomi's latest picks)</li>
+                        <li><code>/dashboard/oracle</code> - Trainer dashboard (approve content)</li>
+                        <li><code>/api/eden/generate</code> - Video generation endpoint</li>
+                        <li><code>/api/polymarket/markets</code> - Market data proxy</li>
+                    </ul>
+                </div>
+
+                <h4>Database Schema (Supabase):</h4>
+                <div class="code-block">-- oracle_picks table
+id: uuid
+created_at: timestamp
+market_title: text
+market_url: text
+consensus: numeric (0-100)
+miyomi_take: text (contrarian thesis)
+video_url: text (Eden generated)
+status: enum (PENDING, APPROVED, LIVE, RESOLVED)
+outcome: enum (CORRECT, INCORRECT, PUSH)
+trainer_notes: text</div>
+
+                <h4>Key Technical Requirements:</h4>
+                <ul>
+                    <li><strong>Real-time updates:</strong> Trainer approves → instantly live on public page</li>
+                    <li><strong>Video pipeline integration:</strong> Eden generation → Supabase storage → CDN</li>
+                    <li><strong>Affiliate tracking:</strong> UTM parameters on all Polymarket/Kalshi links</li>
+                    <li><strong>Performance:</strong> <3sec page load, optimistic UI updates</li>
+                    <li><strong>Mobile-first:</strong> TikTok audience = mobile (responsive critical)</li>
+                </ul>
+
+                <h3>Week 3-4: Trainer Workflow</h3>
+                <div class="highlight-box">
+                    <h4>Morning Brief Generation (automated):</h4>
+                    <ol>
+                        <li>Cron job scans Polymarket/Kalshi overnight (9 AM daily)</li>
+                        <li>Identifies 3-5 markets with >70% or <30% consensus</li>
+                        <li>Generates contrarian thesis for each using Claude API</li>
+                        <li>Queues for trainer review in dashboard</li>
+                    </ol>
+                </div>
+
+                <h4>Trainer Dashboard Features:</h4>
+                <ul>
+                    <li><strong>Review queue:</strong> AI-generated picks awaiting approval</li>
+                    <li><strong>Script editor:</strong> Edit Miyomi's take before video generation</li>
+                    <li><strong>Video preview:</strong> Review generated video before posting</li>
+                    <li><strong>Platform distribution:</strong> One-click post to TikTok/Twitter/Farcaster</li>
+                    <li><strong>Analytics:</strong> Views, clicks, engagement, prediction accuracy</li>
+                </ul>
+
+                <h3>Nice-to-Haves (If Time Permits):</h3>
+                <ul>
+                    <li>Dome API integration (order flow signals)</li>
+                    <li>Prediction accuracy leaderboard</li>
+                    <li>Community comments/reactions</li>
+                    <li>Premium tier paywall ($10/mo subs)</li>
+                </ul>
+            </div>
+
+            <!-- Technical Stack -->
+            <div class="section">
+                <h2>Technical Stack (Recommended)</h2>
+
+                <table>
+                    <tr>
+                        <th>Layer</th>
+                        <th>Technology</th>
+                        <th>Why</th>
+                    </tr>
+                    <tr>
+                        <td>Framework</td>
+                        <td>Next.js 15 + App Router</td>
+                        <td>SSR for SEO, API routes, file-based routing</td>
+                    </tr>
+                    <tr>
+                        <td>Database</td>
+                        <td>Supabase (Postgres)</td>
+                        <td>Real-time subs, auth, storage, generous free tier</td>
+                    </tr>
+                    <tr>
+                        <td>Styling</td>
+                        <td>Tailwind CSS</td>
+                        <td>Fast iteration, mobile-first, consistent design</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment</td>
+                        <td>Vercel</td>
+                        <td>One-click deploy, edge functions, already configured</td>
+                    </tr>
+                    <tr>
+                        <td>Video Storage</td>
+                        <td>Supabase Storage → CDN</td>
+                        <td>Eden generates → upload to Supabase → serve via CDN</td>
+                    </tr>
+                    <tr>
+                        <td>Cron Jobs</td>
+                        <td>Vercel Cron + Edge Functions</td>
+                        <td>Daily market scans, automated briefs</td>
+                    </tr>
+                    <tr>
+                        <td>Auth</td>
+                        <td>Supabase Auth</td>
+                        <td>Trainer login, secure dashboard access</td>
+                    </tr>
+                </table>
+
+                <h3>Existing Code You Can Reuse:</h3>
+                <div class="code-block">// Eden video generation (working)
+import { generateVideo } from './lib/eden-client.js';
+
+// Dome market intelligence (working)
+import { getDomePnL } from './lib/dome-client.js';
+
+// FFmpeg video combination (working)
+import { combineVideoAudio } from './lib/ffmpeg-helper.js';</div>
+            </div>
+
+            <!-- Architecture Decisions -->
+            <div class="section">
+                <h2>Architecture Decisions Made</h2>
+
+                <h3>1. Miyomi is an Oracle (Not a Trader)</h3>
+                <p><strong>This is critical:</strong> The 27 prototypes explored "trader" UX (P&L tracking, position management). <strong>Wrong direction.</strong></p>
+                <div class="highlight-box">
+                    <p><strong>What Miyomi Actually Is:</strong></p>
+                    <ul>
+                        <li>Influencer/commentator who highlights interesting markets</li>
+                        <li>Revenue from attention (affiliates + subs), not trading profits</li>
+                        <li>Content focus: "Here's a contrarian opportunity" not "I bought this"</li>
+                    </ul>
+                </div>
+
+                <h3>2. Trainer as Validation Layer</h3>
+                <p>AI generates → Trainer validates → Miyomi posts. <strong>Trainer's PM expertise is the secret sauce.</strong></p>
+
+                <h3>3. TikTok First, Others Second</h3>
+                <p>Primary platform: TikTok (viral potential). Cross-post to Twitter/Farcaster. Don't optimize for YouTube yet.</p>
+
+                <h3>4. Every Other Day Cadence</h3>
+                <p>3-4 videos/week (not daily). Quality > quantity. Sustainable for trainer.</p>
+
+                <h3>5. Affiliate Links Only (Phase 1)</h3>
+                <p>Don't build premium tier subscriptions yet. Validate affiliate revenue first. Add subs later if traction.</p>
+            </div>
+
+            <!-- Compensation -->
+            <div class="section">
+                <h2>Compensation: 75M $MIYOMI Tokens</h2>
+
+                <h3>Token Allocation (30% of Team)</h3>
+                <div class="highlight-box">
+                    <pre style="font-family: 'Courier New', monospace; color: #0f0;">$MIYOMI Token (1 billion total supply):
+├─ 25% → $SPIRIT holders (Spirit Protocol)
+├─ 25% → Liquidity pool
+├─ 25% → Team (250M tokens):
+│        ├─ 40% Founder (100M) - Vision, strategy, IP
+│        ├─ 30% Dev (75M) - Platform build ← YOU
+│        └─ 30% Trainer (75M) - Daily ops
+└─ 25% → Miyomi treasury</pre>
+                </div>
+
+                <h3>Why 30% (Equal to Trainer)?</h3>
+                <ul>
+                    <li>Building entire technical platform = as valuable as daily curation</li>
+                    <li>One-time build enables long-term operation</li>
+                    <li>Your Eden insider access = significant advantage</li>
+                    <li>Team recognizes technical expertise as critical</li>
+                </ul>
+
+                <h3>Spirit Protocol Royalty Mechanics:</h3>
+                <ul>
+                    <li><strong>12-month auto-pledge:</strong> Tokens locked, earning 12× royalty multiplier</li>
+                    <li><strong>Team gets 76-83% of revenue initially</strong> (weighted by multiplier)</li>
+                    <li><strong>Your share:</strong> 30% of team royalties = ~$692-10k+/mo by Month 18 (varies by scenario)</li>
+                    <li><strong>After 12 months:</strong> Re-pledge for 24×-36× multiplier OR sell</li>
+                </ul>
+            </div>
+
+            <!-- Timeline -->
+            <div class="section">
+                <h2>Timeline: 10 Weeks to Token Launch</h2>
+
+                <h3>Week 1-2: MVP Build</h3>
+                <ul>
+                    <li>Set up Next.js project + Supabase</li>
+                    <li>Build public oracle page + trainer dashboard</li>
+                    <li>Integrate Eden video generation</li>
+                    <li>Deploy to miyomi.ai (domain already configured)</li>
+                </ul>
+
+                <h3>Week 3-4: Workflow Automation</h3>
+                <ul>
+                    <li>Build morning brief generator (Claude API)</li>
+                    <li>Implement trainer approval flow</li>
+                    <li>Add affiliate link tracking</li>
+                    <li>Test with trainer (first 5-10 videos)</li>
+                </ul>
+
+                <h3>Week 5-10: Growth & Scaling</h3>
+                <ul>
+                    <li>Trainer creates 25-30+ videos</li>
+                    <li>Iterate based on performance data</li>
+                    <li>Add analytics dashboard</li>
+                    <li>Optimize video generation speed</li>
+                    <li>Prepare for token launch (Spirit Protocol integration)</li>
+                </ul>
+
+                <h3>Dec 16, 2025: 🚀 Token Launch</h3>
+                <p>$MIYOMI minted via Spirit Protocol. Your 75M tokens distributed (auto-pledged 12 months).</p>
+            </div>
+
+            <!-- Your Advantage -->
+            <div class="section">
+                <h2>Your Advantage: Eden Insider Access</h2>
+
+                <h3>Why This Matters:</h3>
+                <ul>
+                    <li><strong>Faster video generation:</strong> Direct API access, priority support</li>
+                    <li><strong>Custom features:</strong> Can request Miyomi-specific optimizations</li>
+                    <li><strong>Cost efficiency:</strong> Potential for better rates or internal allocation</li>
+                    <li><strong>Technical insight:</strong> Know Eden architecture deeply</li>
+                    <li><strong>Edge on competition:</strong> No other PM agents have this advantage</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p><strong>This isn't just "you can build it"—you can build it BETTER and FASTER because of Eden access.</strong></p>
+                </div>
+            </div>
+
+            <!-- Handoff Documents -->
+            <div class="section">
+                <h2>Handoff Documents (In Repo)</h2>
+
+                <h3>Read These First:</h3>
+                <ol>
+                    <li><code>MIYOMI_MASTER_CONSOLIDATION.md</code> - Complete overview of past 2 months</li>
+                    <li><code>IMPLEMENTATION_PATTERNS_FOUND.md</code> - Best patterns from 27 prototypes</li>
+                    <li><code>DECISION_FRAMEWORK.md</code> - 8 strategic choices already made</li>
+                    <li><code>TEAM_STRUCTURE.md</code> - Your role + trainer role + founder role</li>
+                </ol>
+
+                <h3>Technical References:</h3>
+                <ul>
+                    <li><code>AUDIO_FINAL_SOLUTION.md</code> - Video pipeline technical details</li>
+                    <li><code>PROPRIETARY_EDGE_ARCHITECTURE.md</code> - Dome + Soup integration plans</li>
+                    <li><code>lib/</code> folder - All working code (Eden, Dome, FFmpeg)</li>
+                    <li><code>public/</code> folder - 27 HTML prototypes (cherry-pick best UI patterns)</li>
+                </ul>
+            </div>
+
+            <!-- Questions for You -->
+            <div class="section">
+                <h2>Your Turn - Technical Questions</h2>
+                <p>Before we talk, share your thoughts on the technical approach:</p>
+
+                <div class="highlight-box">
+                    <h4>1. What's your take on the tech stack?</h4>
+                    <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Next.js + Supabase + Vercel recommended. Would you change anything? Why?</p>
+                    <textarea id="question1" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Your tech stack thoughts..."></textarea>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>2. What's the biggest technical risk you see?</h4>
+                    <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Video generation speed? Real-time updates? Database scaling? What could go wrong?</p>
+                    <textarea id="question2" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Technical risks..."></textarea>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>3. What's missing from this spec?</h4>
+                    <p style="font-weight: normal; color: #888; margin-bottom: 16px;">What technical details are unclear? What would you need to know before starting?</p>
+                    <textarea id="question3" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Questions or concerns..."></textarea>
+                </div>
+
+                <div class="highlight-box">
+                    <h4>4. Timeline realistic? (Optional)</h4>
+                    <p style="font-weight: normal; color: #888; margin-bottom: 16px;">4 weeks to MVP, 10 weeks to token launch. Doable or aggressive?</p>
+                    <textarea id="question4" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Timeline thoughts..."></textarea>
+                </div>
+
+                <button onclick="submitFeedback()" style="width: 100%; padding: 16px; background: #0f0; color: #000; border: 1px solid #0f0; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; font-family: 'Helvetica Neue', Arial, sans-serif; transition: all 0.2s; margin-top: 24px;">
+                    Submit & Schedule Call
+                </button>
+                <p id="submit-status" style="text-align: center; margin-top: 16px; color: #0f0; display: none;"></p>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <h2>Next Steps</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 32px; font-weight: bold;">After you submit your thoughts above:</p>
+
+                <div style="text-align: left; max-width: 600px; margin: 0 auto 32px; font-weight: normal;">
+                    <h3 style="color: #000; font-size: 1rem; margin-bottom: 16px;">Here's what happens next:</h3>
+                    <p style="margin-bottom: 8px;"><strong>1.</strong> We review your technical feedback (usually within 24 hours)</p>
+                    <p style="margin-bottom: 8px;"><strong>2.</strong> Schedule 30-minute call to walk through repo and answer questions</p>
+                    <p style="margin-bottom: 8px;"><strong>3.</strong> Discuss timeline, compensation, and start date</p>
+                    <p style="margin-bottom: 8px;"><strong>4.</strong> If aligned, grant repo access and kick off Week 1</p>
+                </div>
+
+                <p style="font-size: 0.9rem; margin-top: 24px; font-weight: normal; color: #666;">
+                    Questions before applying? Email seth@eden.art
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password protection
+        const correctPassword = 'pastrami';
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            if (input === correctPassword) {
+                document.getElementById('password-gate').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        // Auto-save responses to localStorage as user types
+        function autoSaveResponses() {
+            const responses = {
+                q1: document.getElementById('question1').value,
+                q2: document.getElementById('question2').value,
+                q3: document.getElementById('question3').value,
+                q4: document.getElementById('question4').value,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('miyomi_dev_responses', JSON.stringify(responses));
+        }
+
+        // Restore saved responses on page load
+        function restoreResponses() {
+            const saved = localStorage.getItem('miyomi_dev_responses');
+            if (saved) {
+                const responses = JSON.parse(saved);
+                document.getElementById('question1').value = responses.q1 || '';
+                document.getElementById('question2').value = responses.q2 || '';
+                document.getElementById('question3').value = responses.q3 || '';
+                document.getElementById('question4').value = responses.q4 || '';
+            }
+        }
+
+        // Add auto-save listeners
+        window.addEventListener('load', function() {
+            restoreResponses();
+            ['question1', 'question2', 'question3', 'question4'].forEach(id => {
+                document.getElementById(id).addEventListener('input', autoSaveResponses);
+            });
+        });
+
+        // Feedback submission
+        function submitFeedback() {
+            const q1 = document.getElementById('question1').value.trim();
+            const q2 = document.getElementById('question2').value.trim();
+            const q3 = document.getElementById('question3').value.trim();
+            const q4 = document.getElementById('question4').value.trim();
+            const status = document.getElementById('submit-status');
+
+            if (!q1 && !q2 && !q3 && !q4) {
+                status.style.display = 'block';
+                status.style.color = '#f00';
+                status.textContent = 'Please answer at least one question.';
+                return;
+            }
+
+            // Save to localStorage as backup
+            const responses = {
+                q1, q2, q3, q4,
+                submitted: true,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('miyomi_dev_submission', JSON.stringify(responses));
+
+            // Also log to console for backup
+            console.log('MIYOMI DEV RESPONSES SAVED:', responses);
+
+            // Construct email body
+            const subject = 'Miyomi Dev - Technical Feedback';
+            const body = encodeURIComponent(
+                `MIYOMI DEV - TECHNICAL FEEDBACK\n\n` +
+                `---\n\n` +
+                `1. What's your take on the tech stack?\n\n${q1 || '(Not answered)'}\n\n` +
+                `---\n\n` +
+                `2. What's the biggest technical risk you see?\n\n${q2 || '(Not answered)'}\n\n` +
+                `---\n\n` +
+                `3. What's missing from this spec?\n\n${q3 || '(Not answered)'}\n\n` +
+                `---\n\n` +
+                `4. Timeline realistic?\n\n${q4 || '(Not answered)'}\n\n` +
+                `---\n\n` +
+                `Submitted: ${new Date().toISOString()}`
+            );
+
+            // Open email client
+            window.location.href = `mailto:seth@eden.art?subject=${subject}&body=${body}`;
+
+            // Show success message
+            status.style.display = 'block';
+            status.style.color = '#0f0';
+            status.textContent = '✓ Opening your email... Your responses are also saved locally as backup!';
+        }
+    </script>
+</body>
+</html>
