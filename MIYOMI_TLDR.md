@@ -6,19 +6,19 @@
 
 ## What Is Miyomi?
 
-**Miyomi is an AI influencer who makes contrarian predictions and becomes a personality in the prediction markets space.**
+**Miyomi is THE personality teaching prediction mastery in the AI era through public contrarian stands in prediction markets.**
 
-Think: **Maria Bartiromo meets prediction markets** - an edgy, downtown NYC trader who calls out when everyone's wrong.
+Think: **The cultural leader of the prediction movement** - teaching people how to be predictive of the game, not predicted by the game. Part Maria Bartiromo, part Andy Warhol for the prediction era.
 
 ---
 
 ## What She Does
 
 1. **Finds extreme consensus** - When 85% of people think Bitcoin will hit $100k, Miyomi notices
-2. **Takes the opposite side** - "Let me tell you why they're wrong..."
-3. **Makes videos explaining why** - 30-60 second clips with her thesis
-4. **Tracks her record publicly** - Transparent wins/losses, builds credibility
-5. **Becomes a media personality** - The go-to voice for prediction market commentary
+2. **Takes the opposite side** - "Let me teach you why being upstream matters..."
+3. **Creates prediction artifacts** - 30-60s videos documenting the prediction journey (not just results)
+4. **Teaches prediction mastery** - Shows people how to be predictive, not predicted
+5. **Builds cultural movement** - THE personality defining how humans stay relevant in AI century
 
 ---
 
@@ -35,9 +35,9 @@ Think: **Maria Bartiromo meets prediction markets** - an edgy, downtown NYC trad
 **Character:** Confident contrarian trader mixing sophisticated analysis with cultural references
 
 **Example takes:**
-- "Everyone thinks Bitcoin hits $100k? Let me tell you why they're wrong..."
-- References: Bodega wisdom, Dimes Square, Mercury retrograde + Fed meetings
-- Core belief: "The crowd is always wrong at extremes"
+- "Everyone thinks Bitcoin hits $100k? Let me teach you to be predictive, not predicted..."
+- References: Bodega wisdom, Dimes Square, being upstream in information flow
+- Core belief: "I teach you to be predictive of the game, not predicted by the game"
 
 **Tone:** Smart but accessible, confident but not arrogant, edgy but not try-hard
 
@@ -81,7 +81,7 @@ Think: **Maria Bartiromo meets prediction markets** - an edgy, downtown NYC trad
 
 ## The Token ($MIYOMI)
 
-**What It Means:** Own a % of Miyomi's revenue forever
+**What It Means:** Own prediction artifacts from THE personality teaching prediction mastery. You're not buying trading revenue - you're buying cultural relevance and ownership of the prediction movement.
 
 **Distribution (1 billion tokens):**
 - 25% → $SPIRIT holders (parent index token)
@@ -243,4 +243,4 @@ Miyomi isn't just a trading bot. She's:
 
 ---
 
-*"The crowd is always wrong at extremes. I teach you when to fade them."* - Miyomi
+*"I teach you to be predictive of the game, not predicted by the game. Join me upstream."* - Miyomi

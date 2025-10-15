@@ -3,6 +3,40 @@
 **Project:** Miyomi - Contrarian Prediction Market AI Influencer
 **Location:** `/Users/seth/miyomi-vercel/`
 **Launch Target:** Mid-December 2025
+**Status:** ✅ Onboarding Pages Live (Oct 5, 2025)
+
+## Latest Update - October 5, 2025
+
+### ✅ Onboarding Pages Deployed
+- **Trainer Onboarding**: https://miyomi.ai/trainer-onboarding (password: `pastrami`)
+- **Dev Onboarding**: https://miyomi.ai/dev-onboarding (password: `florida`)
+
+### What's Ready
+1. ✅ Streamlined trainer onboarding with Jacob's real quotes/expertise
+2. ✅ Created dev onboarding matching jmill's communication style
+3. ✅ Added FAQ addressing jmill's predictable pushback
+4. ✅ Added Miyomi images to dev page
+5. ✅ Updated both pages: multi-platform distribution + partnerships strategy
+6. ✅ Emphasized trainer drives strategy via PM expertise/network
+
+### Next Steps
+- Share links with Jacob and jmill
+- Edit onboarding content based on feedback
+- Start building MVP once dev commits
+- Create additional docs (compensation agreements, timeline, etc.)
+
+### Eden Agent Integration
+**Reference Repo**: https://github.com/edenartlab/hello-eden
+- Clean boilerplate from jmill for Eden agent integration
+- All documentation needed for connecting with Eden agents
+- Per Xander: "Just point Claude to this and vibe-code away!"
+
+### Quick Resume Command
+```bash
+cd /Users/seth/miyomi-vercel
+```
+
+Then tell me what you want to work on!
 
 ---
 

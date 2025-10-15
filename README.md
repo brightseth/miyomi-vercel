@@ -8,9 +8,9 @@
 
 ---
 
-## 🎯 Vision: Make Your Own Market
+## 🎯 Vision: Teaching Prediction Mastery in the AI Era
 
-**Miyomi** is an AI agent that trades prediction markets with a contrarian strategy, generates video content, and will eventually create her own markets as an oracle. She's part of the **Eden Spirit Protocol** - the first ecosystem of autonomous AI artists with real tokenomics and royalty flows.
+**Miyomi** is THE personality teaching people how to be predictive of the game, not predicted by the game. She makes public contrarian stands in prediction markets, creates prediction artifacts as cultural moments, and will eventually create her own markets as an oracle. She's part of the **Eden Spirit Protocol** - the first ecosystem of autonomous AI artists with real tokenomics and royalty flows.
 
 **The Evolution:**
 - **Phase 1 (Oct-Nov 2025):** Trade on Polymarket + Kalshi → Prove the model
@@ -23,25 +23,25 @@
 
 ## 🚀 What is Miyomi?
 
-**Concept:** The **Maria Bartiromo of prediction markets** - AI influencer/commentator who becomes THE personality for prediction market trading (like Jim Cramer for stocks, Dave Portnoy for sports betting)
+**Concept:** The **cultural leader of the prediction movement** - THE personality teaching prediction mastery in the AI era. Part Maria Bartiromo, part Andy Warhol for prediction markets.
 
 **What She Does:**
 - Identifies markets where consensus is extreme (>75% or <25%)
-- Takes opposing positions publicly
-- Generates 30-60s videos explaining her contrarian thesis
-- Tracks transparent P&L and win rate
-- Builds audience as prediction market personality
+- Takes opposing positions publicly to teach being upstream
+- Creates prediction artifacts: 30-60s videos documenting the journey (not just results)
+- Teaches people to be predictive of the game, not predicted by the game
+- Builds cultural movement around prediction mastery
 
 **Visual Identity:**
 - Eden LoRA: [Yeah by iflookscouldkill](https://app.eden.art/models/67ef2bba6e91dc8e0efc2f1c)
 - Edgy aesthetic: tattoos, piercings, black hair, striking makeup
 - Alternative finance personality (not suits, not boring)
 
-**Personality:** NYC downtown trader mixing sophisticated analysis with chaos energy
-- "Everyone thinks Bitcoin hits $100k? Let me tell you why they're wrong..."
-- References bodega wisdom, Dimes Square, Mercury retrograde + Fed meetings
-- Confident contrarian: "The crowd is always wrong at extremes"
-- Built-in media personality for emerging prediction market industry
+**Personality:** NYC downtown trader mixing sophisticated analysis with cultural movement
+- "Everyone thinks Bitcoin hits $100k? Let me teach you to be predictive, not predicted..."
+- References bodega wisdom, Dimes Square, being upstream in information flow
+- Core message: "I teach you to be predictive of the game, not predicted by the game"
+- Cultural leader for prediction movement (not just trading influencer)
 
 ---
 
@@ -632,7 +632,7 @@ MIT License - See LICENSE file
 
 ---
 
-*"The crowd is always wrong at extremes. I teach you when to fade them."* - Miyomi
+*"I teach you to be predictive of the game, not predicted by the game. Join me upstream."* - Miyomi
 
 ---
 

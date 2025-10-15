@@ -1,9 +1,20 @@
 # Trainer Onboarding - Streamlined Version Complete
 
 **Date:** October 3, 2025 (night session)
-**Status:** ✅ Production deployed
-**URL:** https://miyomi-federation-lrqcehbeg-edenprojects.vercel.app/trainer-onboarding.html
+**Status:** ✅ Production deployed (FINAL)
+**URL:** https://miyomi-federation-8qiyww41f-edenprojects.vercel.app/trainer-onboarding.html
 **Password:** `pastrami`
+
+**Latest changes:**
+- Updated royalty projection from fixed "$692/mo" to "$692-10k+" range (reflects calculator scenarios)
+- Added "What Makes You Uniquely Qualified" section with Jacob's actual insights:
+  - Content platform: "The Goldy Hour" + 13+ Farcaster posts/day
+  - Edge identification: "$PMX is one of the most interesting things I've seen in PMs in long time"
+  - Real conviction: "Undefeated ATS on CFB" / "Herbert MVP shares are FREE rn"
+  - Market understanding: "Men used to go to war. Now they run quantum analysis of the scorigami papers"
+  - Philosophy: "Riches in niches, hyper-riches in hyper niches"
+  - Ex-Polymarket + tracking emerging PM projects (PMX, Novig, Bracket)
+  - 3,800+ follower network for instant distribution
 
 ---
 
@@ -351,7 +362,7 @@ git commit -m "Streamline trainer onboarding (remove 230 lines redundancy, impro
 
 ## Quick Access
 
-**URL:** https://miyomi-federation-lrqcehbeg-edenprojects.vercel.app/trainer-onboarding.html
+**URL:** https://miyomi-federation-o2pkcbi33-edenprojects.vercel.app/trainer-onboarding.html
 **Password:** `pastrami`
 **Reading time:** 15-20 min
 **Status:** ✅ Production ready
