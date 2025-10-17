@@ -26,7 +26,19 @@ export default async function handler(req, res) {
       throw new Error(`Polymarket API error: ${response.status}`);
     }
 
-    const markets = await response.json();
+    let markets = await response.json();
+
+    // Handle if API returns object with data property
+    if (markets.data) {
+      markets = markets.data;
+    }
+
+    // Ensure markets is an array
+    if (!Array.isArray(markets)) {
+      console.error('Polymarket API returned non-array:', typeof markets);
+      markets = [];
+    }
+
     console.log(`📊 Found ${markets.length} total markets`);
 
     // Filter for contrarian opportunities
