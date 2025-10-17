@@ -2,10 +2,13 @@
  * Market Scanner API
  *
  * GET /api/markets/scan
+ * GET /api/markets/scan?live=true (try real API)
  *
- * Fetches live Polymarket markets and filters for contrarian opportunities
- * Returns markets where consensus is extreme (>70% or <30%)
+ * Returns contrarian opportunities with extreme consensus
+ * Uses mock data by default for reliable demo
  */
+
+import { mockOpportunities } from './mock-data.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -13,9 +16,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('🔍 Scanning Polymarket for opportunities...');
+    const useLive = req.query.live === 'true';
 
-    // Fetch markets from Polymarket CLOB API
+    if (!useLive) {
+      // Use mock data for reliable demo
+      console.log('📊 Using mock data (12 opportunities)');
+      return res.status(200).json({
+        success: true,
+        count: mockOpportunities.length,
+        markets: mockOpportunities,
+        lastUpdate: new Date().toISOString(),
+        source: 'mock'
+      });
+    }
+
+    // Try live API if requested
+    console.log('🔍 Scanning live Polymarket API...');
+
     const response = await fetch('https://clob.polymarket.com/markets', {
       headers: {
         'Accept': 'application/json',
@@ -27,7 +44,7 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    const markets = data.data || data; // Handle wrapped or direct array
+    const markets = data.data || data;
 
     console.log(`📊 Found ${markets.length} total markets`);
 
