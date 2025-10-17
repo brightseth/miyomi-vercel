@@ -26,35 +26,34 @@ export default async function handler(req, res) {
       throw new Error(`Polymarket API error: ${response.status}`);
     }
 
-    let markets = await response.json();
-
-    // Handle if API returns object with data property
-    if (markets.data) {
-      markets = markets.data;
-    }
-
-    // Ensure markets is an array
-    if (!Array.isArray(markets)) {
-      console.error('Polymarket API returned non-array:', typeof markets);
-      markets = [];
-    }
+    const data = await response.json();
+    const markets = data.data || data; // Handle wrapped or direct array
 
     console.log(`📊 Found ${markets.length} total markets`);
 
     // Filter for contrarian opportunities
     const opportunities = markets
       .filter(market => {
-        // Must have price data
-        if (!market.outcomePrices || market.outcomePrices.length < 2) return false;
+        // Skip closed/archived markets
+        if (market.closed || market.archived || !market.active) return false;
 
-        // Get YES price (consensus)
-        const yesPrice = parseFloat(market.outcomePrices[0]);
+        // Must have tokens with prices
+        if (!market.tokens || market.tokens.length < 2) return false;
+
+        // Get YES token price (first token is usually YES)
+        const yesToken = market.tokens[0];
+        const yesPrice = parseFloat(yesToken.price);
+
+        // Skip if no valid price
+        if (isNaN(yesPrice) || yesPrice === 0) return false;
 
         // Filter for extreme consensus (>70% or <30%)
         return yesPrice > 0.70 || yesPrice < 0.30;
       })
       .map(market => {
-        const yesPrice = parseFloat(market.outcomePrices[0]);
+        const yesToken = market.tokens[0];
+        const noToken = market.tokens[1];
+        const yesPrice = parseFloat(yesToken.price);
         const consensus = (yesPrice * 100).toFixed(1);
 
         // Calculate contrarian position
@@ -64,17 +63,21 @@ export default async function handler(req, res) {
           : (yesPrice / (1 - yesPrice) * 100).toFixed(0);
 
         return {
-          id: market.condition_id || market.id,
+          id: market.condition_id,
           question: market.question,
           consensus: parseFloat(consensus),
           position,
           edge: parseInt(edge),
           yesPrice: yesPrice.toFixed(3),
-          noPrice: (1 - yesPrice).toFixed(3),
-          volume: market.volume || 0,
-          liquidity: market.liquidity || 0,
+          noPrice: parseFloat(noToken.price).toFixed(3),
+          volume: 0, // Not provided in this endpoint
+          liquidity: 0, // Not provided in this endpoint
           endDate: market.end_date_iso,
-          url: `https://polymarket.com/event/${market.slug || market.condition_id}`,
+          url: `https://polymarket.com/event/${market.market_slug}`,
+          outcomes: {
+            yes: yesToken.outcome,
+            no: noToken.outcome
+          }
         };
       })
       .sort((a, b) => b.edge - a.edge) // Sort by highest edge first
