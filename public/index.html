@@ -1188,7 +1188,50 @@
     }
 
 
-    // Mock live data update to simulate real feeds
+    // REAL DOME API - Fetch actual performance data
+    async function fetchRealDomeData() {
+      try {
+        // Replace with actual Miyomi wallet address when available
+        const wallet = '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'; // Placeholder
+        const response = await fetch(`/api/dome/pnl?wallet=${wallet}`);
+
+        if (!response.ok) {
+          console.log('Dome API not available yet, using mock data');
+          return null;
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Update stats with real data
+          const stats = document.querySelectorAll('.stat-value');
+          if (stats.length >= 4) {
+            // Win rate
+            stats[0].textContent = data.win_rate ? `${parseFloat(data.win_rate).toFixed(1)}%` : '0%';
+
+            // Total P&L
+            const pnl = parseFloat(data.total_pnl || 0);
+            stats[1].textContent = pnl >= 0 ? `+$${(pnl/1000).toFixed(1)}K` : `-$${Math.abs(pnl/1000).toFixed(1)}K`;
+
+            // Trades count (show as followers for now)
+            stats[2].textContent = data.trades_count || '0';
+
+            // Calculate monthly ROI if available
+            // For now, use a simple calc based on P&L
+            const monthlyROI = pnl > 0 ? (pnl / 10000 * 100).toFixed(1) : '0.0';
+            stats[3].textContent = `+${monthlyROI}%`;
+          }
+
+          console.log('✅ Real Dome data loaded:', data);
+          return data;
+        }
+      } catch (error) {
+        console.log('Dome API error, using mock data:', error.message);
+        return null;
+      }
+    }
+
+    // Mock live data update to simulate real feeds (fallback)
     function updateLiveData() {
       // Simulate real-time price changes
       const stats = document.querySelectorAll('.stat-value');
@@ -1227,15 +1270,30 @@
     window.showTrainerTab = showTrainerTab;
 
     // Initialize
-    document.addEventListener('DOMContentLoaded', function() {
-      // Auto-refresh live data simulation
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Try to fetch real Dome data on page load
+      const realData = await fetchRealDomeData();
+
+      if (!realData) {
+        console.log('📊 Using mock data - Dome API not ready yet');
+      }
+
+      // Auto-refresh live data (tries real data first, falls back to mock)
       let secondsUntilUpdate = 30;
-      setInterval(() => {
+      setInterval(async () => {
         secondsUntilUpdate--;
         if (secondsUntilUpdate <= 0) {
           secondsUntilUpdate = 30;
           document.getElementById('live-status').textContent = 'UPDATING...';
-          updateLiveData();
+
+          // Try real data first
+          const updated = await fetchRealDomeData();
+
+          // Fall back to mock if real data fails
+          if (!updated) {
+            updateLiveData();
+          }
+
           document.getElementById('last-sync').textContent = 'just now';
           setTimeout(() => {
             document.getElementById('live-status').textContent = 'LIVE';
