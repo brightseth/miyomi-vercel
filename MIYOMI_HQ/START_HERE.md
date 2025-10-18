@@ -29,6 +29,32 @@ Think: Emma Chamberlain meets prediction markets
 
 ---
 
+## 🔄 Weekly Content Workflow
+
+```
+1. Goldy finds contrarian market
+   ↓
+2. Shares market link in group chat
+   ↓
+3. Miyomi (AI agent) writes 30s script
+   ↓
+4. Goldy reviews script, gives feedback
+   ↓
+5. Seth approves final version
+   ↓
+6. JMill generates video with Eden API
+   ↓
+7. Goldy posts to Twitter + Telegram
+   ↓
+8. Track clicks/signups
+   ↓
+9. Repeat 3-5x per week
+```
+
+**Key point**: Miyomi writes her own content. She's an AI with personality, not a puppet.
+
+---
+
 ## 👥 Who Does What?
 
 **Seth (you're reading this)**:
@@ -40,8 +66,9 @@ Think: Emma Chamberlain meets prediction markets
 - Generate videos using Eden API
 
 **Goldy (growth)**:
-- Write video scripts
-- Post to social media
+- Find contrarian market opportunities
+- Give Miyomi feedback on scripts (she writes them herself)
+- Post videos to social media
 - Build community in Telegram
 
 ---
@@ -55,8 +82,10 @@ Think: Emma Chamberlain meets prediction markets
 - [ ] **Everyone**: Agree on Miyomi's look/voice/vibe
 
 ### Weeks 3-4: First Videos
-- [ ] **Goldy**: Write 3-5 scripts (contrarian takes on trending markets)
-- [ ] **JMill**: Generate videos using those scripts
+- [ ] **Goldy**: Find 3-5 contrarian market opportunities
+- [ ] **Miyomi** (AI agent): Write her own scripts based on those markets
+- [ ] **Goldy**: Review scripts, give feedback
+- [ ] **JMill**: Generate videos using Miyomi's approved scripts
 - [ ] **Goldy**: Post videos, see what gets traction
 - [ ] **Everyone**: Learn what works, iterate
 
@@ -97,16 +126,16 @@ Think: Emma Chamberlain meets prediction markets
 3. Share in group chat: "Which one looks most consistent?"
 4. Claim @miyomi____ on Twitter (check if available first)
 
-**Goldy - 1 hour**:
+**Goldy - 30 min**:
 1. Browse Polymarket.com for trending markets
 2. Find 3 contrarian opportunities (crowd is 80%+ on one side)
-3. Write rough 30-second script for each
-4. Share in group chat for feedback
+3. Share market links in group chat
+4. Miyomi (AI) will write the scripts based on your picks
 
 **Seth - 30 min**:
 1. Email Polymarket: partnerships@polymarket.com (ask for affiliate program)
 2. Review character samples from JMill
-3. Give feedback on Goldy's scripts
+3. Give feedback on markets Goldy found
 
 ---
 
@@ -118,8 +147,11 @@ A: Not yet. First prove the content works. Trading comes later for credibility.
 **Q: What if character doesn't look consistent?**
 A: That's literally Week 1's job - test until it does. No rush.
 
+**Q: Who writes the scripts?**
+A: Miyomi does! She's an AI agent with a 15k-word personality. Goldy finds the markets, Miyomi writes the takes, Goldy gives feedback.
+
 **Q: How do we know what content to make?**
-A: Start with obvious contrarian takes (Trump odds, Bitcoin price, Fed rates). Test. Learn. Iterate.
+A: Goldy finds contrarian opportunities (crowd is 80%+ on one side). Miyomi writes her take. Start with obvious ones: Trump odds, Bitcoin price, Fed rates.
 
 **Q: What if we don't hit Dec 1?**
 A: Then we launch Dec 8. Quality > speed. Don't stress.
