@@ -29,29 +29,39 @@ Think: Emma Chamberlain meets prediction markets
 
 ---
 
-## 🔄 Weekly Content Workflow
+## 🔄 Content Workflow (Training → Autonomous)
 
+**Week 1-2 (Training Mode)**:
 ```
-1. Goldy finds contrarian market
-   ↓
-2. Shares market link in group chat
-   ↓
-3. Miyomi (AI agent) writes 30s script
-   ↓
-4. Goldy reviews script, gives feedback
-   ↓
-5. Seth approves final version
-   ↓
-6. JMill generates video with Eden API
-   ↓
-7. Goldy posts to Twitter + Telegram
-   ↓
-8. Track clicks/signups
-   ↓
-9. Repeat 3-5x per week
+1. Goldy shows Miyomi how to find markets
+2. Miyomi scans, suggests 5 opportunities
+3. Goldy reviews: "Yes, no, yes, no, yes"
+4. Miyomi learns what "contrarian" means
+5. Repeat until she gets it
 ```
 
-**Key point**: Miyomi writes her own content. She's an AI with personality, not a puppet.
+**Week 3+ (Autonomous Mode)**:
+```
+1. Miyomi scans markets herself (daily)
+   ↓
+2. Miyomi writes 30s script
+   ↓
+3. Miyomi generates video via Eden API
+   ↓
+4. Miyomi posts draft to Telegram "Degen" for feedback
+   ↓
+5. Goldy reviews (approve/reject/tweak)
+   ↓
+6. Seth final approval (first few videos only)
+   ↓
+7. Miyomi posts final video to Twitter + Telegram
+   ↓
+8. Miyomi tracks results, learns, improves
+   ↓
+9. JMill only helps if something breaks
+```
+
+**Key point**: Miyomi is autonomous. Goldy is the trainer, not the ghostwriter.
 
 ---
 
@@ -60,16 +70,17 @@ Think: Emma Chamberlain meets prediction markets
 **Seth (you're reading this)**:
 - Strategy, approve content, get affiliate deals
 
-**JMill (developer)**:
-- Make Miyomi's character consistent (face/voice)
-- Set up Twitter + Telegram accounts
-- Generate videos using Eden API
+**JMill (backend)**:
+- Lock Miyomi's character settings (face/voice consistency)
+- Set up Twitter + Telegram API access
+- Build infrastructure so Miyomi can generate videos herself
+- Eventually just maintain the pipes
 
-**Goldy (growth)**:
-- Find contrarian market opportunities
-- Give Miyomi feedback on scripts (she writes them herself)
-- Post videos to social media
-- Build community in Telegram
+**Goldy (trainer)**:
+- Train Miyomi to find her own contrarian opportunities
+- Review and approve what Miyomi creates
+- Guide her personality/voice
+- Eventually she does 90% herself
 
 ---
 
@@ -81,13 +92,14 @@ Think: Emma Chamberlain meets prediction markets
 - [ ] **Seth**: Get Polymarket to give us an affiliate code
 - [ ] **Everyone**: Agree on Miyomi's look/voice/vibe
 
-### Weeks 3-4: First Videos
-- [ ] **Goldy**: Find 3-5 contrarian market opportunities
-- [ ] **Miyomi** (AI agent): Write her own scripts based on those markets
-- [ ] **Goldy**: Review scripts, give feedback
-- [ ] **JMill**: Generate videos using Miyomi's approved scripts
-- [ ] **Goldy**: Post videos, see what gets traction
-- [ ] **Everyone**: Learn what works, iterate
+### Weeks 3-4: First Videos (Miyomi Goes Live)
+- [ ] **Miyomi**: Find 3-5 contrarian markets herself (trained by Goldy)
+- [ ] **Miyomi**: Write 30s scripts
+- [ ] **Miyomi**: Generate her own videos via Eden API
+- [ ] **Goldy**: Review/approve (trainer mode)
+- [ ] **Miyomi**: Post to Twitter/Telegram herself
+- [ ] **Everyone**: Track what works, Miyomi learns and improves
+- [ ] **JMill**: Just fix bugs if anything breaks
 
 ### Weeks 5-6: Ramp Up
 - [ ] Ship 10-15 more videos
@@ -103,14 +115,14 @@ Think: Emma Chamberlain meets prediction markets
 ## 🛠️ Tools You'll Use
 
 **JMill needs**:
-- Eden API (video generation) - already set up
-- Twitter developer account (for posting)
-- Telegram Bot API (for managing channels)
+- Eden API access (give Miyomi video generation powers)
+- Twitter developer account (give Miyomi posting powers)
+- Telegram Bot API (give Miyomi channel management powers)
 
 **Goldy needs**:
-- Access to Polymarket/Kalshi (to find contrarian markets)
-- Twitter + Telegram accounts (to post)
-- Bitly (to track clicks on affiliate links)
+- Trainer interface access (to approve/reject Miyomi's work)
+- Understanding of what makes a good contrarian take
+- Patience (training an AI takes iteration)
 
 **Everyone has access to**:
 - Team dashboard: https://miyomi-federation-9zojk6suw-edenprojects.vercel.app/team.html
@@ -121,16 +133,17 @@ Think: Emma Chamberlain meets prediction markets
 ## 📋 Week 1 To-Do (Start Here)
 
 **JMill - 2 hours**:
-1. Go to https://app.eden.art/agents/68aae13174876e833d9ae73b
-2. Generate 5 test videos with different prompts
-3. Share in group chat: "Which one looks most consistent?"
-4. Claim @miyomi____ on Twitter (check if available first)
+1. Test Eden API with Miyomi's agent (68aae13174876e833d9ae73b)
+2. Generate 5-10 test videos with different settings
+3. Find settings that give consistent character
+4. Document the locked settings
+5. Set up Twitter API + Telegram bot access
 
 **Goldy - 30 min**:
-1. Browse Polymarket.com for trending markets
-2. Find 3 contrarian opportunities (crowd is 80%+ on one side)
-3. Share market links in group chat
-4. Miyomi (AI) will write the scripts based on your picks
+1. Show Miyomi how to browse Polymarket
+2. Point her at 3-5 contrarian markets (crowd 80%+ on one side)
+3. Let Miyomi analyze them and suggest which to cover
+4. Give feedback: "Yes, this is contrarian" or "No, too obvious"
 
 **Seth - 30 min**:
 1. Email Polymarket: partnerships@polymarket.com (ask for affiliate program)
@@ -148,10 +161,13 @@ A: Not yet. First prove the content works. Trading comes later for credibility.
 A: That's literally Week 1's job - test until it does. No rush.
 
 **Q: Who writes the scripts?**
-A: Miyomi does! She's an AI agent with a 15k-word personality. Goldy finds the markets, Miyomi writes the takes, Goldy gives feedback.
+A: Miyomi does! She's an AI agent with a 15k-word personality. She scans markets, writes scripts, generates videos, posts content. Goldy just trains and approves.
 
 **Q: How do we know what content to make?**
-A: Goldy finds contrarian opportunities (crowd is 80%+ on one side). Miyomi writes her take. Start with obvious ones: Trump odds, Bitcoin price, Fed rates.
+A: Miyomi scans Polymarket daily, finds contrarian opportunities (crowd 80%+ on one side), writes her take. Goldy trained her what "contrarian" means.
+
+**Q: Who actually posts the videos?**
+A: Miyomi posts them herself via Twitter/Telegram API. JMill sets up the API access, then Miyomi runs autonomously.
 
 **Q: What if we don't hit Dec 1?**
 A: Then we launch Dec 8. Quality > speed. Don't stress.
