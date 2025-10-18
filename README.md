@@ -1,6 +1,6 @@
 # MIYOMI - AI Prediction Market Influencer
 
-**2-Week Sprint: Oct 20 - Nov 1, 2025**
+**6-Week Build: Oct 20 - Dec 1, 2025**
 
 [![Live](https://img.shields.io/badge/Live-miyomi.ai-green)](https://miyomi-federation-mnuiwd0d4-edenprojects.vercel.app)
 
@@ -12,13 +12,13 @@
 **Revenue**: Polymarket/Kalshi affiliate fees from user signups
 **Content**: Daily 30-45s vertical videos ("Today's Market" + "Today's Pick")
 **Distribution**: Twitter + Telegram (3 channels)
-**Timeline**: Launch Nov 1, 2025
+**Timeline**: Launch Dec 1 (after Solienne, before Spirit Protocol Dec 10)
 
 ---
 
-## 🚨 WEEK 1 PRIORITIES (Oct 20-27)
+## 🚨 PHASE 1: FOUNDATION (Weeks 1-2)
 
-### 1. Character Lock (JMill) - **DUE: TUE OCT 21**
+### 1. Character Lock (JMill) - **Week 1**
 **Goal**: Finalize Miyomi's exact look/voice so she's consistent across all videos
 
 **Tasks**:
@@ -37,7 +37,7 @@
 
 ---
 
-### 2. Social Setup (JMill) - **DUE: MON OCT 20**
+### 2. Social Setup (JMill) - **Week 1-2**
 **Goal**: Claim handles and set up 3 Telegram channels
 
 **Tasks**:
@@ -52,8 +52,8 @@
 
 ---
 
-### 3. Video Pipeline (JMill + Jacob) - **DUE: THU OCT 23**
-**Goal**: Ship first video end-to-end
+### 3. Video Pipeline (JMill + Jacob) - **Weeks 2-3**
+**Goal**: Ship first video end-to-end, then build cadence
 
 **Tasks**:
 - [ ] Pick market from scanner (contrarian angle)
@@ -63,7 +63,7 @@
 - [ ] Post to Twitter + Telegram
 - [ ] Measure: impressions, engagement, clicks
 
-**Target**: Ship 7 videos by Sun Oct 27
+**Target**: 3-5 videos by end of Week 3 (quality over speed)
 
 **Workflow**:
 1. Signal finder suggests topics (or manual scan for now)
@@ -74,7 +74,7 @@
 
 ---
 
-### 4. Polymarket Affiliate (Seth) - **DUE: MON OCT 20**
+### 4. Polymarket Affiliate (Seth) - **Weeks 1-2**
 **Goal**: Secure trackable affiliate link/code
 
 **Tasks**:
@@ -109,13 +109,30 @@
 
 ---
 
-## 📊 WEEK 1 SUCCESS METRICS
+## 📊 6-WEEK MILESTONES
 
-- [ ] 7 videos published (1 per day)
-- [ ] 1,000+ impressions/day on Twitter
-- [ ] 50+ members in Telegram channels
-- [ ] 10+ affiliate link clicks
-- [ ] Character locked (no variation across videos)
+**Phase 1: Foundation (Weeks 1-2)**
+- [ ] Character locked (consistent look/voice)
+- [ ] Social handles claimed (Twitter + 3 Telegrams)
+- [ ] Polymarket affiliate secured
+
+**Phase 2: First Content (Weeks 3-4)**
+- [ ] 3-5 videos published
+- [ ] 500+ impressions/video
+- [ ] 20+ Telegram members
+- [ ] 5+ affiliate clicks
+
+**Phase 3: Scale (Weeks 5-6)**
+- [ ] 10+ videos total
+- [ ] 1,000+ impressions/video
+- [ ] 100+ Telegram members
+- [ ] Consistent posting rhythm
+
+**Launch (Dec 1)**
+- [ ] 15-20 videos in library
+- [ ] Proven track record (65%+ win rate)
+- [ ] $1k+ cumulative affiliate revenue
+- [ ] Ready for Spirit Protocol token launch (Dec 10)
 
 ---
 
@@ -265,34 +282,35 @@ Details: `MIYOMI_HQ/SPIRIT_TOKENOMICS.md`
 
 ---
 
-## ⏭️ NEXT STEPS (In Order)
+## ⏭️ NEXT STEPS (No Rush)
 
-**Monday Oct 20**:
-1. JMill: Claim social handles
-2. Seth: Contact Polymarket for affiliate
-3. JMill: Test Eden video generation (10 samples)
-4. Daily stand-up: Review samples, pick character
+**This Week (Oct 20-27)**:
+1. JMill: Start testing Eden video generation (play with settings)
+2. Seth: Reach out to Polymarket affiliate team
+3. Everyone: Review character samples, discuss vibe
+4. JMill: Claim social handles when ready
 
-**Tuesday Oct 21**:
-5. Lock character (face + voice)
-6. Document in lookbook
-7. Jacob: Draft first 3 scripts
-8. Seth: Approve scripts (same-day)
+**Next 2 Weeks (Oct 28 - Nov 10)**:
+5. Lock character (face + voice) - take time to get it right
+6. Set up all 3 Telegram channels
+7. Jacob: Draft first 3 scripts (no rush)
+8. Generate first test video
 
-**Wednesday Oct 22**:
-9. Generate first video
-10. Post to Twitter + Telegram
-11. Track: impressions, clicks, conversions
-12. Ship 2nd video
+**Weeks 3-4 (Nov 11 - Nov 24)**:
+9. Ship first video when ready (quality > speed)
+10. Build feedback loop (what works?)
+11. Iterate on content format
+12. Post 2-3 more videos
 
-**Thursday-Sunday Oct 23-27**:
-13. Ship videos 3-7
-14. Iterate on hooks/CTAs based on engagement
-15. Build signal finder if time permits
+**Weeks 5-6 (Nov 25 - Dec 1)**:
+13. Ramp to consistent cadence
+14. Build library of 15-20 videos
+15. Finalize for Dec 1 launch
 
 ---
 
-**Status**: Infrastructure 75% done. Content/audience 0%. Let's ship.
+**Status**: Infrastructure 75% done. Content/audience 0%. 6 weeks to nail it.
 
 **Last Updated**: Oct 18, 2025
-**Sprint Start**: Mon Oct 20, 2025
+**Build Start**: Mon Oct 20, 2025
+**Launch Target**: Dec 1, 2025 (Spirit Protocol Dec 10)
