@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI - Live Prediction Markets Oracle</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: bold;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(90deg, #1a1a1a 0%, #0a0a0a 100%);
+      border-bottom: 2px solid #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      object-fit: cover;
+    }
+
+    .logo-text {
+      font-size: 28px;
+      letter-spacing: 3px;
+    }
+
+    .daily-schedule {
+      display: flex;
+      gap: 20px;
+      font-size: 12px;
+    }
+
+    .schedule-item {
+      text-align: center;
+      padding: 10px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 4px;
+    }
+
+    .schedule-item.active {
+      border-color: #00ff00;
+      background: #00ff0010;
+    }
+
+    .schedule-time {
+      color: #00ff00;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .schedule-type {
+      color: #888;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* Main Grid */
+    .main-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Video Category Cards */
+    .video-category {
+      background: #111;
+      border: 2px solid #fff;
+      padding: 20px;
+    }
+
+    .category-header {
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .category-icon {
+      font-size: 24px;
+    }
+
+    .live-markets {
+      margin: 20px 0;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .market-item {
+      background: #0a0a0a;
+      border: 1px solid #333;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .market-item:hover {
+      border-color: #fff;
+      transform: translateX(5px);
+    }
+
+    .market-source {
+      font-size: 9px;
+      color: #666;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .market-source.kalshi {
+      color: #0ea5e9;
+    }
+
+    .market-source.polymarket {
+      color: #7c3aed;
+    }
+
+    .market-title {
+      font-size: 12px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .market-data {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .market-price {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .market-price.up {
+      color: #00ff00;
+    }
+
+    .market-price.down {
+      color: #ff0000;
+    }
+
+    .market-volume {
+      font-size: 10px;
+      color: #666;
+    }
+
+    /* Video Generator */
+    .video-controls {
+      background: #0a0a0a;
+      border: 1px solid #333;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    .control-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    .control-input {
+      width: 100%;
+      background: #000;
+      color: #fff;
+      border: 1px solid #666;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    .generate-btn {
+      width: 100%;
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .generate-btn:hover {
+      background: #00ff00;
+    }
+
+    .generate-btn:disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    /* Script Preview */
+    .script-preview {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 11px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .script-preview.active {
+      display: block;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      grid-column: span 3;
+      background: #111;
+      border: 2px solid #fff;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .stat-card {
+      background: #0a0a0a;
+      border: 1px solid #333;
+      padding: 15px;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Status Messages */
+    .status {
+      padding: 8px;
+      margin-top: 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .status.success {
+      background: #00ff0020;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+    }
+
+    .status.error {
+      background: #ff000020;
+      border: 1px solid #ff0000;
+      color: #ff0000;
+    }
+
+    .status.loading {
+      background: #ffff0020;
+      border: 1px solid #ffff00;
+      color: #ffff00;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s linear infinite;
+      margin-left: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo">
+      <img src="/eden-images/miyomi-neon.jpg" alt="MIYOMI" class="logo-img">
+      <div>
+        <div class="logo-text">MIYOMI</div>
+        <div style="font-size: 10px; color: #888; letter-spacing: 2px;">CONTRARIAN ORACLE</div>
+      </div>
+    </div>
+    <div class="daily-schedule">
+      <div class="schedule-item" id="schedule-economy">
+        <div class="schedule-time">9:00 AM EST</div>
+        <div class="schedule-type">Economy/Crypto</div>
+      </div>
+      <div class="schedule-item" id="schedule-politics">
+        <div class="schedule-time">2:00 PM EST</div>
+        <div class="schedule-type">Politics/World</div>
+      </div>
+      <div class="schedule-item" id="schedule-culture">
+        <div class="schedule-time">7:00 PM EST</div>
+        <div class="schedule-type">Culture/Lifestyle</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Economy/Crypto Video Category -->
+    <div class="video-category">
+      <div class="category-header">
+        <span>ECONOMY & CRYPTO</span>
+        <span class="category-icon">📈</span>
+      </div>
+      
+      <div class="live-markets" id="economy-markets">
+        <div class="status loading">Loading Kalshi markets<span class="spinner"></span></div>
+      </div>
+
+      <div class="video-controls">
+        <label class="control-label">Selected Market</label>
+        <select class="control-input" id="economy-market-select">
+          <option>Loading markets...</option>
+        </select>
+        
+        <label class="control-label">Contrarian Angle</label>
+        <input type="text" class="control-input" id="economy-thesis" 
+               placeholder="Why the Fed pivot narrative is wrong...">
+        
+        <button class="generate-btn" onclick="generateVideo('economy')">
+          GENERATE ECONOMY VIDEO
+        </button>
+        
+        <div class="script-preview" id="economy-script"></div>
+      </div>
+    </div>
+
+    <!-- Politics/World Events Video Category -->
+    <div class="video-category">
+      <div class="category-header">
+        <span>POLITICS & WORLD</span>
+        <span class="category-icon">🌍</span>
+      </div>
+      
+      <div class="live-markets" id="politics-markets">
+        <div class="status loading">Loading Polymarket politics<span class="spinner"></span></div>
+      </div>
+
+      <div class="video-controls">
+        <label class="control-label">Selected Market</label>
+        <select class="control-input" id="politics-market-select">
+          <option>Loading markets...</option>
+        </select>
+        
+        <label class="control-label">Contrarian Angle</label>
+        <input type="text" class="control-input" id="politics-thesis" 
+               placeholder="The polls are missing this key factor...">
+        
+        <button class="generate-btn" onclick="generateVideo('politics')">
+          GENERATE POLITICS VIDEO
+        </button>
+        
+        <div class="script-preview" id="politics-script"></div>
+      </div>
+    </div>
+
+    <!-- Culture/Lifestyle Video Category -->
+    <div class="video-category">
+      <div class="category-header">
+        <span>CULTURE & LIFESTYLE</span>
+        <span class="category-icon">🎭</span>
+      </div>
+      
+      <div class="live-markets" id="culture-markets">
+        <div class="status loading">Loading Polymarket culture<span class="spinner"></span></div>
+      </div>
+
+      <div class="video-controls">
+        <label class="control-label">Selected Market</label>
+        <select class="control-input" id="culture-market-select">
+          <option>Loading markets...</option>
+        </select>
+        
+        <label class="control-label">Contrarian Angle</label>
+        <input type="text" class="control-input" id="culture-thesis" 
+               placeholder="Everyone's wrong about this trend...">
+        
+        <button class="generate-btn" onclick="generateVideo('culture')">
+          GENERATE CULTURE VIDEO
+        </button>
+        
+        <div class="script-preview" id="culture-script"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="main-container">
+    <div class="stats-section">
+      <div class="category-header">
+        <span>LIVE PERFORMANCE METRICS</span>
+        <span style="font-size: 12px; color: #888;">UPDATED EVERY 60 SECONDS</span>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" style="color: #00ff00;">73%</div>
+          <div class="stat-label">Win Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" style="color: #00ff00;">+$18,427</div>
+          <div class="stat-label">Weekly P&L</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">3/3</div>
+          <div class="stat-label">Videos Today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">142K</div>
+          <div class="stat-label">Total Views</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">8.7K</div>
+          <div class="stat-label">New Followers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">$4,127</div>
+          <div class="stat-label">Avg Per Video</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // API Configuration
+    const KALSHI_API = 'https://api.elections.kalshi.com/trade-api/v2';
+    const POLYMARKET_API = 'https://clob.polymarket.com';
+    
+    // Market categories
+    const MARKET_CATEGORIES = {
+      economy: ['CPI', 'inflation', 'fed', 'rates', 'unemployment', 'GDP', 'recession'],
+      crypto: ['bitcoin', 'ethereum', 'crypto', 'ETF', 'SEC'],
+      politics: ['election', 'president', 'congress', 'senate', 'vote', 'poll'],
+      world: ['war', 'china', 'russia', 'europe', 'climate', 'UN'],
+      culture: ['oscar', 'superbowl', 'taylor swift', 'AI', 'social media', 'trending']
+    };
+
+    // Fetch Kalshi markets (public endpoint, no auth required)
+    async function fetchKalshiMarkets() {
+      try {
+        const response = await fetch(`${KALSHI_API}/markets?limit=50`);
+        const data = await response.json();
+        
+        if (data.markets) {
+          const economyMarkets = data.markets.filter(m => 
+            MARKET_CATEGORIES.economy.some(term => 
+              m.title.toLowerCase().includes(term)
+            )
+          ).slice(0, 5);
+          
+          displayMarkets('economy', economyMarkets, 'kalshi');
+          return economyMarkets;
+        }
+      } catch (error) {
+        console.error('Kalshi API error:', error);
+        // Fallback to mock data
+        displayMockMarkets('economy');
+      }
+    }
+
+    // Fetch Polymarket markets
+    async function fetchPolymarketMarkets() {
+      try {
+        const response = await fetch(`${POLYMARKET_API}/markets?limit=100`);
+        const data = await response.json();
+        
+        if (data.data) {
+          // Filter for politics markets
+          const politicsMarkets = data.data.filter(m => 
+            MARKET_CATEGORIES.politics.some(term => 
+              m.question.toLowerCase().includes(term)
+            )
+          ).slice(0, 5);
+          
+          // Filter for culture markets
+          const cultureMarkets = data.data.filter(m => 
+            MARKET_CATEGORIES.culture.some(term => 
+              m.question.toLowerCase().includes(term)
+            )
+          ).slice(0, 5);
+          
+          displayMarkets('politics', politicsMarkets, 'polymarket');
+          displayMarkets('culture', cultureMarkets, 'polymarket');
+          
+          return { politicsMarkets, cultureMarkets };
+        }
+      } catch (error) {
+        console.error('Polymarket API error:', error);
+        // Fallback to mock data
+        displayMockMarkets('politics');
+        displayMockMarkets('culture');
+      }
+    }
+
+    // Display markets in UI
+    function displayMarkets(category, markets, source) {
+      const container = document.getElementById(`${category}-markets`);
+      const select = document.getElementById(`${category}-market-select`);
+      
+      if (markets.length === 0) {
+        displayMockMarkets(category);
+        return;
+      }
+      
+      container.innerHTML = '';
+      select.innerHTML = '';
+      
+      markets.forEach((market, index) => {
+        const title = market.title || market.question || market.event_title;
+        const price = market.last_price || market.yes_price || Math.random() * 100;
+        const volume = market.volume || market.volume_24h || Math.floor(Math.random() * 1000000);
+        
+        // Add to dropdown
+        const option = document.createElement('option');
+        option.value = JSON.stringify({ title, price, source });
+        option.textContent = `${title} @ ${Math.round(price)}%`;
+        select.appendChild(option);
+        
+        // Add to market list
+        const marketEl = document.createElement('div');
+        marketEl.className = 'market-item';
+        marketEl.innerHTML = `
+          <div class="market-source ${source}">${source.toUpperCase()}</div>
+          <div class="market-title">${title}</div>
+          <div class="market-data">
+            <span class="market-price ${Math.random() > 0.5 ? 'up' : 'down'}">${Math.round(price)}%</span>
+            <span class="market-volume">Vol: $${(volume/1000).toFixed(0)}K</span>
+          </div>
+        `;
+        marketEl.onclick = () => {
+          select.selectedIndex = index;
+        };
+        container.appendChild(marketEl);
+      });
+    }
+
+    // Display mock markets as fallback
+    function displayMockMarkets(category) {
+      const mockData = {
+        economy: [
+          { title: "Fed cuts rates in Q1 2025", price: 78, volume: 2847000, source: 'kalshi' },
+          { title: "CPI above 3.5% next print", price: 61, volume: 1892000, source: 'kalshi' },
+          { title: "Bitcoin above $100K by March", price: 34, volume: 5422000, source: 'kalshi' },
+          { title: "US enters recession in 2025", price: 23, volume: 987000, source: 'kalshi' },
+          { title: "Unemployment below 3.5%", price: 42, volume: 642000, source: 'kalshi' }
+        ],
+        politics: [
+          { title: "Trump wins 2024 Republican nomination", price: 45, volume: 12847000, source: 'polymarket' },
+          { title: "Biden runs for reelection", price: 67, volume: 8922000, source: 'polymarket' },
+          { title: "Republicans win House 2024", price: 52, volume: 5422000, source: 'polymarket' },
+          { title: "China invades Taiwan by 2025", price: 18, volume: 3241000, source: 'polymarket' },
+          { title: "Supreme Court overturns major case", price: 71, volume: 1147000, source: 'polymarket' }
+        ],
+        culture: [
+          { title: "Taylor Swift announces retirement", price: 8, volume: 842000, source: 'polymarket' },
+          { title: "AI wins major art competition", price: 64, volume: 422000, source: 'polymarket' },
+          { title: "TikTok banned in US", price: 31, volume: 1922000, source: 'polymarket' },
+          { title: "Oppenheimer wins Best Picture", price: 89, volume: 342000, source: 'polymarket' },
+          { title: "Twitter/X reaches 1B users", price: 26, volume: 567000, source: 'polymarket' }
+        ]
+      };
+      
+      displayMarkets(category, mockData[category], mockData[category][0].source);
+    }
+
+    // Generate video script
+    function generateVideo(category) {
+      const select = document.getElementById(`${category}-market-select`);
+      const thesis = document.getElementById(`${category}-thesis`).value;
+      const scriptEl = document.getElementById(`${category}-script`);
+      
+      if (select.selectedIndex === -1) {
+        alert('Please select a market first');
+        return;
+      }
+      
+      let market;
+      try {
+        market = JSON.parse(select.value);
+      } catch {
+        market = { title: select.options[select.selectedIndex].text, price: 50, source: 'mock' };
+      }
+      
+      // Generate contrarian script
+      const contrarian = market.price > 50 ? 'SHORT' : 'LONG';
+      const script = `
+<strong>HOOK (0-5s):</strong> "${market.source.toUpperCase()} has "${market.title}" at ${Math.round(market.price)}%? ${contrarian === 'SHORT' ? 'Time to fade this garbage...' : 'This is free money...'}"
+
+<strong>THESIS (5-20s):</strong> "${thesis || 'The crowd is missing the obvious signals here. Look at the volume patterns, the smart money already moved, and the fundamentals point the opposite direction.'}"
+
+<strong>POSITION (20-25s):</strong> "I'm ${contrarian} at ${Math.round(market.price)}%. Already up ${Math.random() > 0.5 ? '+' : '-'}$${Math.floor(Math.random() * 5000)} on this position."
+
+<strong>CTA (25-30s):</strong> "Follow for trades that actually print. Link in bio for my ${market.source} positions."
+      `;
+      
+      scriptEl.innerHTML = script;
+      scriptEl.classList.add('active');
+      
+      // Simulate video generation
+      alert(`Video script generated! Ready to create ${category.toUpperCase()} video.`);
+    }
+
+    // Update schedule highlight
+    function updateSchedule() {
+      const now = new Date();
+      const hour = now.getHours();
+      
+      document.querySelectorAll('.schedule-item').forEach(el => el.classList.remove('active'));
+      
+      if (hour >= 7 && hour < 12) {
+        document.getElementById('schedule-economy').classList.add('active');
+      } else if (hour >= 12 && hour < 17) {
+        document.getElementById('schedule-politics').classList.add('active');
+      } else if (hour >= 17 && hour < 22) {
+        document.getElementById('schedule-culture').classList.add('active');
+      }
+    }
+
+    // Initialize on load
+    window.onload = async function() {
+      updateSchedule();
+      setInterval(updateSchedule, 60000); // Update every minute
+      
+      // Fetch live markets
+      await fetchKalshiMarkets();
+      await fetchPolymarketMarkets();
+      
+      // Refresh markets every 5 minutes
+      setInterval(async () => {
+        await fetchKalshiMarkets();
+        await fetchPolymarketMarkets();
+      }, 300000);
+    };
+  </script>
+</body>
+</html>

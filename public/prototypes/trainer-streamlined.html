@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI Trainer Dashboard - Streamlined</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: bold;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background: #111;
+      border-bottom: 2px solid #ff0;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      color: #ff0;
+    }
+
+    .trainer-badge {
+      background: #ff0;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 20px;
+      font-size: 0.8rem;
+    }
+
+    .stat {
+      color: #888;
+    }
+
+    .stat-value {
+      color: #0f0;
+      margin-left: 5px;
+    }
+
+    /* Main Layout */
+    .main-container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #0a0a0a;
+      border-right: 1px solid #333;
+      padding: 20px;
+    }
+
+    .workflow-stage {
+      margin-bottom: 25px;
+    }
+
+    .stage-header {
+      font-size: 0.8rem;
+      color: #ff0;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stage-item {
+      background: #111;
+      border: 1px solid #333;
+      padding: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.75rem;
+    }
+
+    .stage-item:hover {
+      border-color: #ff0;
+      background: #1a1a1a;
+    }
+
+    .stage-item.active {
+      background: #ff0;
+      color: #000;
+      border-color: #ff0;
+    }
+
+    .item-count {
+      float: right;
+      background: #f00;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 0.6rem;
+    }
+
+    /* Center Panel - Review Queue */
+    .center-panel {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .queue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .queue-title {
+      font-size: 1.2rem;
+      color: #ff0;
+    }
+
+    .filter-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .filter-btn {
+      background: #222;
+      border: 1px solid #444;
+      color: #fff;
+      padding: 5px 10px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover {
+      border-color: #ff0;
+    }
+
+    .filter-btn.active {
+      background: #ff0;
+      color: #000;
+      border-color: #ff0;
+    }
+
+    /* Position Cards */
+    .position-card {
+      background: #111;
+      border: 2px solid #333;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .position-card.high-edge {
+      border-color: #0f0;
+    }
+
+    .position-card.urgent {
+      border-color: #f00;
+    }
+
+    .card-header {
+      background: #1a1a1a;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .market-info {
+      flex: 1;
+    }
+
+    .market-title {
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+    }
+
+    .market-meta {
+      display: flex;
+      gap: 15px;
+      font-size: 0.7rem;
+      color: #888;
+    }
+
+    .edge-indicator {
+      background: #0f0;
+      color: #000;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .commentary-section {
+      background: #0a0a0a;
+      padding: 10px;
+      border-radius: 3px;
+      margin-bottom: 15px;
+    }
+
+    .commentary-label {
+      font-size: 0.7rem;
+      color: #ff0;
+      margin-bottom: 8px;
+    }
+
+    .commentary-text {
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #ccc;
+      font-weight: normal;
+    }
+
+    /* Optimization Controls */
+    .optimization-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .control-label {
+      font-size: 0.65rem;
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    .slider {
+      width: 100%;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .slider-fill {
+      height: 100%;
+      background: #ff0;
+      border-radius: 2px;
+      width: 60%;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.8rem;
+      border-radius: 3px;
+    }
+
+    .btn-approve {
+      background: #0f0;
+      color: #000;
+    }
+
+    .btn-modify {
+      background: #ff0;
+      color: #000;
+    }
+
+    .btn-skip {
+      background: #333;
+      color: #fff;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Right Panel - Analytics */
+    .right-panel {
+      width: 300px;
+      background: #0a0a0a;
+      border-left: 1px solid #333;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .performance-widget {
+      background: #111;
+      border: 1px solid #333;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+
+    .widget-title {
+      font-size: 0.8rem;
+      color: #ff0;
+      margin-bottom: 10px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.7rem;
+    }
+
+    .metric-label {
+      color: #888;
+    }
+
+    .metric-value {
+      color: #0f0;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fab {
+      width: 50px;
+      height: 50px;
+      background: #ff0;
+      color: #000;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 8px rgba(255, 255, 0, 0.3);
+      transition: all 0.2s;
+    }
+
+    .fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(255, 255, 0, 0.5);
+    }
+
+    /* Status Indicators */
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .status-live { background: #0f0; animation: pulse 2s infinite; }
+    .status-pending { background: #ff0; }
+    .status-offline { background: #f00; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">MIYOMI</div>
+      <div class="trainer-badge">TRAINER MODE</div>
+      <div class="stats-bar">
+        <div class="stat">Win Rate:<span class="stat-value">73%</span></div>
+        <div class="stat">Today's Edge:<span class="stat-value">+$2,340</span></div>
+        <div class="stat">Followers:<span class="stat-value">42.5K</span></div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="status-dot status-live"></span> Live Markets
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Sidebar - Workflow Stages -->
+    <div class="sidebar">
+      <div class="workflow-stage">
+        <div class="stage-header">🌅 MORNING REVIEW</div>
+        <div class="stage-item active">
+          Overnight Alerts <span class="item-count">3</span>
+        </div>
+        <div class="stage-item">
+          Priority Markets <span class="item-count">5</span>
+        </div>
+      </div>
+
+      <div class="workflow-stage">
+        <div class="stage-header">📊 OPTIMIZATION</div>
+        <div class="stage-item">
+          Pending Approval <span class="item-count">7</span>
+        </div>
+        <div class="stage-item">
+          Script Refinement <span class="item-count">2</span>
+        </div>
+      </div>
+
+      <div class="workflow-stage">
+        <div class="stage-header">🎥 BROADCASTING</div>
+        <div class="stage-item">
+          Ready to Publish <span class="item-count">4</span>
+        </div>
+        <div class="stage-item">
+          Scheduled <span class="item-count">2</span>
+        </div>
+      </div>
+
+      <div class="workflow-stage">
+        <div class="stage-header">📈 PERFORMANCE</div>
+        <div class="stage-item">Today's Results</div>
+        <div class="stage-item">Weekly Report</div>
+      </div>
+    </div>
+
+    <!-- Center Panel - Review Queue -->
+    <div class="center-panel">
+      <div class="queue-header">
+        <div class="queue-title">📋 REVIEW QUEUE</div>
+        <div class="filter-controls">
+          <button class="filter-btn active">All</button>
+          <button class="filter-btn">High Edge</button>
+          <button class="filter-btn">Urgent</button>
+          <button class="filter-btn">Trending</button>
+        </div>
+      </div>
+
+      <!-- Position Card 1 - High Edge -->
+      <div class="position-card high-edge">
+        <div class="card-header">
+          <div class="market-info">
+            <div class="market-title">🔥 S&P 500 Calls Overconfidence</div>
+            <div class="market-meta">
+              <span>Market: SPY Weekly</span>
+              <span>Consensus: 82% Bullish</span>
+              <span>Expires: 18 hours</span>
+            </div>
+          </div>
+          <div class="edge-indicator">+27% EDGE</div>
+        </div>
+        <div class="card-body">
+          <div class="commentary-section">
+            <div class="commentary-label">MIYOMI'S COMMENTARY</div>
+            <div class="commentary-text">
+              "Everyone's buying SPY calls like it's free money. 82% bullish? That's not conviction, that's a crowded trade waiting to unwind. Smart money is quietly hedging. When retail is this confident, reversals hit hard. I'm taking the other side."
+            </div>
+          </div>
+
+          <div class="optimization-controls">
+            <div class="control-group">
+              <div class="control-label">TONE</div>
+              <div class="slider">
+                <div class="slider-fill" style="width: 70%;"></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="control-label">CONFIDENCE</div>
+              <div class="slider">
+                <div class="slider-fill" style="width: 85%;"></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="control-label">EVIDENCE</div>
+              <div class="slider">
+                <div class="slider-fill" style="width: 60%;"></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="control-label">URGENCY</div>
+              <div class="slider">
+                <div class="slider-fill" style="width: 90%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-approve">✅ APPROVE</button>
+            <button class="btn btn-modify">✏️ MODIFY</button>
+            <button class="btn btn-skip">⏭️ SKIP</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Position Card 2 - Urgent -->
+      <div class="position-card urgent">
+        <div class="card-header">
+          <div class="market-info">
+            <div class="market-title">⚡ Bitcoin $100K Rejection Thesis</div>
+            <div class="market-meta">
+              <span>Market: BTC/USD</span>
+              <span>Consensus: 73% Hit $100K</span>
+              <span>Window: 7 days</span>
+            </div>
+          </div>
+          <div class="edge-indicator">+23% EDGE</div>
+        </div>
+        <div class="card-body">
+          <div class="commentary-section">
+            <div class="commentary-label">MIYOMI'S COMMENTARY</div>
+            <div class="commentary-text">
+              "Bitcoin at $100K is the new 'permanent plateau' narrative. 73% think it's inevitable. But funding rates are screaming overleveraged longs, exchange reserves are rising, and whales are distributing. The crowd sees moon, I see correction."
+            </div>
+          </div>
+
+          <div class="optimization-controls">
+            <div class="control-group">
+              <div class="control-label">TONE</div>
+              <div class="slider">
+                <div class="slider-fill" style="width: 80%;"></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="control-label">CONFIDENCE</div>
+              <div class="slider">
+                <div class="slider-fill" style="width: 75%;"></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="control-label">EVIDENCE</div>
+              <div class="slider">
+                <div class="slider-fill" style="width: 85%;"></div>
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="control-label">URGENCY</div>
+              <div class="slider">
+                <div class="slider-fill" style="width: 70%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button class="btn btn-approve">✅ APPROVE</button>
+            <button class="btn btn-modify">✏️ MODIFY</button>
+            <button class="btn btn-skip">⏭️ SKIP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel - Analytics -->
+    <div class="right-panel">
+      <div class="performance-widget">
+        <div class="widget-title">📊 TODAY'S PERFORMANCE</div>
+        <div class="metric-row">
+          <span class="metric-label">Positions Reviewed</span>
+          <span class="metric-value">12</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Approved</span>
+          <span class="metric-value">8 (67%)</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Videos Generated</span>
+          <span class="metric-value">3</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Engagement Rate</span>
+          <span class="metric-value">4.7%</span>
+        </div>
+      </div>
+
+      <div class="performance-widget">
+        <div class="widget-title">🎯 PREDICTION ACCURACY</div>
+        <div class="metric-row">
+          <span class="metric-label">Last 24h</span>
+          <span class="metric-value">3/4 (75%)</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Last 7 Days</span>
+          <span class="metric-value">18/25 (72%)</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Last 30 Days</span>
+          <span class="metric-value">67/92 (73%)</span>
+        </div>
+      </div>
+
+      <div class="performance-widget">
+        <div class="widget-title">💰 REVENUE IMPACT</div>
+        <div class="metric-row">
+          <span class="metric-label">Today</span>
+          <span class="metric-value">+$340</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Week</span>
+          <span class="metric-value">+$2,180</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Month</span>
+          <span class="metric-value">+$8,740</span>
+        </div>
+      </div>
+
+      <div class="performance-widget">
+        <div class="widget-title">🤖 MIYOMI LEARNING</div>
+        <div class="metric-row">
+          <span class="metric-label">Pattern Match</span>
+          <span class="metric-value">87%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Auto-Improve</span>
+          <span class="metric-value">+12%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Trainer Sync</span>
+          <span class="metric-value">94%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <button class="fab" title="Generate Video">🎥</button>
+    <button class="fab" title="Batch Approve">✅</button>
+    <button class="fab" title="Emergency Stop">🛑</button>
+  </div>
+
+  <script>
+    // Simulated real-time updates
+    function updateMetrics() {
+      const winRate = document.querySelector('.stat-value');
+      const currentRate = parseInt(winRate.textContent);
+      const newRate = currentRate + (Math.random() > 0.5 ? 1 : -1);
+      if (newRate >= 70 && newRate <= 80) {
+        winRate.textContent = newRate + '%';
+      }
+    }
+
+    // Update metrics every 30 seconds
+    setInterval(updateMetrics, 30000);
+
+    // Handle action buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const card = this.closest('.position-card');
+
+        if (this.classList.contains('btn-approve')) {
+          card.style.opacity = '0.5';
+          card.style.borderColor = '#0f0';
+          setTimeout(() => card.remove(), 500);
+        } else if (this.classList.contains('btn-modify')) {
+          // Open modification interface
+          const commentary = card.querySelector('.commentary-text');
+          commentary.contentEditable = true;
+          commentary.style.border = '2px solid #ff0';
+          commentary.focus();
+        } else if (this.classList.contains('btn-skip')) {
+          card.style.opacity = '0.3';
+          setTimeout(() => card.remove(), 300);
+        }
+      });
+    });
+
+    // Handle workflow stage clicks
+    document.querySelectorAll('.stage-item').forEach(item => {
+      item.addEventListener('click', function() {
+        document.querySelectorAll('.stage-item').forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Handle filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Handle sliders
+    document.querySelectorAll('.slider').forEach(slider => {
+      slider.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const width = rect.width;
+        const percent = (x / width) * 100;
+        this.querySelector('.slider-fill').style.width = percent + '%';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIYOMI MARKETS - The Contrarian Oracle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #888;
+            font-size: 18px;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0f0;
+        }
+
+        .stat-value.negative {
+            color: #f00;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            background: #111;
+        }
+
+        .tab.active {
+            border-bottom-color: #0f0;
+        }
+
+        /* Market Cards */
+        .markets-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .market-card {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .market-card:hover {
+            border-color: #0f0;
+            box-shadow: 0 4px 12px rgba(0, 255, 0, 0.1);
+        }
+
+        .market-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .market-question {
+            font-size: 22px;
+            font-weight: bold;
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .market-badge {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .market-badge.contrarian {
+            background: #ff0080;
+            color: #fff;
+        }
+
+        .market-badge.culture {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .market-badge.crypto {
+            background: #f7931a;
+            color: #000;
+        }
+
+        .market-badge.resolved {
+            background: #0f0;
+            color: #000;
+        }
+
+        .market-description {
+            color: #aaa;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        /* Order Book Display */
+        .order-book {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .outcome {
+            background: #0a0a0a;
+            padding: 16px;
+            border-radius: 4px;
+        }
+
+        .outcome-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .outcome-price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0f0;
+        }
+
+        .outcome-price.no {
+            color: #f44;
+        }
+
+        .price-change {
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .price-change.up {
+            color: #0f0;
+        }
+
+        .price-change.down {
+            color: #f44;
+        }
+
+        /* Market Info */
+        .market-info {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Miyomi's Position */
+        .miyomi-position {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .position-header {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .position-details {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .position-pnl {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .position-pnl.profit {
+            color: #0f0;
+        }
+
+        .position-pnl.loss {
+            color: #f44;
+        }
+
+        /* Actions */
+        .market-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #0f0;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #0d0;
+        }
+
+        .btn-secondary {
+            background: #333;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #444;
+        }
+
+        /* Resolution Card */
+        .resolution-info {
+            background: #0a0a0a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .resolution-outcome {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .resolution-outcome.yes {
+            color: #0f0;
+        }
+
+        .resolution-outcome.no {
+            color: #f44;
+        }
+
+        .resolution-evidence {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .resolution-evidence a {
+            color: #0f0;
+            text-decoration: none;
+        }
+
+        .resolution-evidence a:hover {
+            text-decoration: underline;
+        }
+
+        /* Create Market Button */
+        .create-market-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #0f0;
+            color: #000;
+            border: none;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 255, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .create-market-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Timer */
+        .countdown {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: #ff0080;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .countdown.soon {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .stats-bar {
+                gap: 20px;
+            }
+
+            .order-book {
+                grid-template-columns: 1fr;
+            }
+
+            .market-info {
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>MIYOMI MARKETS</h1>
+            <p class="tagline">The Contrarian Oracle's Prediction Markets</p>
+
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-label">Win Rate</span>
+                    <span class="stat-value" id="win-rate">--</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Total Volume</span>
+                    <span class="stat-value" id="total-volume">--</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Active Markets</span>
+                    <span class="stat-value" id="active-markets">--</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Miyomi P&L</span>
+                    <span class="stat-value" id="miyomi-pnl">--</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Resolution Accuracy</span>
+                    <span class="stat-value" id="resolution-accuracy">--</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('active')">Active Markets</div>
+            <div class="tab" onclick="switchTab('resolved')">Resolved Markets</div>
+            <div class="tab" onclick="switchTab('all')">All Markets</div>
+        </div>
+
+        <!-- Markets Grid -->
+        <div class="markets-grid" id="markets-grid">
+            <div class="loading">Loading Miyomi's markets...</div>
+        </div>
+    </div>
+
+    <!-- Create Market Button (Trainer Mode Only) -->
+    <button class="create-market-btn" onclick="createMarket()" title="Create New Market">+</button>
+
+    <script>
+        // State
+        let currentTab = 'active'
+        let allMarkets = []
+        let ws = null
+
+        // Initialize
+        async function init() {
+            await loadMarkets()
+            await loadStats()
+            connectWebSocket()
+        }
+
+        // Load markets from API
+        async function loadMarkets() {
+            try {
+                const response = await fetch('/api/miyomi/markets')
+                const data = await response.json()
+                allMarkets = data.markets || []
+                renderMarkets()
+            } catch (error) {
+                console.error('Failed to load markets:', error)
+                document.getElementById('markets-grid').innerHTML = `
+                    <div class="empty-state">
+                        <h3>Failed to load markets</h3>
+                        <p>Please try again later</p>
+                    </div>
+                `
+            }
+        }
+
+        // Load stats
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/miyomi/stats')
+                const data = await response.json()
+
+                document.getElementById('win-rate').textContent = `${data.winRate}%`
+                document.getElementById('total-volume').textContent = `$${formatNumber(data.totalVolume)}`
+                document.getElementById('active-markets').textContent = data.activeMarkets
+
+                const pnlEl = document.getElementById('miyomi-pnl')
+                pnlEl.textContent = `$${formatNumber(data.miyomiPnl)}`
+                pnlEl.className = `stat-value ${data.miyomiPnl >= 0 ? '' : 'negative'}`
+
+                document.getElementById('resolution-accuracy').textContent = `${data.resolutionAccuracy}%`
+            } catch (error) {
+                console.error('Failed to load stats:', error)
+            }
+        }
+
+        // Switch tab
+        function switchTab(tab) {
+            currentTab = tab
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+            event.target.classList.add('active')
+            renderMarkets()
+        }
+
+        // Render markets
+        function renderMarkets() {
+            const grid = document.getElementById('markets-grid')
+
+            let filtered = allMarkets
+            if (currentTab === 'active') {
+                filtered = allMarkets.filter(m => m.status === 'active')
+            } else if (currentTab === 'resolved') {
+                filtered = allMarkets.filter(m => m.status === 'resolved')
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No ${currentTab} markets yet</h3>
+                        <p>${currentTab === 'active' ? 'Check back Monday for new markets' : 'Markets will appear here after resolution'}</p>
+                    </div>
+                `
+                return
+            }
+
+            grid.innerHTML = filtered.map(market => renderMarketCard(market)).join('')
+        }
+
+        // Render market card
+        function renderMarketCard(market) {
+            const isActive = market.status === 'active'
+            const timeLeft = isActive ? getTimeLeft(market.resolution_date) : null
+
+            return `
+                <div class="market-card">
+                    <div class="market-header">
+                        <div class="market-question">${market.question}</div>
+                        <span class="market-badge ${market.status === 'resolved' ? 'resolved' : market.category}">
+                            ${market.status === 'resolved' ? 'RESOLVED' : market.category}
+                        </span>
+                    </div>
+
+                    <div class="market-description">${market.description}</div>
+
+                    ${isActive ? `
+                        <div class="order-book">
+                            <div class="outcome">
+                                <div class="outcome-label">YES</div>
+                                <div class="outcome-price yes">${(market.yes_price * 100).toFixed(0)}%</div>
+                                <div class="price-change ${market.yes_change >= 0 ? 'up' : 'down'}">
+                                    ${market.yes_change >= 0 ? '+' : ''}${market.yes_change}%
+                                </div>
+                            </div>
+                            <div class="outcome">
+                                <div class="outcome-label">NO</div>
+                                <div class="outcome-price no">${(market.no_price * 100).toFixed(0)}%</div>
+                                <div class="price-change ${market.no_change >= 0 ? 'up' : 'down'}">
+                                    ${market.no_change >= 0 ? '+' : ''}${market.no_change}%
+                                </div>
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="resolution-info">
+                            <div class="resolution-outcome ${market.outcome?.toLowerCase()}">${market.outcome}</div>
+                            <div class="resolution-evidence">
+                                Evidence: <a href="${market.evidence_url}" target="_blank">View proof</a>
+                            </div>
+                        </div>
+                    `}
+
+                    <div class="market-info">
+                        <div class="info-item">
+                            <span class="info-label">Volume</span>
+                            <span class="info-value">$${formatNumber(market.total_volume || 0)}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Traders</span>
+                            <span class="info-value">${market.unique_traders || 0}</span>
+                        </div>
+                        ${isActive ? `
+                            <div class="info-item">
+                                <span class="info-label">Time Left</span>
+                                <span class="info-value">
+                                    ${timeLeft ? `<span class="countdown ${timeLeft.hours < 24 ? 'soon' : ''}">${timeLeft.display}</span>` : '--'}
+                                </span>
+                            </div>
+                        ` : `
+                            <div class="info-item">
+                                <span class="info-label">Resolved</span>
+                                <span class="info-value">${formatDate(market.resolved_at)}</span>
+                            </div>
+                        `}
+                    </div>
+
+                    <div class="miyomi-position">
+                        <div class="position-header">Miyomi's Position</div>
+                        <div class="position-details">
+                            <div class="info-item">
+                                <span class="info-label">YES</span>
+                                <span class="info-value">${market.miyomi_position?.yes || 0} @ ${(market.miyomi_position?.entry_price_yes || 0).toFixed(2)}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">NO</span>
+                                <span class="info-value">${market.miyomi_position?.no || 0} @ ${(market.miyomi_position?.entry_price_no || 0).toFixed(2)}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">P&L</span>
+                                <span class="position-pnl ${(market.miyomi_pnl || 0) >= 0 ? 'profit' : 'loss'}">
+                                    ${(market.miyomi_pnl || 0) >= 0 ? '+' : ''}$${Math.abs(market.miyomi_pnl || 0).toFixed(2)}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="market-actions">
+                        ${isActive ? `
+                            <button class="btn btn-primary" onclick="tradeMarket('${market.condition_id}')">Trade on Soup.xyz</button>
+                        ` : ''}
+                        ${market.announcement_video_url ? `
+                            <button class="btn btn-secondary" onclick="watchVideo('${market.announcement_video_url}')">Watch Announcement</button>
+                        ` : ''}
+                        ${market.resolution_video_url ? `
+                            <button class="btn btn-secondary" onclick="watchVideo('${market.resolution_video_url}')">Watch Resolution</button>
+                        ` : ''}
+                    </div>
+                </div>
+            `
+        }
+
+        // WebSocket connection for real-time updates
+        function connectWebSocket() {
+            // TODO: Implement WebSocket connection to Soup.xyz
+            // ws = new WebSocket('wss://i.soup.xyz/ws')
+            // Subscribe to order book updates for all active markets
+        }
+
+        // Helper: Get time left
+        function getTimeLeft(resolutionDate) {
+            const now = new Date()
+            const end = new Date(resolutionDate)
+            const diff = end - now
+
+            if (diff <= 0) return null
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+
+            return {
+                days,
+                hours,
+                minutes,
+                display: days > 0 ? `${days}d ${hours}h` : hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`
+            }
+        }
+
+        // Helper: Format number
+        function formatNumber(num) {
+            if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
+            if (num >= 1000) return `${(num / 1000).toFixed(1)}K`
+            return num.toFixed(0)
+        }
+
+        // Helper: Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString)
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+        }
+
+        // Actions
+        function tradeMarket(conditionId) {
+            window.open(`https://app.soup.xyz/market/${conditionId}`, '_blank')
+        }
+
+        function watchVideo(url) {
+            window.open(url, '_blank')
+        }
+
+        function createMarket() {
+            window.location.href = '/miyomi-markets-create.html'
+        }
+
+        // Initialize on load
+        init()
+
+        // Refresh every 30 seconds
+        setInterval(loadMarkets, 30000)
+        setInterval(loadStats, 30000)
+    </script>
+</body>
+</html>

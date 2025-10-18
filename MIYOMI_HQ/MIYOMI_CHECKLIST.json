@@ -1,0 +1,252 @@
+{
+  "project": "Miyomi - AI Prediction Market Influencer",
+  "sprint": "2-Week Launch (Oct 20 - Nov 1)",
+  "status": "Active",
+  "lastUpdated": "2025-10-17",
+
+  "week1": {
+    "name": "Foundation (Days 1-7)",
+    "dueDate": "2025-10-26",
+    "kpis": {
+      "videosShipped": { "target": 7, "actual": 0 },
+      "textPostsPerDay": { "target": 2, "actual": 0 },
+      "memesPerDay": { "target": 1, "actual": 0 },
+      "dailyImpressions": { "target": 1000, "actual": 0 },
+      "telegramMembers": { "target": 50, "actual": 0 },
+      "affiliateClicks": { "target": 10, "actual": 0 }
+    },
+    "tasks": [
+      {
+        "id": "w1-1",
+        "name": "Character Lock",
+        "owner": "JMill",
+        "due": "2025-10-21",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Pick canonical face model", "done": false },
+          { "name": "Select voice (TTS or clone)", "done": false },
+          { "name": "Fix wardrobe/tattoos/accessories", "done": false },
+          { "name": "Create 10-shot lookbook", "done": false },
+          { "name": "Write 1-page brand spec", "done": false }
+        ]
+      },
+      {
+        "id": "w1-2",
+        "name": "Spin Up Channels",
+        "owner": "JMill",
+        "due": "2025-10-20",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Register Twitter @miyomi____", "done": false },
+          { "name": "Create Telegram: Miyomi Announcements", "done": false },
+          { "name": "Create Telegram: Miyomi Degen (open)", "done": false },
+          { "name": "Create Telegram: Miyomi Signals Pro (private)", "done": false },
+          { "name": "Set up UTM/Bitly tracking", "done": false },
+          { "name": "Add legal: 'Not financial advice' + disclosure", "done": false }
+        ]
+      },
+      {
+        "id": "w1-3",
+        "name": "Posting Pipeline",
+        "owner": "JMill",
+        "due": "2025-10-22",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Build script → video generator", "done": false },
+          { "name": "Add CTA overlay system", "done": false },
+          { "name": "Set up auto-publish to Twitter", "done": false },
+          { "name": "Set up auto-post to Telegram", "done": false },
+          { "name": "Wire affiliate links with tracking", "done": false }
+        ]
+      },
+      {
+        "id": "w1-4",
+        "name": "Signal Finder v0",
+        "owner": "JMill",
+        "due": "2025-10-22",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Scrape X lists (prediction markets, macro, culture)", "done": false },
+          { "name": "Build ranking: freshness + engagement velocity", "done": false },
+          { "name": "Auto-deliver top-5 feed at 10:00 CET", "done": false },
+          { "name": "Auto-deliver top-5 feed at 16:00 CET", "done": false }
+        ]
+      },
+      {
+        "id": "w1-5",
+        "name": "Affiliate Outreach",
+        "owner": "Seth",
+        "due": "2025-10-20",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Contact Polymarket - get trackable code", "done": false },
+          { "name": "Pipeline: Kalshi outreach", "done": false },
+          { "name": "Pipeline: DraftKings outreach", "done": false },
+          { "name": "Pipeline: Robinhood outreach", "done": false }
+        ]
+      },
+      {
+        "id": "w1-6",
+        "name": "Ship First 7 Scripts/Videos",
+        "owner": "JMill + Jacob",
+        "due": "2025-10-26",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Day 1 script → video", "done": false },
+          { "name": "Day 2 script → video", "done": false },
+          { "name": "Day 3 script → video", "done": false },
+          { "name": "Day 4 script → video", "done": false },
+          { "name": "Day 5 script → video", "done": false },
+          { "name": "Day 6 script → video", "done": false },
+          { "name": "Day 7 script → video", "done": false }
+        ]
+      }
+    ]
+  },
+
+  "week2": {
+    "name": "Scale (Days 8-14)",
+    "dueDate": "2025-11-01",
+    "kpis": {
+      "totalVideos": { "target": 14, "actual": 0 },
+      "cumulativeViews": { "target": 50000, "actual": 0 },
+      "affiliateClicks": { "target": 100, "actual": 0 },
+      "conversions": { "target": 5, "actual": 0 }
+    },
+    "tasks": [
+      {
+        "id": "w2-1",
+        "name": "Format Hardening",
+        "owner": "JMill",
+        "due": "2025-10-29",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Standardize 30-45s 'Today's Market' block", "done": false },
+          { "name": "Standardize 'Today's Pick' format", "done": false },
+          { "name": "Create Friday 'Week in Markets' wrap template", "done": false }
+        ]
+      },
+      {
+        "id": "w2-2",
+        "name": "Attribution & Offers",
+        "owner": "JMill",
+        "due": "2025-10-31",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Close Polymarket affiliate with custom landing", "done": false },
+          { "name": "Measure CPA", "done": false },
+          { "name": "Build attribution dashboard", "done": false }
+        ]
+      },
+      {
+        "id": "w2-3",
+        "name": "Private Signals Pilot",
+        "owner": "JMill",
+        "due": "2025-11-01",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Gate Signals Pro for 100 early adopters", "done": false },
+          { "name": "Set up 2 actionable ideas/day workflow", "done": false },
+          { "name": "Create beta feedback loop", "done": false }
+        ]
+      },
+      {
+        "id": "w2-4",
+        "name": "Growth Mechanics",
+        "owner": "Jacob + JMill",
+        "due": "2025-11-01",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Reply-chains with known PM voices", "done": false },
+          { "name": "Build 'Miyomi's Hit Rate' public notion page", "done": false },
+          { "name": "Create weekly scoreboard image template", "done": false },
+          { "name": "Launch leaderboard tactics", "done": false }
+        ]
+      },
+      {
+        "id": "w2-5",
+        "name": "Miyomi.ai Teaser",
+        "owner": "JMill",
+        "due": "2025-10-24",
+        "status": "pending",
+        "subtasks": [
+          { "name": "Write headline copy", "done": false },
+          { "name": "Build email capture form", "done": false },
+          { "name": "Create link hub", "done": false },
+          { "name": "Deploy to miyomi.ai", "done": false }
+        ]
+      }
+    ]
+  },
+
+  "dailyStandups": {
+    "frequency": "Daily, 60 min",
+    "participants": ["Seth", "JMill"],
+    "startDate": "2025-10-18",
+    "time": "TBD",
+    "agenda": [
+      "Review previous day KPIs",
+      "Script approval for today",
+      "Blockers/risks",
+      "Next 24h priorities"
+    ]
+  },
+
+  "metrics": {
+    "output": ["videos/day", "on-time rate"],
+    "distribution": ["views", "avg watch time", "engagement rate"],
+    "funnel": ["CTR", "signups", "affiliate conversions", "CAC/CPA"],
+    "community": ["Telegram growth", "active posters", "retention"],
+    "topicHitRate": "% posts on rising threads within 30 min"
+  },
+
+  "milestones": [
+    {
+      "name": "Soft Launch",
+      "date": "2025-11-01",
+      "criteria": ["7+ videos shipped", "50+ Telegram members", "5+ conversions"]
+    },
+    {
+      "name": "Sponsor Week #1",
+      "date": "2025-11-15",
+      "criteria": ["Proof-case with attribution", "Unit economics validated"]
+    },
+    {
+      "name": "Toy Fair Positioning",
+      "date": "2026-02-01",
+      "criteria": ["Position as 'AI markets host'"]
+    },
+    {
+      "name": "Scale Target",
+      "date": "2026-03-31",
+      "criteria": ["10k Telegram open", "1k Signals Pro", "Unit economics proven"]
+    }
+  ],
+
+  "risks": [
+    {
+      "risk": "Character drift",
+      "counter": "Model lock + recipe versioning; reject until within tolerance"
+    },
+    {
+      "risk": "Platform throttling/X API cost",
+      "counter": "Blend public scraping + manual lists; no auto-reply bots"
+    },
+    {
+      "risk": "Low conversion",
+      "counter": "One sponsor first; iterate CTA placement; show proof-case"
+    },
+    {
+      "risk": "Team distraction (Abraham gravity)",
+      "counter": "Firewall Henry to protocol; keep execution with JMill/Jacob"
+    }
+  ],
+
+  "decisions": [
+    "Skip Farcaster; Twitter + Telegram only",
+    "Human-curated, AI-produced is acceptable",
+    "Affiliate revenue first, sponsorship second, paid signals after traction",
+    "Build signal discovery tool as core IP",
+    "Move independently of Abraham; ship agents fast"
+  ]
+}

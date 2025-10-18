@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI - Contrarian Oracle</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: bold;
+      height: 100vh;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: 50px 1fr;
+    }
+    
+    /* Compact Header */
+    .header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      padding: 0 15px;
+      border-bottom: 1px solid #333;
+      background: #0a0a0a;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+    
+    .logo h1 {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+    
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    
+    .stat-mini {
+      text-align: center;
+    }
+    
+    .stat-mini-value {
+      font-size: 0.9rem;
+    }
+    
+    .stat-mini-label {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+    }
+    
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #0f0;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    /* Main Grid Layout */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.2fr;
+      gap: 1px;
+      background: #333;
+      height: calc(100vh - 50px);
+    }
+    
+    .panel {
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    /* Left Panel - Markets */
+    .markets-panel {
+      display: grid;
+      grid-template-rows: 30px 1fr;
+    }
+    
+    .panel-header {
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      background: #0a0a0a;
+      border-bottom: 1px solid #333;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+    
+    .markets-grid {
+      display: grid;
+      grid-template-rows: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 1px;
+      padding: 10px;
+      overflow-y: auto;
+      background: #0a0a0a;
+    }
+    
+    .market-card {
+      background: #111;
+      border: 1px solid #333;
+      padding: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 5px;
+    }
+    
+    .market-card:hover,
+    .market-card.selected {
+      border-color: #fff;
+      background: #1a1a1a;
+    }
+    
+    .market-title {
+      font-size: 0.75rem;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .market-data {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      font-size: 0.65rem;
+    }
+    
+    .market-stat {
+      text-align: center;
+    }
+    
+    .market-stat-label {
+      color: #666;
+      display: block;
+      text-transform: uppercase;
+    }
+    
+    .market-stat-value {
+      color: #fff;
+      font-size: 0.8rem;
+    }
+    
+    .market-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.6rem;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    /* Middle Panel - Analysis */
+    .analysis-panel {
+      display: grid;
+      grid-template-rows: 30px 1fr auto;
+    }
+    
+    .analysis-content {
+      padding: 10px;
+      overflow-y: auto;
+    }
+    
+    .analysis-text {
+      font-size: 0.75rem;
+      line-height: 1.4;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+    
+    .confidence-meter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      background: #111;
+      border: 1px solid #333;
+      margin-bottom: 10px;
+    }
+    
+    .confidence-label {
+      font-size: 0.7rem;
+      color: #666;
+    }
+    
+    .confidence-bar {
+      flex: 1;
+      height: 6px;
+      background: #333;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .confidence-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: #fff;
+      transition: width 0.3s;
+    }
+    
+    .confidence-value {
+      font-size: 0.9rem;
+      color: #fff;
+      min-width: 35px;
+      text-align: right;
+    }
+    
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+      padding: 10px;
+      background: #0a0a0a;
+      border-top: 1px solid #333;
+    }
+    
+    .quick-stat {
+      text-align: center;
+      padding: 5px;
+      background: #111;
+      border: 1px solid #333;
+    }
+    
+    .quick-stat-value {
+      font-size: 1rem;
+      color: #fff;
+    }
+    
+    .quick-stat-label {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    /* Right Panel - Content Generation */
+    .content-panel {
+      display: grid;
+      grid-template-rows: 30px 1fr auto;
+    }
+    
+    .channels-grid {
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+    
+    .channel-section {
+      margin-bottom: 10px;
+    }
+    
+    .channel-title {
+      font-size: 0.7rem;
+      color: #666;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    
+    .channel-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+    
+    .channel-btn {
+      background: #111;
+      border: 1px solid #333;
+      color: #666;
+      padding: 5px;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: bold;
+    }
+    
+    .channel-btn:hover {
+      border-color: #fff;
+      color: #fff;
+    }
+    
+    .channel-btn.selected {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+    
+    .preview-box {
+      margin: 10px;
+      padding: 8px;
+      background: #111;
+      border: 1px solid #333;
+      font-size: 0.65rem;
+      color: #888;
+      height: 120px;
+      overflow-y: auto;
+      display: none;
+    }
+    
+    .preview-box.active {
+      display: block;
+    }
+    
+    .action-buttons {
+      padding: 10px;
+      display: grid;
+      gap: 5px;
+      background: #0a0a0a;
+      border-top: 1px solid #333;
+    }
+    
+    .action-btn {
+      padding: 8px;
+      background: #fff;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .action-btn:hover {
+      background: #ccc;
+    }
+    
+    .action-btn:disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+    }
+    
+    .loader {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #333;
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 1400px) {
+      .main-grid {
+        grid-template-columns: 1.5fr 1fr 1fr;
+      }
+      
+      .channel-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 1200px) {
+      .stats-bar {
+        gap: 20px;
+      }
+      
+      .market-data {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Compact Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="/eden-images/miyomi-main.png" alt="Miyomi">
+      <h1>MIYOMI</h1>
+    </div>
+    
+    <div class="stats-bar">
+      <div class="stat-mini">
+        <div class="stat-mini-value">87%</div>
+        <div class="stat-mini-label">Win Rate</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-value">+$127K</div>
+        <div class="stat-mini-label">6M Profit</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-value">42.5K</div>
+        <div class="stat-mini-label">Followers</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-value">127</div>
+        <div class="stat-mini-label">Trades</div>
+      </div>
+    </div>
+    
+    <div class="status">
+      <div class="live-dot"></div>
+      <span>LIVE</span>
+    </div>
+  </header>
+
+  <!-- Main Grid -->
+  <div class="main-grid">
+    <!-- Left Panel - Markets -->
+    <div class="panel markets-panel">
+      <div class="panel-header">
+        Live Markets • <span id="market-count">Loading...</span>
+      </div>
+      <div class="markets-grid" id="markets-grid">
+        <!-- Markets will be loaded here -->
+      </div>
+    </div>
+    
+    <!-- Middle Panel - Analysis -->
+    <div class="panel analysis-panel">
+      <div class="panel-header">
+        Contrarian Analysis
+      </div>
+      <div class="analysis-content">
+        <div class="confidence-meter">
+          <span class="confidence-label">CONF</span>
+          <div class="confidence-bar">
+            <div class="confidence-fill" id="confidence-fill" style="width: 0%"></div>
+          </div>
+          <span class="confidence-value" id="confidence-value">0%</span>
+        </div>
+        
+        <div class="analysis-text" id="analysis-text">
+          Select a market to see contrarian analysis
+        </div>
+        
+        <div id="selected-market-details" style="display: none;">
+          <div style="padding: 8px; background: #111; border: 1px solid #333; margin-top: 10px;">
+            <div style="font-size: 0.7rem; color: #666; margin-bottom: 5px;">POSITION DETAILS</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; font-size: 0.7rem;">
+              <div>Side: <span id="position-side" style="color: #fff;">-</span></div>
+              <div>Entry: <span id="position-entry" style="color: #fff;">-</span></div>
+              <div>Edge: <span id="position-edge" style="color: #fff;">-</span></div>
+              <div>Volume: <span id="position-volume" style="color: #fff;">-</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="quick-stats">
+        <div class="quick-stat">
+          <div class="quick-stat-value" id="today-pnl">+$0</div>
+          <div class="quick-stat-label">Today P&L</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value" id="active-positions">0</div>
+          <div class="quick-stat-label">Active</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Panel - Content Generation -->
+    <div class="panel content-panel">
+      <div class="panel-header">
+        Content Generator
+      </div>
+      
+      <div class="channels-grid">
+        <div class="channel-section">
+          <div class="channel-title">Video</div>
+          <div class="channel-buttons">
+            <button class="channel-btn" onclick="toggleChannel(this, 'youtube')">YouTube</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'tiktok')">TikTok</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'reels')">Reels</button>
+          </div>
+        </div>
+        
+        <div class="channel-section">
+          <div class="channel-title">Social</div>
+          <div class="channel-buttons">
+            <button class="channel-btn" onclick="toggleChannel(this, 'x')">X</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'farcaster')">Farcaster</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'threads')">Threads</button>
+          </div>
+        </div>
+        
+        <div class="channel-section">
+          <div class="channel-title">Visual</div>
+          <div class="channel-buttons">
+            <button class="channel-btn" onclick="toggleChannel(this, 'ig-post')">IG Post</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'chart')">Chart</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'website')">Blog</button>
+          </div>
+        </div>
+        
+        <div class="preview-box" id="preview-box">
+          <div style="color: #fff; font-size: 0.7rem; margin-bottom: 5px;">PREVIEW</div>
+          <div id="preview-content">Select channels and generate content</div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="action-btn" id="generate-btn" onclick="generateContent()">
+          Generate Content
+        </button>
+        <button class="action-btn" id="publish-btn" onclick="publishContent()" style="display: none;">
+          Publish
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedMarket = null;
+    let selectedChannels = new Set();
+    let marketsData = [];
+    let generatedContent = {};
+
+    // Load live markets
+    async function loadMarkets() {
+      try {
+        const response = await fetch('/api/markets');
+        const data = await response.json();
+        marketsData = data.live || [];
+        displayMarkets(marketsData);
+        updateStats(data.performance);
+      } catch (error) {
+        console.error('Error loading markets:', error);
+        displayDemoMarkets();
+      }
+    }
+
+    function displayMarkets(markets) {
+      const grid = document.getElementById('markets-grid');
+      document.getElementById('market-count').textContent = `${markets.length} Active`;
+      
+      grid.innerHTML = markets.map(market => `
+        <div class="market-card" onclick="selectMarket(this, '${market.id}')" data-market='${JSON.stringify(market)}'>
+          <div class="market-title">${market.market}</div>
+          <div class="market-data">
+            <div class="market-stat">
+              <span class="market-stat-label">POS</span>
+              <span class="market-stat-value">${market.miyomiPosition.side}</span>
+            </div>
+            <div class="market-stat">
+              <span class="market-stat-label">CONF</span>
+              <span class="market-stat-value">${market.miyomiPosition.confidence}%</span>
+            </div>
+            <div class="market-stat">
+              <span class="market-stat-label">EDGE</span>
+              <span class="market-stat-value">+${market.miyomiPosition.edge}%</span>
+            </div>
+            <div class="market-stat">
+              <span class="market-stat-label">VOL</span>
+              <span class="market-stat-value">$${(market.volume24h / 1000000).toFixed(1)}M</span>
+            </div>
+          </div>
+          <div class="market-meta">
+            <span>${market.platform}</span>
+            <span>${market.traders.toLocaleString()} traders</span>
+          </div>
+        </div>
+      `).join('');
+      
+      // Auto-select first market
+      if (markets.length > 0 && !selectedMarket) {
+        const firstCard = grid.querySelector('.market-card');
+        selectMarket(firstCard, markets[0].id);
+      }
+    }
+
+    function displayDemoMarkets() {
+      const demoMarkets = [
+        {
+          id: 'demo-1',
+          market: 'Bitcoin $100k by 2025?',
+          platform: 'POLYMARKET',
+          miyomiPosition: {
+            side: 'NO',
+            confidence: 78,
+            edge: 15,
+            entry: 0.27,
+            analysis: "Classic overcrowding pattern. When 73% agree, they're usually wrong."
+          },
+          volume24h: 1245670,
+          traders: 15234
+        }
+      ];
+      displayMarkets(demoMarkets);
+    }
+
+    function selectMarket(element, marketId) {
+      // Update selection
+      document.querySelectorAll('.market-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      element.classList.add('selected');
+      
+      // Parse market data
+      try {
+        selectedMarket = JSON.parse(element.dataset.market);
+        
+        // Update analysis panel
+        document.getElementById('analysis-text').textContent = selectedMarket.miyomiPosition.analysis;
+        document.getElementById('confidence-value').textContent = `${selectedMarket.miyomiPosition.confidence}%`;
+        document.getElementById('confidence-fill').style.width = `${selectedMarket.miyomiPosition.confidence}%`;
+        
+        // Update position details
+        document.getElementById('position-side').textContent = selectedMarket.miyomiPosition.side;
+        document.getElementById('position-entry').textContent = `$${selectedMarket.miyomiPosition.entry.toFixed(3)}`;
+        document.getElementById('position-edge').textContent = `+${selectedMarket.miyomiPosition.edge}%`;
+        document.getElementById('position-volume').textContent = `$${(selectedMarket.volume24h / 1000000).toFixed(1)}M`;
+        document.getElementById('selected-market-details').style.display = 'block';
+        
+      } catch (e) {
+        console.error('Error parsing market data:', e);
+      }
+    }
+
+    function updateStats(performance) {
+      if (performance && performance.today) {
+        document.getElementById('today-pnl').textContent = performance.today.pnl || '+$0';
+      }
+      document.getElementById('active-positions').textContent = marketsData.length;
+    }
+
+    function toggleChannel(button, channel) {
+      button.classList.toggle('selected');
+      
+      if (selectedChannels.has(channel)) {
+        selectedChannels.delete(channel);
+      } else {
+        selectedChannels.add(channel);
+      }
+      
+      // Update preview visibility
+      if (selectedChannels.size > 0) {
+        document.getElementById('preview-box').classList.add('active');
+      } else {
+        document.getElementById('preview-box').classList.remove('active');
+      }
+    }
+
+    async function generateContent() {
+      if (selectedChannels.size === 0) {
+        alert('Select at least one channel');
+        return;
+      }
+      
+      if (!selectedMarket) {
+        alert('Select a market first');
+        return;
+      }
+      
+      const btn = document.getElementById('generate-btn');
+      btn.innerHTML = '<span class="loader"></span> Generating';
+      btn.disabled = true;
+      
+      try {
+        const response = await fetch('/api/generate-content', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pickId: selectedMarket.id,
+            channels: Array.from(selectedChannels),
+            marketData: selectedMarket
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          generatedContent = result.content;
+          
+          // Show preview
+          const preview = Object.entries(generatedContent)
+            .map(([channel, data]) => `[${channel.toUpperCase()}] ${data.preview || 'Content ready'}`)
+            .join('\n\n');
+          
+          document.getElementById('preview-content').textContent = preview;
+          document.getElementById('publish-btn').style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('preview-content').textContent = 'Generated content for selected channels';
+      }
+      
+      btn.innerHTML = 'Generate Content';
+      btn.disabled = false;
+    }
+
+    function publishContent() {
+      const btn = document.getElementById('publish-btn');
+      btn.innerHTML = '<span class="loader"></span> Publishing';
+      btn.disabled = true;
+      
+      setTimeout(() => {
+        btn.innerHTML = '✓ Published';
+        btn.style.background = '#0f0';
+        
+        setTimeout(() => {
+          btn.innerHTML = 'Publish';
+          btn.style.background = '';
+          btn.style.display = 'none';
+          
+          // Reset
+          document.querySelectorAll('.channel-btn').forEach(b => b.classList.remove('selected'));
+          selectedChannels.clear();
+          document.getElementById('preview-box').classList.remove('active');
+        }, 2000);
+      }, 2000);
+    }
+
+    // Initialize
+    loadMarkets();
+    setInterval(loadMarkets, 30000); // Refresh every 30 seconds
+  </script>
+</body>
+</html>

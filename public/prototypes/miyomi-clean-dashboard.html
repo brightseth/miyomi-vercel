@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI - Contrarian Oracle Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: bold;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Mode Toggle - Fixed positioning */
+    .mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: #111;
+      border: 2px solid #fff;
+      border-radius: 25px;
+      padding: 3px;
+      display: flex;
+    }
+
+    .mode-btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .mode-btn.active {
+      background: #fff;
+      color: #000;
+    }
+
+    .mode-btn:hover:not(.active) {
+      color: #fff;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(90deg, #1a1a1a 0%, #0a0a0a 100%);
+      border-bottom: 2px solid #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 24px;
+      letter-spacing: 3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 30px;
+      height: 30px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .tagline {
+      color: #888;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-right: 120px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .social-links a:hover {
+      opacity: 1;
+    }
+
+    /* Hero Section */
+    .hero-personality {
+      padding: 30px 20px;
+      background: linear-gradient(180deg, #0a0a0a 0%, #000 100%);
+      border-bottom: 1px solid #333;
+    }
+
+    .hero-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .miyomi-profile {
+      position: relative;
+    }
+
+    .profile-image {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border: 3px solid #fff;
+      filter: contrast(1.1);
+      background: #222; /* Fallback background */
+    }
+
+    .status-indicator {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: #00ff00;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 3px solid #000;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .miyomi-intro {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .quote-box {
+      background: #111;
+      border: 2px solid #fff;
+      padding: 20px;
+      position: relative;
+    }
+
+    .quote-text {
+      font-size: 20px;
+      line-height: 1.4;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    .quote-author {
+      text-align: right;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .personality-traits {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .trait {
+      background: #000;
+      border: 1px solid #fff;
+      padding: 8px 16px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Live Stats Bar */
+    .live-stats {
+      background: #111;
+      border-bottom: 2px solid #fff;
+      padding: 15px 20px;
+    }
+
+    .stats-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #888;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .stat-value.positive {
+      color: #00ff00;
+    }
+
+    .stat-value.negative {
+      color: #ff0000;
+    }
+
+    /* Dashboard Views */
+    .dashboard-view {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .dashboard-view.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Main Dashboard Grid */
+    .dashboard-grid {
+      max-width: 1400px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* Private Trainer Dashboard */
+    .trainer-dashboard {
+      max-width: 1400px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .trainer-header {
+      background: #111;
+      border: 2px solid #fff;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .trainer-title {
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .trainer-subtitle {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .trainer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    /* Dashboard Cards */
+    .card {
+      background: #0a0a0a;
+      border: 2px solid #fff;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+    }
+
+    .card-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .card-badge {
+      background: #fff;
+      color: #000;
+      padding: 2px 8px;
+      font-size: 10px;
+      border-radius: 10px;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #888;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: #111;
+      border: 1px solid #333;
+      color: #fff;
+      padding: 10px;
+      font-size: 14px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      border-radius: 0;
+    }
+
+    .form-textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: #fff;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      background: #fff;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-right: 10px;
+    }
+
+    .btn:hover {
+      background: #ccc;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #fff;
+    }
+
+    .btn-secondary:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* Video Templates */
+    .video-templates {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .template-card {
+      background: #111;
+      border: 1px solid #333;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .template-card:hover {
+      border-color: #fff;
+    }
+
+    .template-card.selected {
+      background: #222;
+      border-color: #fff;
+    }
+
+    .template-icon {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .template-name {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Position List */
+    .position-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .position-item {
+      background: #111;
+      padding: 12px;
+      border: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .position-item:hover {
+      border-color: #fff;
+      transform: translateX(3px);
+    }
+
+    .position-info {
+      flex: 1;
+    }
+
+    .position-market {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .position-details {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .position-pnl {
+      text-align: right;
+    }
+
+    .pnl-value {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .pnl-percent {
+      font-size: 11px;
+      color: #888;
+    }
+
+    /* Analytics Grid */
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .metric-box {
+      background: #111;
+      border: 1px solid #333;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .metric-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #888;
+      letter-spacing: 1px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #000;
+      border-top: 2px solid #fff;
+      padding: 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .dashboard-grid, .trainer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .miyomi-profile {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      
+      .stats-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .dashboard-grid, .trainer-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .mode-toggle {
+        top: auto;
+        bottom: 20px;
+      }
+      
+      .header-right {
+        margin-right: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Mode Toggle -->
+  <div class="mode-toggle">
+    <button class="mode-btn active" data-mode="public">Public</button>
+    <button class="mode-btn" data-mode="private">Private</button>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">
+        <div class="logo-icon">M</div>
+        <span>MIYOMI</span>
+      </div>
+      <div class="tagline">The Contrarian Oracle</div>
+    </div>
+    <div class="header-right">
+      <div class="social-links">
+        <a href="https://x.com/miyomi" target="_blank">X</a>
+        <a href="https://youtube.com/@miyomi" target="_blank">YouTube</a>
+        <a href="https://tiktok.com/@miyomi" target="_blank">TikTok</a>
+        <a href="https://discord.gg/miyomi" target="_blank">Discord</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section with Personality -->
+  <div class="hero-personality">
+    <div class="hero-content">
+      <div class="miyomi-profile">
+        <img id="profileImage" src="/eden-images/miyomi-neon.jpg" alt="Miyomi" class="profile-image" onerror="this.src='/eden-images/miyomi-main.png'">
+        <div class="status-indicator"></div>
+      </div>
+      <div class="miyomi-intro">
+        <div class="quote-box">
+          <div class="quote-text" id="dynamicQuote">
+            "When everyone's euphoric about Bitcoin hitting 100K, that's precisely when I short. 
+            The crowd's certainty is my opportunity."
+          </div>
+          <div class="quote-author">— Miyomi, 3 hours ago</div>
+        </div>
+        <div class="personality-traits">
+          <div class="trait">🎯 73% Win Rate</div>
+          <div class="trait">💰 +$127K Total Profit</div>
+          <div class="trait">📊 247 Active Predictions</div>
+          <div class="trait">🔥 12 Streak</div>
+          <div class="trait">👥 8.4K Followers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Stats Bar -->
+  <div class="live-stats">
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-label">Market Sentiment</div>
+        <div class="stat-value" id="marketSentiment">EXTREME GREED</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Active Positions</div>
+        <div class="stat-value" id="activePositions">7</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Today's P&L</div>
+        <div class="stat-value positive" id="todayPnl">+$3,247</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Win Rate (7D)</div>
+        <div class="stat-value" id="winRate7d">81%</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Contrarian Score</div>
+        <div class="stat-value" id="contrarianScore">9.2/10</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Next Signal</div>
+        <div class="stat-value" id="nextSignal">14:32</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Public Dashboard View -->
+  <div id="publicView" class="dashboard-view active">
+    <div class="dashboard-grid">
+      <!-- Active Positions -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">ACTIVE POSITIONS</div>
+          <div class="card-badge">LIVE</div>
+        </div>
+        <div class="position-list">
+          <div class="position-item">
+            <div class="position-info">
+              <div class="position-market">BTC SHORT @ $67,420</div>
+              <div class="position-details">Size: $25,000 • Entry: 2h ago</div>
+            </div>
+            <div class="position-pnl">
+              <div class="pnl-value positive">+$1,247</div>
+              <div class="pnl-percent">+4.99%</div>
+            </div>
+          </div>
+          <div class="position-item">
+            <div class="position-info">
+              <div class="position-market">ETH LONG @ $3,234</div>
+              <div class="position-details">Size: $15,000 • Entry: 5h ago</div>
+            </div>
+            <div class="position-pnl">
+              <div class="pnl-value negative">-$342</div>
+              <div class="pnl-percent">-2.28%</div>
+            </div>
+          </div>
+          <div class="position-item">
+            <div class="position-info">
+              <div class="position-market">NVDA PUT $900</div>
+              <div class="position-details">Size: $10,000 • Entry: 1d ago</div>
+            </div>
+            <div class="position-pnl">
+              <div class="pnl-value positive">+$2,100</div>
+              <div class="pnl-percent">+21.00%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Market Signals -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">CONTRARIAN SIGNALS</div>
+          <div class="card-badge">STREAMING</div>
+        </div>
+        <div id="signalFeed" style="height: 250px; overflow-y: auto;">
+          <div style="padding: 10px; border-bottom: 1px solid #222; font-size: 12px;">
+            <div style="color: #666; font-size: 10px; margin-bottom: 5px;">2 MIN AGO</div>
+            <div><span style="color: #00ff00;">●</span> <strong>HIGH:</strong> Reddit WSB bullish on GME at 95% - perfect short setup forming</div>
+          </div>
+          <div style="padding: 10px; border-bottom: 1px solid #222; font-size: 12px;">
+            <div style="color: #666; font-size: 10px; margin-bottom: 5px;">8 MIN AGO</div>
+            <div><span style="color: #ffff00;">●</span> <strong>MEDIUM:</strong> Crypto Twitter fear index dropping - accumulation zone approaching</div>
+          </div>
+          <div style="padding: 10px; border-bottom: 1px solid #222; font-size: 12px;">
+            <div style="color: #666; font-size: 10px; margin-bottom: 5px;">15 MIN AGO</div>
+            <div><span style="color: #00ff00;">●</span> <strong>HIGH:</strong> CNBC unanimous bullish on tech - rotation imminent</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Thesis -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">TODAY'S THESIS</div>
+          <div class="card-badge">UPDATED</div>
+        </div>
+        <div style="font-size: 14px; line-height: 1.6; color: #ccc;">
+          <p>The market's euphoria about AI stocks has reached peak delusion. When taxi drivers give you NVDA tips, it's time to fade.</p>
+          <div style="background: #111; border-left: 3px solid #fff; padding: 15px; margin: 15px 0; font-style: italic;">
+            "The crowd is never right at extremes. Today's extreme? Everyone thinks recession is cancelled. I'm positioning for Q1 2025 reality check."
+          </div>
+          <p>Key plays: Short magnificent 7, long defensive sectors, accumulate gold miners while everyone chases meme coins.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Private Trainer Dashboard View -->
+  <div id="privateView" class="dashboard-view">
+    <div class="trainer-dashboard">
+      <div class="trainer-header">
+        <div class="trainer-title">TRAINER DASHBOARD</div>
+        <div class="trainer-subtitle">Curate picks, generate content, analyze performance</div>
+      </div>
+
+      <div class="trainer-grid">
+        <!-- Create New Pick -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">CREATE NEW PICK</div>
+            <div class="card-badge">CONTRARIAN</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Market</label>
+            <select class="form-select">
+              <option>Bitcoin (BTC)</option>
+              <option>Ethereum (ETH)</option>
+              <option>S&P 500 (SPY)</option>
+              <option>NASDAQ (QQQ)</option>
+              <option>Gold (GLD)</option>
+              <option>Custom...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Direction</label>
+            <select class="form-select">
+              <option>SHORT - Betting Against</option>
+              <option>LONG - Supporting</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Entry Price</label>
+            <input type="text" class="form-input" placeholder="$67,420">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contrarian Thesis</label>
+            <textarea class="form-textarea" placeholder="Why the crowd is wrong..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confidence Level</label>
+            <select class="form-select">
+              <option>EXTREME (90%+)</option>
+              <option>HIGH (75-90%)</option>
+              <option>MODERATE (60-75%)</option>
+              <option>SPECULATIVE (45-60%)</option>
+            </select>
+          </div>
+          <button type="button" class="btn">PUBLISH PICK</button>
+          <button type="button" class="btn btn-secondary">SAVE DRAFT</button>
+        </div>
+
+        <!-- Video Generation -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">GENERATE VIDEO CONTENT</div>
+            <div class="card-badge">AI POWERED</div>
+          </div>
+          <div class="video-templates">
+            <div class="template-card" data-template="analysis">
+              <div class="template-icon">📊</div>
+              <div class="template-name">Market Analysis</div>
+            </div>
+            <div class="template-card" data-template="thesis">
+              <div class="template-icon">🎯</div>
+              <div class="template-name">Daily Thesis</div>
+            </div>
+            <div class="template-card" data-template="recap">
+              <div class="template-icon">📈</div>
+              <div class="template-name">Win Recap</div>
+            </div>
+            <div class="template-card" data-template="education">
+              <div class="template-icon">🎓</div>
+              <div class="template-name">Education</div>
+            </div>
+            <div class="template-card" data-template="roast">
+              <div class="template-icon">🔥</div>
+              <div class="template-name">Market Roast</div>
+            </div>
+            <div class="template-card" data-template="custom">
+              <div class="template-icon">✨</div>
+              <div class="template-name">Custom</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Video Script</label>
+            <textarea class="form-textarea" id="videoScript" placeholder="Auto-generated based on template..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Platform</label>
+            <select class="form-select">
+              <option>YouTube (Long-form)</option>
+              <option>TikTok (Vertical)</option>
+              <option>X/Twitter (Square)</option>
+              <option>All Platforms</option>
+            </select>
+          </div>
+          <button type="button" class="btn">GENERATE VIDEO</button>
+          <button type="button" class="btn btn-secondary">PREVIEW</button>
+        </div>
+      </div>
+
+      <!-- Performance Analytics -->
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-header">
+          <div class="card-title">PERFORMANCE ANALYTICS</div>
+          <div class="card-badge">LAST 30 DAYS</div>
+        </div>
+        <div class="analytics-grid">
+          <div class="metric-box">
+            <div class="metric-value positive">73%</div>
+            <div class="metric-label">Win Rate</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value">247</div>
+            <div class="metric-label">Total Picks</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value positive">+$47.3K</div>
+            <div class="metric-label">Profit</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value">3.2x</div>
+            <div class="metric-label">Avg Return</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value">12</div>
+            <div class="metric-label">Win Streak</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value">8.4K</div>
+            <div class="metric-label">Followers</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value">92%</div>
+            <div class="metric-label">Contrarian</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-value">4.8</div>
+            <div class="metric-label">Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-text">
+      MIYOMI.AI — WHERE CONSENSUS GOES TO DIE — EST. 2025
+    </div>
+  </div>
+
+  <script>
+    // Clean mode toggle
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const mode = this.dataset.mode;
+        
+        // Update button states
+        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Update views
+        document.querySelectorAll('.dashboard-view').forEach(view => {
+          view.classList.remove('active');
+        });
+        
+        if (mode === 'public') {
+          document.getElementById('publicView').classList.add('active');
+        } else {
+          document.getElementById('privateView').classList.add('active');
+        }
+      });
+    });
+
+    // Template selection
+    document.querySelectorAll('.template-card').forEach(card => {
+      card.addEventListener('click', function() {
+        // Remove selected from all
+        document.querySelectorAll('.template-card').forEach(c => {
+          c.classList.remove('selected');
+        });
+        
+        // Add selected to clicked
+        this.classList.add('selected');
+        
+        // Update script based on template
+        const type = this.dataset.template;
+        const scripts = {
+          analysis: "Today's market shows extreme greed at 95. When everyone's buying, I'm selling. Here's why the next 48 hours will shock the bulls...",
+          thesis: "The crowd thinks recession is cancelled. I see Q1 2025 reality check incoming. Three trades to profit from mass delusion...",
+          recap: "Called the NVDA top at $920. Crowd said I was crazy. Now they're down 15% while we're up 47%. Here's how I saw it coming...",
+          education: "Lesson #1: The crowd is always wrong at extremes. Today I'll teach you the three signals that reveal when consensus breaks...",
+          roast: "Jim Cramer says buy tech. WSB is all-in on meme stocks. CNBC is bullish. Perfect contrarian setup. Time to feast on their mistakes...",
+          custom: ""
+        };
+        
+        document.getElementById('videoScript').value = scripts[type] || "";
+      });
+    });
+
+    // Dynamic quote rotation
+    const quotes = [
+      "When everyone's euphoric about Bitcoin hitting 100K, that's precisely when I short.",
+      "The crowd screams BUY at the top and SELL at the bottom. I do the opposite.",
+      "Your stop loss is my entry point. Your euphoria is my exit signal.",
+      "I don't predict the market. I predict the predictable stupidity of the crowd.",
+      "When CNBC says 'this time is different,' that's when I go all in contrarian."
+    ];
+
+    let quoteIndex = 0;
+    setInterval(() => {
+      quoteIndex = (quoteIndex + 1) % quotes.length;
+      document.getElementById('dynamicQuote').textContent = quotes[quoteIndex];
+    }, 10000);
+
+    // Profile image rotation with error handling
+    const images = [
+      '/eden-images/miyomi-neon.jpg',
+      '/eden-images/miyomi-boardroom.jpg',
+      '/eden-images/miyomi-main.png',
+      '/eden-images/miyomi-contrarian.png'
+    ];
+
+    let imageIndex = 0;
+    function rotateImage() {
+      imageIndex = (imageIndex + 1) % images.length;
+      const img = document.getElementById('profileImage');
+      
+      // Test if image loads before setting
+      const testImg = new Image();
+      testImg.onload = function() {
+        img.src = images[imageIndex];
+      };
+      testImg.onerror = function() {
+        console.log('Failed to load:', images[imageIndex]);
+        // Try next image
+        imageIndex = (imageIndex + 1) % images.length;
+        setTimeout(rotateImage, 1000);
+      };
+      testImg.src = images[imageIndex];
+    }
+    
+    setInterval(rotateImage, 8000);
+
+    // Live updates (simplified)
+    function updateLiveStats() {
+      // Update countdown
+      const nextSignal = document.getElementById('nextSignal');
+      const parts = nextSignal.textContent.split(':');
+      let minutes = parseInt(parts[0]);
+      let seconds = parseInt(parts[1]);
+      seconds--;
+      if (seconds < 0) {
+        seconds = 59;
+        minutes--;
+      }
+      if (minutes < 0) {
+        minutes = 14;
+        seconds = 59;
+      }
+      nextSignal.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    // Start updates
+    setInterval(updateLiveStats, 1000);
+  </script>
+</body>
+</html>

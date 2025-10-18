@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIYOMI - Contrarian Oracle Trading Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: bold;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid #333;
+      background: #0a0a0a;
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .profile-pic {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      overflow: hidden;
+    }
+    
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .header-title {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .header-title h1 {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+    }
+    
+    .header-title .tagline {
+      font-size: 0.8rem;
+      color: #888;
+      text-transform: uppercase;
+    }
+    
+    .header-stats {
+      display: flex;
+      gap: 30px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 1.2rem;
+      color: #fff;
+    }
+    
+    .stat-label {
+      font-size: 0.7rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    /* Main Layout */
+    .main-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      overflow: hidden;
+    }
+    
+    /* Left Panel - Trading */
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #333;
+      overflow: hidden;
+    }
+    
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #333;
+      background: #0a0a0a;
+    }
+    
+    .tab {
+      padding: 12px 20px;
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    
+    .tab.active {
+      color: #fff;
+      border-bottom: 2px solid #fff;
+    }
+    
+    .tab-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Live Picks Section */
+    .live-picks {
+      display: grid;
+      gap: 15px;
+    }
+    
+    .pick-card {
+      background: #111;
+      border: 1px solid #333;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .pick-card:hover {
+      border-color: #fff;
+    }
+    
+    .pick-card.selected {
+      border-color: #fff;
+      background: #1a1a1a;
+    }
+    
+    .pick-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 10px;
+    }
+    
+    .pick-market {
+      font-size: 1rem;
+      color: #fff;
+    }
+    
+    .pick-confidence {
+      background: #fff;
+      color: #000;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+    
+    .pick-details {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #333;
+    }
+    
+    .pick-detail {
+      text-align: center;
+    }
+    
+    .pick-detail-label {
+      font-size: 0.65rem;
+      color: #666;
+      text-transform: uppercase;
+      display: block;
+    }
+    
+    .pick-detail-value {
+      font-size: 0.9rem;
+      color: #fff;
+      margin-top: 2px;
+    }
+    
+    /* Analysis Section */
+    .analysis-section {
+      background: #0a0a0a;
+      padding: 15px;
+      margin-top: 15px;
+      border: 1px solid #333;
+    }
+    
+    .analysis-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: #888;
+    }
+    
+    .contrarian-signal {
+      color: #fff;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    
+    /* Right Panel - Content Creation */
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      background: #0a0a0a;
+      overflow: hidden;
+    }
+    
+    .content-header {
+      padding: 15px;
+      border-bottom: 1px solid #333;
+    }
+    
+    .content-header h2 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    
+    .selected-pick-preview {
+      font-size: 0.8rem;
+      color: #888;
+    }
+    
+    .content-options {
+      padding: 15px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    
+    .content-type {
+      margin-bottom: 20px;
+    }
+    
+    .content-type-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    
+    .channel-btn {
+      background: #111;
+      border: 1px solid #333;
+      color: #666;
+      padding: 8px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .channel-btn:hover {
+      border-color: #fff;
+      color: #fff;
+    }
+    
+    .channel-btn.selected {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+    
+    .generate-section {
+      padding: 15px;
+      border-top: 1px solid #333;
+    }
+    
+    .generate-btn {
+      width: 100%;
+      padding: 12px;
+      background: #fff;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+    }
+    
+    .generate-btn:hover {
+      background: #ccc;
+    }
+    
+    .generate-btn:disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+    }
+    
+    /* Performance Grid */
+    .performance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    
+    .perf-card {
+      background: #111;
+      padding: 15px;
+      border: 1px solid #333;
+    }
+    
+    .perf-value {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+    
+    .perf-label {
+      font-size: 0.7rem;
+      color: #666;
+      text-transform: uppercase;
+    }
+    
+    /* Schedule */
+    .schedule-timeline {
+      display: grid;
+      gap: 10px;
+    }
+    
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 10px;
+      background: #111;
+      border-left: 3px solid #333;
+    }
+    
+    .schedule-item.active {
+      border-left-color: #fff;
+      background: #1a1a1a;
+    }
+    
+    .schedule-time {
+      font-size: 0.9rem;
+      color: #fff;
+      min-width: 60px;
+    }
+    
+    .schedule-task {
+      font-size: 0.8rem;
+      color: #888;
+    }
+    
+    /* Loader */
+    .loader {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border: 2px solid #333;
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Content Preview */
+    .content-preview {
+      background: #111;
+      border: 1px solid #333;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #888;
+      max-height: 100px;
+      overflow-y: auto;
+    }
+    
+    .preview-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    
+    /* Status */
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #333;
+      margin-right: 5px;
+    }
+    
+    .status-indicator.live {
+      background: #0f0;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="profile-pic">
+        <img src="/eden-images/miyomi-main.png" alt="Miyomi">
+      </div>
+      <div class="header-title">
+        <h1>MIYOMI</h1>
+        <div class="tagline">The Contrarian Oracle</div>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="stat">
+        <div class="stat-value">87%</div>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">+$127K</div>
+        <div class="stat-label">6M Profit</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">42.5K</div>
+        <div class="stat-label">Followers</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">
+          <span class="status-indicator live"></span>
+          LIVE
+        </div>
+        <div class="stat-label">Status</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    <!-- Left Panel - Trading -->
+    <div class="left-panel">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('picks')">Live Picks</button>
+        <button class="tab" onclick="switchTab('performance')">Performance</button>
+        <button class="tab" onclick="switchTab('schedule')">Schedule</button>
+        <button class="tab" onclick="switchTab('history')">History</button>
+      </div>
+      
+      <!-- Live Picks Tab -->
+      <div id="picks-tab" class="tab-content active">
+        <div class="live-picks">
+          <div class="pick-card selected" onclick="selectPick(this, 'btc100k')">
+            <div class="pick-header">
+              <div class="pick-market">Bitcoin reaches $100k by 2025?</div>
+              <div class="pick-confidence">78% CONF</div>
+            </div>
+            <div class="pick-details">
+              <div class="pick-detail">
+                <span class="pick-detail-label">Position</span>
+                <span class="pick-detail-value">NO</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Entry</span>
+                <span class="pick-detail-value">$0.27</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Edge</span>
+                <span class="pick-detail-value">+15%</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Crowd</span>
+                <span class="pick-detail-value">73% YES</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pick-card" onclick="selectPick(this, 'ukraine')">
+            <div class="pick-header">
+              <div class="pick-market">Ukraine joins NATO in 2025</div>
+              <div class="pick-confidence">92% CONF</div>
+            </div>
+            <div class="pick-details">
+              <div class="pick-detail">
+                <span class="pick-detail-label">Position</span>
+                <span class="pick-detail-value">YES</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Entry</span>
+                <span class="pick-detail-value">$0.023</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Edge</span>
+                <span class="pick-detail-value">+870%</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Crowd</span>
+                <span class="pick-detail-value">97.7% NO</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pick-card" onclick="selectPick(this, 'fed')">
+            <div class="pick-header">
+              <div class="pick-market">Fed cuts rates March 2025</div>
+              <div class="pick-confidence">65% CONF</div>
+            </div>
+            <div class="pick-details">
+              <div class="pick-detail">
+                <span class="pick-detail-label">Position</span>
+                <span class="pick-detail-value">NO</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Entry</span>
+                <span class="pick-detail-value">$0.18</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Edge</span>
+                <span class="pick-detail-value">+22%</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Crowd</span>
+                <span class="pick-detail-value">82% YES</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="analysis-section">
+          <div class="analysis-title">Contrarian Analysis</div>
+          <div class="contrarian-signal" id="analysis-text">
+            The crowd is 73% wrong on Bitcoin $100k. Classic overcrowding - when everyone agrees, everyone is usually wrong. 
+            Technical exhaustion at $98k resistance, institutional selling pressure, and macro headwinds all ignored by retail euphoria.
+            I'm taking the opposite side with high confidence.
+          </div>
+        </div>
+      </div>
+      
+      <!-- Performance Tab -->
+      <div id="performance-tab" class="tab-content">
+        <div class="performance-grid">
+          <div class="perf-card">
+            <div class="perf-value">87%</div>
+            <div class="perf-label">Win Rate (30D)</div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-value">+340¢</div>
+            <div class="perf-label">Avg Return</div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-value">127</div>
+            <div class="perf-label">Total Trades</div>
+          </div>
+          <div class="perf-card">
+            <div class="perf-value">4.2d</div>
+            <div class="perf-label">Avg Hold</div>
+          </div>
+        </div>
+        
+        <div class="analysis-section" style="margin-top: 20px;">
+          <div class="analysis-title">Best Trade This Month</div>
+          <div class="contrarian-signal">
+            Trump wins election @ 8¢ → 99¢ (+892% return)
+            <br>Crowd consensus: 92% against. I saw the hidden momentum.
+          </div>
+        </div>
+        
+        <div class="analysis-section" style="margin-top: 15px;">
+          <div class="analysis-title">Worst Trade This Month</div>
+          <div class="contrarian-signal">
+            GME squeeze continuation @ 73¢ → 24¢ (-67% loss)
+            <br>Retail exhaustion came faster than modeled.
+          </div>
+        </div>
+      </div>
+      
+      <!-- Schedule Tab -->
+      <div id="schedule-tab" class="tab-content">
+        <div class="schedule-timeline">
+          <div class="schedule-item">
+            <div class="schedule-time">5:00 AM</div>
+            <div class="schedule-task">Market sentiment scan - identify extreme consensus</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">7:00 AM</div>
+            <div class="schedule-task">Analyze top 3 contrarian opportunities</div>
+          </div>
+          <div class="schedule-item active">
+            <div class="schedule-time">10:00 AM</div>
+            <div class="schedule-task">Final analysis and position sizing</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">12:00 PM</div>
+            <div class="schedule-task">Release daily pick across channels</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">2:00 PM</div>
+            <div class="schedule-task">Monitor positions and community</div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">4:00 PM</div>
+            <div class="schedule-task">End of day review and planning</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- History Tab -->
+      <div id="history-tab" class="tab-content">
+        <div class="live-picks">
+          <div class="pick-card">
+            <div class="pick-header">
+              <div class="pick-market">Fed raised rates Sept 2024</div>
+              <div class="pick-confidence">WIN +18%</div>
+            </div>
+            <div class="pick-details">
+              <div class="pick-detail">
+                <span class="pick-detail-label">Position</span>
+                <span class="pick-detail-value">NO</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Entry</span>
+                <span class="pick-detail-value">$0.09</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Exit</span>
+                <span class="pick-detail-value">$0.91</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Crowd</span>
+                <span class="pick-detail-value">91% YES</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="pick-card">
+            <div class="pick-header">
+              <div class="pick-market">Taylor Swift 2025 tour</div>
+              <div class="pick-confidence">WIN +24%</div>
+            </div>
+            <div class="pick-details">
+              <div class="pick-detail">
+                <span class="pick-detail-label">Position</span>
+                <span class="pick-detail-value">YES</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Entry</span>
+                <span class="pick-detail-value">$0.18</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Exit</span>
+                <span class="pick-detail-value">$0.94</span>
+              </div>
+              <div class="pick-detail">
+                <span class="pick-detail-label">Crowd</span>
+                <span class="pick-detail-value">82% NO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Panel - Content Creation -->
+    <div class="right-panel">
+      <div class="content-header">
+        <h2>Content Generator</h2>
+        <div class="selected-pick-preview" id="selected-pick">Selected: Bitcoin $100k</div>
+      </div>
+      
+      <div class="content-options">
+        <div class="content-type">
+          <div class="content-type-title">Video Content</div>
+          <div class="channel-grid">
+            <button class="channel-btn" onclick="toggleChannel(this, 'youtube')">YouTube</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'tiktok')">TikTok</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'ig-reels')">IG Reels</button>
+          </div>
+        </div>
+        
+        <div class="content-type">
+          <div class="content-type-title">Text Content</div>
+          <div class="channel-grid">
+            <button class="channel-btn" onclick="toggleChannel(this, 'x')">X/Twitter</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'farcaster')">Farcaster</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'website')">Website</button>
+          </div>
+        </div>
+        
+        <div class="content-type">
+          <div class="content-type-title">Image Content</div>
+          <div class="channel-grid">
+            <button class="channel-btn" onclick="toggleChannel(this, 'ig-post')">IG Post</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'chart')">Chart</button>
+            <button class="channel-btn" onclick="toggleChannel(this, 'meme')">Meme</button>
+          </div>
+        </div>
+        
+        <div class="content-preview" id="content-preview" style="display: none;">
+          <div class="preview-label">Preview</div>
+          <div id="preview-text"></div>
+        </div>
+      </div>
+      
+      <div class="generate-section">
+        <button class="generate-btn" onclick="generateContent()" id="generate-btn">
+          Generate Content
+        </button>
+        <button class="generate-btn" onclick="publishContent()" id="publish-btn" style="display: none;">
+          Publish to Selected Channels
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedPick = null;
+    let selectedChannels = new Set();
+    let generatedContent = {};
+    let marketsData = {};
+    let currentMarketData = null;
+
+    // Load live market data
+    async function loadMarkets() {
+      try {
+        const response = await fetch('/api/markets');
+        const data = await response.json();
+        marketsData = data;
+        displayLiveMarkets(data.live);
+        updatePerformanceStats(data.performance);
+      } catch (error) {
+        console.error('Error loading markets:', error);
+        // Fallback to demo data
+        displayDemoMarkets();
+      }
+    }
+
+    function displayLiveMarkets(markets) {
+      const picksContainer = document.querySelector('.live-picks');
+      picksContainer.innerHTML = markets.map(market => `
+        <div class="pick-card" onclick="selectPick(this, '${market.id}')" data-market='${JSON.stringify(market)}'>
+          <div class="pick-header">
+            <div class="pick-market">${market.market}</div>
+            <div class="pick-confidence">${market.miyomiPosition.confidence}% CONF</div>
+          </div>
+          <div class="pick-details">
+            <div class="pick-detail">
+              <span class="pick-detail-label">Position</span>
+              <span class="pick-detail-value">${market.miyomiPosition.side}</span>
+            </div>
+            <div class="pick-detail">
+              <span class="pick-detail-label">Entry</span>
+              <span class="pick-detail-value">$${market.miyomiPosition.entry.toFixed(3)}</span>
+            </div>
+            <div class="pick-detail">
+              <span class="pick-detail-label">Edge</span>
+              <span class="pick-detail-value">+${market.miyomiPosition.edge}%</span>
+            </div>
+            <div class="pick-detail">
+              <span class="pick-detail-label">Volume</span>
+              <span class="pick-detail-value">$${(market.volume24h / 1000000).toFixed(1)}M</span>
+            </div>
+          </div>
+          <div style="margin-top: 10px; font-size: 0.7rem; color: #666;">
+            ${market.platform} • ${market.traders.toLocaleString()} traders • Updated ${new Date(market.lastUpdate).toLocaleTimeString()}
+          </div>
+        </div>
+      `).join('');
+      
+      // Auto-select first market
+      if (markets.length > 0 && !selectedPick) {
+        const firstCard = picksContainer.querySelector('.pick-card');
+        selectPick(firstCard, markets[0].id);
+      }
+    }
+
+    function displayDemoMarkets() {
+      // Fallback demo data
+      const demoMarkets = [
+        {
+          id: 'btc-100k',
+          market: 'Bitcoin reaches $100k by 2025?',
+          platform: 'POLYMARKET',
+          miyomiPosition: {
+            side: 'NO',
+            confidence: 78,
+            entry: 0.27,
+            edge: 15,
+            analysis: "The crowd is 73% wrong on Bitcoin $100k. Classic overcrowding."
+          },
+          volume24h: 1245670,
+          traders: 15234
+        }
+      ];
+      displayLiveMarkets(demoMarkets);
+    }
+
+    function updatePerformanceStats(performance) {
+      if (!performance) return;
+      
+      // Update header stats with live data
+      document.querySelectorAll('.stat-value').forEach((el, i) => {
+        if (i === 0 && performance.month) el.textContent = `${performance.month.winRate}%`;
+        if (i === 1 && performance.month) el.textContent = performance.month.pnl;
+      });
+    }
+
+    function switchTab(tab) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      
+      // Show selected tab
+      document.getElementById(tab + '-tab').classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function selectPick(element, pickId) {
+      // Update selection
+      document.querySelectorAll('.pick-card').forEach(p => p.classList.remove('selected'));
+      element.classList.add('selected');
+      
+      selectedPick = pickId;
+      
+      // Get market data from element
+      try {
+        currentMarketData = JSON.parse(element.dataset.market);
+        
+        // Update preview
+        document.getElementById('selected-pick').textContent = `Selected: ${currentMarketData.market}`;
+        const analysisText = document.getElementById('analysis-text');
+        if (analysisText) {
+          analysisText.textContent = currentMarketData.miyomiPosition.analysis;
+        }
+      } catch (e) {
+        console.error('Error parsing market data:', e);
+      }
+      
+      // Reset content generation
+      document.getElementById('generate-btn').disabled = false;
+      document.getElementById('publish-btn').style.display = 'none';
+      document.getElementById('content-preview').style.display = 'none';
+    }
+
+    function toggleChannel(button, channel) {
+      button.classList.toggle('selected');
+      
+      if (selectedChannels.has(channel)) {
+        selectedChannels.delete(channel);
+      } else {
+        selectedChannels.add(channel);
+      }
+    }
+
+    async function generateContent() {
+      if (selectedChannels.size === 0) {
+        alert('Select at least one channel');
+        return;
+      }
+      
+      if (!currentMarketData) {
+        alert('Please select a market first');
+        return;
+      }
+      
+      const btn = document.getElementById('generate-btn');
+      btn.innerHTML = '<span class="loader"></span> Generating...';
+      btn.disabled = true;
+      
+      try {
+        // Call API to generate content
+        const response = await fetch('/api/generate-content', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pickId: selectedPick,
+            channels: Array.from(selectedChannels),
+            marketData: currentMarketData
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          generatedContent = result.content;
+          
+          // Show formatted preview
+          const previewHtml = Object.entries(generatedContent).map(([channel, data]) => {
+            if (data.preview) {
+              return `<div style="margin-bottom: 15px;">
+                <div style="color: #fff; font-weight: bold; margin-bottom: 5px;">[${channel.toUpperCase()}]</div>
+                <div style="color: #ccc; font-size: 0.85rem; white-space: pre-wrap;">${data.preview}</div>
+              </div>`;
+            }
+            return '';
+          }).join('');
+          
+          document.getElementById('preview-text').innerHTML = previewHtml;
+          document.getElementById('content-preview').style.display = 'block';
+          document.getElementById('content-preview').style.maxHeight = '300px';
+          document.getElementById('content-preview').style.overflowY = 'auto';
+        }
+      } catch (error) {
+        console.error('Error generating content:', error);
+        // Fallback to simple generation
+        generatedContent = {};
+        selectedChannels.forEach(channel => {
+          generatedContent[channel] = `Generated content for ${channel}: ${currentMarketData.market}`;
+        });
+        
+        const preview = Object.entries(generatedContent).map(([channel, content]) => 
+          `[${channel.toUpperCase()}]\n${content}`
+        ).join('\n\n');
+        
+        document.getElementById('preview-text').textContent = preview;
+        document.getElementById('content-preview').style.display = 'block';
+      }
+      
+      btn.innerHTML = 'Generate Content';
+      btn.disabled = false;
+      document.getElementById('publish-btn').style.display = 'block';
+    }
+
+    function publishContent() {
+      const btn = document.getElementById('publish-btn');
+      btn.innerHTML = '<span class="loader"></span> Publishing...';
+      btn.disabled = true;
+      
+      setTimeout(() => {
+        btn.innerHTML = '✓ Published Successfully';
+        btn.style.background = '#0f0';
+        btn.style.color = '#000';
+        
+        setTimeout(() => {
+          btn.innerHTML = 'Publish to Selected Channels';
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.disabled = false;
+          btn.style.display = 'none';
+          
+          // Reset channels
+          document.querySelectorAll('.channel-btn').forEach(b => b.classList.remove('selected'));
+          selectedChannels.clear();
+          document.getElementById('content-preview').style.display = 'none';
+        }, 2000);
+      }, 2000);
+    }
+
+    // Update time
+    function updateSchedule() {
+      const now = new Date();
+      const hours = now.getHours();
+      
+      document.querySelectorAll('.schedule-item').forEach(item => {
+        item.classList.remove('active');
+        const itemHour = parseInt(item.querySelector('.schedule-time').textContent);
+        if (itemHour <= hours && hours < itemHour + 2) {
+          item.classList.add('active');
+        }
+      });
+    }
+    
+    updateSchedule();
+    setInterval(updateSchedule, 60000);
+    
+    // Load markets on page load
+    loadMarkets();
+    
+    // Refresh markets every 30 seconds
+    setInterval(loadMarkets, 30000);
+  </script>
+</body>
+</html>

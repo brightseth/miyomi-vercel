@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miyomi Trainer Onboarding</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: bold;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Password Gate */
+        #password-gate {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 32px;
+        }
+
+        .password-card {
+            background: #000;
+            border: 1px solid #fff;
+            padding: 48px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .password-card h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fff;
+        }
+
+        .password-card p {
+            color: #888;
+            margin-bottom: 32px;
+            font-weight: normal;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+        }
+
+        .password-card input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #333;
+            background: #111;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: bold;
+            margin-bottom: 16px;
+            transition: border 0.2s;
+        }
+
+        .password-card input:focus {
+            outline: none;
+            border-color: #fff;
+        }
+
+        .password-card button {
+            width: 100%;
+            padding: 16px;
+            background: #fff;
+            color: #000;
+            border: 1px solid #fff;
+            font-size: 0.8rem;
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .password-card button:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        .error-message {
+            color: #f00;
+            margin-top: 16px;
+            display: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main Content */
+        #main-content {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+
+        header {
+            background: #000;
+            border: 1px solid #fff;
+            padding: 32px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        header .tagline {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+            margin-bottom: 16px;
+            font-weight: normal;
+        }
+
+        .tldr {
+            background: #fff;
+            color: #000;
+            border: 1px solid #fff;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .tldr h2 {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .tldr ul {
+            list-style: none;
+            font-size: 1rem;
+            font-weight: normal;
+        }
+
+        .tldr ul li {
+            margin-bottom: 8px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .tldr ul li:before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .section {
+            background: #000;
+            border: 1px solid #333;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .section h2 {
+            color: #fff;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #fff;
+        }
+
+        .section h3 {
+            color: #fff;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .section p, .section ul, .section ol {
+            font-weight: normal;
+        }
+
+        .workflow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .workflow-card {
+            background: #111;
+            border: 1px solid #333;
+            padding: 24px;
+        }
+
+        .workflow-card h4 {
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .workflow-card p {
+            font-weight: normal;
+        }
+
+        .workflow-card ul {
+            list-style: none;
+            padding-left: 0;
+            font-weight: normal;
+        }
+
+        .workflow-card ul li {
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+
+        .token-box {
+            background: #fff;
+            color: #000;
+            border: 1px solid #fff;
+            padding: 32px;
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .token-box .big-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .token-box .description {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 32px;
+            margin: 32px 0;
+        }
+
+        .timeline:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: #fff;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 32px;
+            padding-left: 32px;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: -36px;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border: 1px solid #000;
+        }
+
+        .timeline-item h4 {
+            color: #fff;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .timeline-item ul {
+            color: #ccc;
+            font-weight: normal;
+        }
+
+        .timeline-item p {
+            font-weight: normal;
+        }
+
+        .highlight-box {
+            background: #111;
+            border: 1px solid #333;
+            border-left: 3px solid #fff;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .highlight-box h4 {
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .highlight-box p, .highlight-box ul {
+            font-weight: normal;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .metric-card {
+            background: #111;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .metric-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .metric-card .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+            font-weight: normal;
+        }
+
+        .cta-section {
+            background: #fff;
+            color: #000;
+            border: 1px solid #fff;
+            padding: 48px;
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .cta-section h2 {
+            color: #000;
+            border: none;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            font-size: 1rem;
+            font-weight: normal;
+            margin-bottom: 16px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: #000;
+            color: #fff;
+            border: 1px solid #000;
+            font-weight: bold;
+            font-size: 0.8rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        code {
+            background: #111;
+            color: #0f0;
+            padding: 3px 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            font-weight: normal;
+        }
+
+        pre {
+            background: #111;
+            color: #0f0;
+            border: 1px solid #333;
+            padding: 24px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-weight: normal;
+            line-height: 1.5;
+        }
+
+        ul, ol {
+            margin-left: 24px;
+        }
+
+        ul li, ol li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #fff;
+        }
+
+        /* Visual Media */
+        .hero-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            display: block;
+            margin: 24px auto;
+            border: 1px solid #fff;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 1px solid #333;
+            transition: border 0.2s;
+        }
+
+        .image-gallery img:hover {
+            border-color: #fff;
+        }
+
+        .video-container {
+            max-width: 400px;
+            margin: 24px auto;
+            border: 1px solid #fff;
+            background: #000;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .video-container video::-webkit-media-controls-panel {
+            background: #000;
+        }
+
+        .video-caption {
+            padding: 16px;
+            text-align: center;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+            font-weight: normal;
+        }
+
+        .tech-stack-diagram {
+            background: #111;
+            border: 1px solid #333;
+            padding: 32px;
+            margin: 24px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #0f0;
+            overflow-x: auto;
+        }
+
+        .workflow-diagram {
+            background: #111;
+            border: 1px solid #333;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .workflow-step {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #333;
+        }
+
+        .workflow-step:last-child {
+            border-bottom: none;
+        }
+
+        .workflow-step .step-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            padding-top: 8px;
+        }
+
+        .workflow-step .step-content h4 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .workflow-step .step-content p {
+            font-weight: normal;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Interactive Calculator */
+        .calculator-container {
+            background: #111;
+            border: 1px solid #333;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fff;
+        }
+
+        .input-group input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .input-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .input-group input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            cursor: pointer;
+            border: none;
+        }
+
+        .input-group .value-display {
+            font-size: 1.2rem;
+            color: #0f0;
+            font-weight: bold;
+        }
+
+        .calculator-results {
+            background: #000;
+            border: 1px solid #fff;
+            padding: 24px;
+            margin-top: 24px;
+        }
+
+        .result-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+            padding-top: 24px;
+            margin-top: 16px;
+            border-top: 2px solid #fff;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .result-value.highlight {
+            font-size: 1.8rem;
+            color: #0f0;
+        }
+
+        .scenario-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .scenario-button {
+            padding: 12px 24px;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        .scenario-button:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            #main-content {
+                padding: 16px;
+            }
+
+            header {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .workflow {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 24px;
+            }
+
+            .cta-section {
+                padding: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Gate -->
+    <div id="password-gate">
+        <div class="password-card">
+            <h1>Miyomi Trainer</h1>
+            <p>Enter password to access onboarding</p>
+            <input type="password" id="password-input" placeholder="Password" autocomplete="off">
+            <button onclick="checkPassword()">Access Onboarding</button>
+            <p class="error-message" id="error-message">Incorrect password. Try again.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <header>
+            <h1>Miyomi Trainer Onboarding</h1>
+            <p class="tagline">Welcome to the Prediction Market Oracle Team</p>
+            <p style="color: #666; font-size: 0.8rem; font-weight: normal;">Confidential — For: Trainer Role — October 2025</p>
+        </header>
+
+        <!-- TL;DR Section -->
+        <div class="tldr">
+            <h2>TL;DR - The Opportunity</h2>
+            <ul>
+                <li><strong>Role:</strong> Trainer for Miyomi (prediction market oracle)</li>
+                <li><strong>Time:</strong> 15-30 minutes/day</li>
+                <li><strong>Compensation:</strong> 75M $MIYOMI tokens (30% of team allocation)</li>
+                <li><strong>Timeline:</strong> 10 weeks to token launch (Dec 16, 2025)</li>
+                <li><strong>Your Edge:</strong> Prediction market expertise is THE critical asset</li>
+            </ul>
+        </div>
+
+        <!-- Who Is Miyomi -->
+        <div class="section">
+            <h2>Who Is Miyomi?</h2>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">Before we dive into your role, meet the character you'll be training:</p>
+            <p><strong>22-year-old prediction market oracle who creates viral content about contrarian opportunities.</strong></p>
+
+            <img src="/eden-images/miyomi-neon.jpg" alt="Miyomi" class="hero-image">
+
+            <div class="highlight-box">
+                <h4>Core Identity</h4>
+                <ul>
+                    <li><strong>NOT a trader:</strong> Oracle/influencer (Maria Bartiromo meets Gen-Z PM)</li>
+                    <li><strong>Content focus:</strong> 30-60 sec TikTok videos with "Markets whisper..." mystique</li>
+                    <li><strong>Revenue model:</strong> Attention economy (affiliates + subs), not trading P&L</li>
+                    <li><strong>Core thesis:</strong> "The crowd is always wrong at extremes" (>70% or <30% consensus)</li>
+                </ul>
+            </div>
+
+            <h3>Visual Identity</h3>
+            <div class="image-gallery">
+                <img src="/eden-images/miyomi-contrarian.png" alt="Miyomi Contrarian">
+                <img src="/eden-images/miyomi-analysis.png" alt="Miyomi Analysis">
+                <img src="/eden-images/miyomi-boardroom.jpg" alt="Miyomi Boardroom">
+                <img src="/eden-images/miyomi-victory.png" alt="Miyomi Victory">
+            </div>
+
+            <p style="margin-top: 24px; color: #888; font-weight: normal;">Fast-talking NYC energy • Gen-Z slang + probabilistic analysis • Contrarian but confident • Target: 65%+ prediction accuracy</p>
+        </div>
+
+        <!-- The Opportunity -->
+        <div class="section">
+            <h2>The Opportunity</h2>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">Now that you know Miyomi, here's what this role means for you:</p>
+
+            <div class="token-box">
+                <div class="big-number">75M $MIYOMI</div>
+                <div class="description">30% of Team Allocation — Equal to Dev</div>
+            </div>
+
+            <h3>What You Get</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="number">75M</div>
+                    <div class="label">$MIYOMI Tokens (30%)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">$692-10k+</div>
+                    <div class="label">Monthly Royalties (Month 18, varies by scenario)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">12×</div>
+                    <div class="label">Royalty Multiplier (12-month lock)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">76-83%</div>
+                    <div class="label">Team Royalty Share (Initially)</div>
+                </div>
+            </div>
+
+            <h3>What You Do</h3>
+            <div class="highlight-box">
+                <p><strong>15-30 minutes per day curating AI-generated prediction market content:</strong></p>
+                <ul>
+                    <li><strong>Morning (10 min):</strong> Review AI brief → Select best contrarian opportunity</li>
+                    <li><strong>Midday (10 min):</strong> Approve video → Post to TikTok with affiliate link</li>
+                    <li><strong>Afternoon (10 min):</strong> Engage with community → Track metrics</li>
+                </ul>
+            </div>
+
+            <h3>Why You're Perfect</h3>
+            <div class="highlight-box">
+                <p><strong>Your prediction market expertise is the secret sauce:</strong></p>
+                <ul>
+                    <li>Validate which opportunities are real vs noise</li>
+                    <li>Know what markets get volume vs hype</li>
+                    <li>Understand resolution edge cases</li>
+                    <li>Bring credibility from actual PM trading experience</li>
+                </ul>
+                <p style="margin-top: 16px;"><strong>Without you:</strong> Just another prediction bot<br>
+                <strong>With you:</strong> Credible oracle with expert validation</p>
+            </div>
+
+            <h3>What Makes You Uniquely Qualified</h3>
+            <div class="highlight-box" style="border-left-color: #0f0;">
+                <p><strong>You've already built exactly what Miyomi needs:</strong></p>
+                <ul style="font-weight: normal;">
+                    <li><strong>Content platform:</strong> "The Goldy Hour" streams + active Farcaster presence where you post market insights 13+ times/day - you already know how to create engaging PM content at scale</li>
+                    <li><strong>Edge identification:</strong> "$PMX is one of the most interesting things I've seen in PMs in long time" - you spot emerging opportunities before they're obvious. That's Miyomi's entire value prop.</li>
+                    <li><strong>Real skin in the game:</strong> "Undefeated ATS on CFB this weekend" / "Herbert MVP shares are FREE rn" - you're not theorizing, you're actually making calls with real money. Miyomi needs that conviction.</li>
+                    <li><strong>Market microstructure:</strong> "Men used to go to war. Now they run quantum analysis of the scorigami papers" - you understand both the absurdity and the edge in deep market analysis</li>
+                    <li><strong>Philosophy that matches Miyomi's:</strong> "Riches in niches, hyper-riches in hyper niches" - you understand specialization beats generalization in PM content</li>
+                    <li><strong>Cultural timing:</strong> You called South Park covering prediction markets "biblical" and track when thought leaders migrate platforms - you have a sense for mainstream momentum</li>
+                    <li><strong>Polymarket insider:</strong> Ex-Polymarket + awareness of emerging PM projects (PMX, Novig, Bracket) - you know the ecosystem from the inside</li>
+                    <li><strong>Network credibility:</strong> 3,800+ followers in PM/crypto space give Miyomi instant distribution and legitimacy</li>
+                </ul>
+                <p style="margin-top: 16px; color: #0f0;"><strong>You're not learning this role - you've been doing it already. We're just giving you AI tools to scale what you already do best.</strong></p>
+            </div>
+
+            <h3>Why Now?</h3>
+            <ul>
+                <li><strong>Election season:</strong> High prediction market volume</li>
+                <li><strong>Polymarket mainstream:</strong> Growing attention and users</li>
+                <li><strong>AI agents trending:</strong> Perfect timing for oracle launch</li>
+                <li><strong>Early mover advantage:</strong> First AI oracle with expert curation</li>
+            </ul>
+        </div>
+
+        <!-- Revenue Growth & Monetization Flywheel -->
+        <div class="section">
+            <h2>Revenue Growth & Monetization Plan</h2>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">Your token value grows with Miyomi's success. Here's how revenue scales through the attention flywheel:</p>
+
+            <h3>The Attention Flywheel</h3>
+            <div class="highlight-box" style="background: #000; border: 1px solid #fff; padding: 32px;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center;">
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 12px;">01</div>
+                        <div style="font-weight: bold; margin-bottom: 12px; color: #0f0; font-size: 1.1rem;">QUALITY</div>
+                        <div style="font-weight: normal; font-size: 0.9rem; color: #ccc;">Your expert curation + Dome intelligence = credible predictions</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 12px;">02</div>
+                        <div style="font-weight: bold; margin-bottom: 12px; color: #0f0; font-size: 1.1rem;">ENGAGEMENT</div>
+                        <div style="font-weight: normal; font-size: 0.9rem; color: #ccc;">Accurate calls → Algorithm boost → Follower growth</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 3rem; margin-bottom: 12px;">03</div>
+                        <div style="font-weight: bold; margin-bottom: 12px; color: #0f0; font-size: 1.1rem;">REVENUE</div>
+                        <div style="font-weight: normal; font-size: 0.9rem; color: #ccc;">Affiliates + Subs + Sponsors → Better content → Repeat ∞</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Revenue Summary (18 Months)</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="number">$300</div>
+                    <div class="label">Month 3 Revenue</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">$5,000</div>
+                    <div class="label">Month 12 Revenue</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">$14,000</div>
+                    <div class="label">Month 18 Revenue</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">46×</div>
+                    <div class="label">Growth Multiple</div>
+                </div>
+            </div>
+
+            <h3>Monetization Layers</h3>
+            <div class="highlight-box">
+                <h4>1. Affiliate Revenue (Primary - Months 1-12)</h4>
+                <ul style="font-weight: normal;">
+                    <li><strong>Polymarket:</strong> $50-100 per signup, 10-20% of betting fees</li>
+                    <li><strong>Kalshi:</strong> Similar structure, smaller market</li>
+                    <li><strong>Scale:</strong> 1,000 followers → $300/mo | 25,000 followers → $2,500/mo | 100,000 followers → $6,000/mo</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>2. Premium Subscriptions (Secondary - Months 4+)</h4>
+                <ul style="font-weight: normal;">
+                    <li><strong>Pricing:</strong> $10/month for early access + deeper analysis</li>
+                    <li><strong>Conversion:</strong> 2% of audience (conservative)</li>
+                    <li><strong>Scale:</strong> 5,000 followers → 100 subs ($1,000/mo) | 100,000 followers → 2,000 subs ($20,000/mo)</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>3. Brand Sponsorships (Later - Months 9+)</h4>
+                <ul style="font-weight: normal;">
+                    <li><strong>Targets:</strong> Crypto exchanges, wallet providers, prediction market platforms, financial data services</li>
+                    <li><strong>Rates:</strong> $1,500-5,000/month per sponsor (based on audience size)</li>
+                    <li><strong>Threshold:</strong> Need 25,000+ followers for first sponsor deals</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>4. Soup.xyz Markets (Future - Months 12+)</h4>
+                <ul style="font-weight: normal;">
+                    <li><strong>Market-making revenue:</strong> Spread on custom Miyomi-created markets</li>
+                    <li><strong>Oracle fees:</strong> Resolution services for unique markets</li>
+                    <li><strong>Potential:</strong> $500-2,000/mo once established</li>
+                </ul>
+            </div>
+
+            <h3>Why This Growth Is Realistic</h3>
+            <ul style="font-weight: normal;">
+                <li><strong>Proven model:</strong> Similar PM/crypto content creators hitting 50k-200k followers in 12-18 months</li>
+                <li><strong>Timing advantage:</strong> Election cycle + Polymarket mainstream = high interest</li>
+                <li><strong>Algorithm boost:</strong> TikTok rewards consistent posting (3-4×/week) with exponential reach</li>
+                <li><strong>Proprietary edge:</strong> Dome intelligence + expert curation = differentiated content</li>
+                <li><strong>Compounding:</strong> Each accurate prediction builds credibility → more followers → higher conversion</li>
+            </ul>
+
+            <h3>Interactive Revenue Calculator</h3>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">Plug in your own assumptions based on your PM experience and see how revenue scales:</p>
+
+            <div class="calculator-container">
+                <div class="scenario-buttons">
+                    <button class="scenario-button" onclick="loadScenario('conservative')">Conservative</button>
+                    <button class="scenario-button" onclick="loadScenario('moderate')">Moderate (Base Case)</button>
+                    <button class="scenario-button" onclick="loadScenario('aggressive')">Aggressive</button>
+                </div>
+
+                <div class="calculator-inputs">
+                    <div class="input-group">
+                        <label for="followers">Followers at Month 18</label>
+                        <input type="range" id="followers" min="10000" max="200000" step="10000" value="100000" oninput="calculateRevenue()">
+                        <div class="value-display" id="followersValue">100,000</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="avgViews">Avg Views per Video</label>
+                        <input type="range" id="avgViews" min="5000" max="500000" step="5000" value="100000" oninput="calculateRevenue()">
+                        <div class="value-display" id="avgViewsValue">100,000</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="affiliateCtr">Affiliate Click-Through Rate</label>
+                        <input type="range" id="affiliateCtr" min="1" max="10" step="0.5" value="5" oninput="calculateRevenue()">
+                        <div class="value-display" id="affiliateCtrValue">5.0%</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="affiliateCpa">Affiliate CPA (per signup)</label>
+                        <input type="range" id="affiliateCpa" min="20" max="150" step="10" value="75" oninput="calculateRevenue()">
+                        <div class="value-display" id="affiliateCpaValue">$75</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="subConversion">Premium Sub Conversion</label>
+                        <input type="range" id="subConversion" min="0.5" max="5" step="0.25" value="2" oninput="calculateRevenue()">
+                        <div class="value-display" id="subConversionValue">2.0%</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="subPrice">Premium Sub Price</label>
+                        <input type="range" id="subPrice" min="5" max="25" step="5" value="10" oninput="calculateRevenue()">
+                        <div class="value-display" id="subPriceValue">$10/mo</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sponsors">Brand Sponsors</label>
+                        <input type="range" id="sponsors" min="0" max="5" step="1" value="2" oninput="calculateRevenue()">
+                        <div class="value-display" id="sponsorsValue">2</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sponsorRate">Avg Sponsor Rate/Month</label>
+                        <input type="range" id="sponsorRate" min="1000" max="8000" step="500" value="2500" oninput="calculateRevenue()">
+                        <div class="value-display" id="sponsorRateValue">$2,500</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="videosPerWeek">Videos per Week</label>
+                        <input type="range" id="videosPerWeek" min="1" max="7" step="1" value="3" oninput="calculateRevenue()">
+                        <div class="value-display" id="videosPerWeekValue">3</div>
+                    </div>
+                </div>
+
+                <div class="calculator-results">
+                    <h4 style="margin-bottom: 16px; color: #fff;">MONTH 18 PROJECTIONS</h4>
+
+                    <div class="result-row">
+                        <span class="result-label">Affiliate Revenue</span>
+                        <span class="result-value" id="affiliateRevenue">$0</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Premium Subscriptions</span>
+                        <span class="result-value" id="subRevenue">$0</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Brand Sponsorships</span>
+                        <span class="result-value" id="sponsorRevenue">$0</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Soup.xyz Markets</span>
+                        <span class="result-value" id="soupRevenue">$1,000</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Total Monthly Revenue</span>
+                        <span class="result-value highlight" id="totalRevenue">$0</span>
+                    </div>
+
+                    <div class="result-row">
+                        <span class="result-label">Your Monthly Royalty (30% of 76% team)</span>
+                        <span class="result-value highlight" id="yourRoyalty">$0</span>
+                    </div>
+                </div>
+
+                <p style="margin-top: 24px; font-size: 0.85rem; color: #666; font-weight: normal;">
+                    <strong>Note:</strong> These are projections based on your assumptions. Actual results depend on content quality, timing, market conditions, and execution. The calculator helps you model different scenarios—test your own numbers based on your prediction market expertise.
+                </p>
+            </div>
+        </div>
+
+        <!-- How The System Works -->
+        <div class="section">
+            <h2>How The System Works</h2>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">The revenue projections above depend on consistent, quality content. Here's your streamlined daily workflow:</p>
+
+            <div class="workflow">
+                <div class="workflow-card">
+                    <h4>Morning (10 min)</h4>
+                    <p><strong>9:00 AM — Review AI Brief</strong></p>
+                    <ul>
+                        <li>AI scans Polymarket/Kalshi overnight</li>
+                        <li>Presents 3 contrarian opportunities</li>
+                        <li>You select most interesting one</li>
+                        <li>Edit script if needed (AI does first draft)</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-card">
+                    <h4>Midday (10 min)</h4>
+                    <p><strong>11:00 AM — Approve & Post</strong></p>
+                    <ul>
+                        <li>Review generated video (Eden AI + audio)</li>
+                        <li>Approve or request regeneration</li>
+                        <li>Post to TikTok with affiliate link</li>
+                        <li>Cross-post to Twitter/Farcaster</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-card">
+                    <h4>Afternoon (10 min)</h4>
+                    <p><strong>2:00 PM — Engage</strong></p>
+                    <ul>
+                        <li>Respond to comments</li>
+                        <li>Track engagement metrics</li>
+                        <li>Note what's working for next day</li>
+                        <li>Quick update to team in async chat</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Timeline -->
+        <div class="section">
+            <h2>Timeline: 10 Weeks to Token Launch</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Week 1 (Oct 7-13): Foundation</h4>
+                    <ul>
+                        <li>Review character docs (Miyomi's personality)</li>
+                        <li>Test trainer dashboard once Dev builds it</li>
+                        <li>Understand workflow and tools</li>
+                        <li>Give feedback on UX</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Ready to start daily operations</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 2-3 (Oct 14-27): First Videos</h4>
+                    <ul>
+                        <li>Create first 5-10 oracle videos</li>
+                        <li>Find contrarian opportunities on Polymarket</li>
+                        <li>Test what content works</li>
+                        <li>Track initial metrics</li>
+                    </ul>
+                    <p><strong>Target:</strong> 200+ followers, first affiliate clicks</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 4-6 (Oct 28 - Nov 17): Growth</h4>
+                    <ul>
+                        <li>Continue 3-4 videos per week (every other day)</li>
+                        <li>Engage with growing community</li>
+                        <li>Refine content based on performance</li>
+                        <li>Hit 500+ followers</li>
+                    </ul>
+                    <p><strong>Target:</strong> Consistent engagement rate (10%+), growing audience</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 7-10 (Nov 18 - Dec 15): Launch Prep</h4>
+                    <ul>
+                        <li>Scale to 25-30+ total videos</li>
+                        <li>Build to 1,000+ followers</li>
+                        <li>Validate affiliate revenue model</li>
+                        <li>Prepare for token launch</li>
+                    </ul>
+                    <p><strong>Target:</strong> Economic viability proven, ready for Spirit Academy</p>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 11 (Dec 16, 2025): 🚀 Token Launch</h4>
+                    <ul>
+                        <li>$MIYOMI minted via Spirit Protocol</li>
+                        <li>Your 75M tokens distributed</li>
+                        <li>Auto-pledged for 12 months</li>
+                        <li>Royalty income starts flowing</li>
+                    </ul>
+                    <p><strong>Milestone:</strong> Miyomi officially graduated</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Metrics -->
+        <div class="section">
+            <h2>Success Metrics</h2>
+
+            <h3>Month 1 Goals</h3>
+            <ul>
+                <li>✓ 10 oracle videos posted</li>
+                <li>✓ 200+ followers</li>
+                <li>✓ First $10 affiliate revenue</li>
+                <li>✓ Daily workflow established</li>
+            </ul>
+
+            <h3>Month 2 Goals</h3>
+            <ul>
+                <li>✓ 20 total videos</li>
+                <li>✓ 500+ followers</li>
+                <li>✓ 10+ premium subscribers (if launched)</li>
+                <li>✓ Dome integration working</li>
+            </ul>
+
+            <h3>Month 3 Goals (Token Launch)</h3>
+            <ul>
+                <li>✓ 30+ total videos</li>
+                <li>✓ 1,000+ followers</li>
+                <li>✓ $500+ MRR (affiliates + subs)</li>
+                <li>✓ 65%+ prediction accuracy</li>
+                <li>✓ Token launch ready</li>
+            </ul>
+
+            <h3>Your Personal KPIs</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="number">10%+</div>
+                    <div class="label">Engagement Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">65%+</div>
+                    <div class="label">Prediction Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">5%+</div>
+                    <div class="label">Affiliate CTR</div>
+                </div>
+                <div class="metric-card">
+                    <div class="number">+50-100</div>
+                    <div class="label">Followers/Week</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Structure -->
+        <div class="section">
+            <h2>Team Structure</h2>
+
+            <h3>Three-Person Team:</h3>
+
+            <div class="workflow">
+                <div class="workflow-card">
+                    <h4>Founder (Creator/Producer)</h4>
+                    <ul>
+                        <li>Vision and strategy</li>
+                        <li>Character development</li>
+                        <li>Business decisions</li>
+                        <li>Partnership approvals</li>
+                        <li>Token launch planning</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-card">
+                    <h4>Dev (Full Stack Developer)</h4>
+                    <ul>
+                        <li>Builds entire platform (Next.js)</li>
+                        <li>API integrations (Eden, Dome, Polymarket)</li>
+                        <li>Deployment and scaling</li>
+                        <li>Technical optimization</li>
+                        <li>Has Eden insider access</li>
+                    </ul>
+                </div>
+
+                <div class="workflow-card" style="border-left-color: #ffd700;">
+                    <h4>Trainer (You - Daily Operations)</h4>
+                    <ul>
+                        <li>Market opportunity selection</li>
+                        <li>Content curation and quality</li>
+                        <li>Community engagement</li>
+                        <li>Miyomi's voice consistency</li>
+                        <li>Performance tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Communication</h3>
+            <ul>
+                <li><strong>Daily:</strong> Async updates in team chat</li>
+                <li><strong>Weekly:</strong> 30 min sync call</li>
+                <li><strong>Tools:</strong> Discord/Telegram + GitHub</li>
+            </ul>
+        </div>
+
+        <!-- Tech Stack & System Architecture -->
+        <div class="section">
+            <h2>Tech Stack & System Architecture</h2>
+
+            <h3>System Architecture</h3>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">Clean visual breakdown of how everything connects:</p>
+
+            <div class="workflow-diagram">
+                <div class="workflow-step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h4>Market Data Sources</h4>
+                        <p><strong>Polymarket:</strong> Presidential, elections, crypto, world events<br>
+                        <strong>Kalshi:</strong> Fed rates, recession, economic indicators<br>
+                        <strong>Soup.xyz:</strong> Custom markets, oracle control</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h4>Proprietary Intelligence (Dome API)</h4>
+                        <p><strong>Order flow analysis</strong> (smart money tracking)<br>
+                        <strong>Momentum exhaustion detection</strong><br>
+                        <strong>Volume distribution analysis</strong><br>
+                        <span style="color: #0f0;">→ NO ONE ELSE HAS THIS DATA</span></p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h4>AI Analysis + Your Curation</h4>
+                        <p><strong>AI does:</strong> Consensus detection, edge calculation, thesis generation<br>
+                        <strong>You do:</strong> Market selection, script editing, quality control<br>
+                        <span style="color: #0f0;">→ YOUR EXPERTISE = THE SECRET SAUCE</span></p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h4>Content Generation (Automated)</h4>
+                        <p><strong>Eden AI:</strong> 30-60sec video (2-5 min generation)<br>
+                        <strong>ElevenLabs:</strong> Miyomi voice clone (20-30 sec)<br>
+                        <strong>FFmpeg:</strong> Merge video + audio (5-10 sec)<br>
+                        <span style="color: #0f0;">→ TOTAL: 3-6 MINUTES PER VIDEO</span></p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">05</div>
+                    <div class="step-content">
+                        <h4>Distribution (Your Strategy Call)</h4>
+                        <p><strong>All platforms available:</strong> TikTok, YouTube, X/Twitter, Instagram, Farcaster, miyomi.ai<br>
+                        <strong>Partnerships:</strong> PM platforms (Polymarket, Kalshi, PMX), influencer collabs, brand co-marketing<br>
+                        <strong>You decide:</strong> Test what works, optimize based on data. Your PM network + content expertise drives the strategy.</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">06</div>
+                    <div class="step-content">
+                        <h4>Revenue Capture</h4>
+                        <p><strong>Affiliates:</strong> Polymarket + Kalshi commissions<br>
+                        <strong>Subscriptions:</strong> $10/mo premium tier<br>
+                        <strong>Sponsors:</strong> Crypto/PM brand partnerships<br>
+                        <strong>Soup.xyz:</strong> Market-making + oracle fees</p>
+                    </div>
+                </div>
+
+                <div class="workflow-step">
+                    <div class="step-number">07</div>
+                    <div class="step-content">
+                        <h4>Spirit Protocol (Tokenomics)</h4>
+                        <p><strong>Revenue → $SPIRIT → Royalties</strong><br>
+                        75M tokens to YOU (30% of team)<br>
+                        12-month auto-pledge → 12× multiplier<br>
+                        <span style="color: #0f0;">→ 76-83% OF REVENUE TO TEAM INITIALLY</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Your Role in the System</h3>
+            <div class="highlight-box">
+                <p><strong>You are the critical validation layer between AI analysis and public content.</strong></p>
+                <ul>
+                    <li><strong>Market Selection:</strong> AI generates options, you pick winners (PM expertise)</li>
+                    <li><strong>Quality Control:</strong> Ensure Miyomi's voice stays authentic</li>
+                    <li><strong>Community Trust:</strong> Your curation = credibility</li>
+                    <li><strong>Performance Optimization:</strong> Track what resonates, iterate daily</li>
+                </ul>
+                <p style="margin-top: 16px;"><strong>Without you:</strong> Just another prediction bot<br>
+                <strong>With you:</strong> Credible oracle with expert validation</p>
+            </div>
+        </div>
+
+        <!-- Competitive Advantages -->
+        <div class="section">
+            <h2>Why This Is Unique</h2>
+
+            <h3>Competitive Advantages</h3>
+
+            <div class="highlight-box">
+                <h4>1. Dome API Intelligence (Proprietary)</h4>
+                <ul>
+                    <li>Order flow analysis</li>
+                    <li>Smart money tracking</li>
+                    <li>Momentum exhaustion signals</li>
+                    <li><strong>No one else has this data publicly</strong></li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>2. Soup.xyz Market Creation (Unique)</h4>
+                <ul>
+                    <li>Create custom markets</li>
+                    <li>Control resolution as oracle</li>
+                    <li>Market-making revenue potential</li>
+                    <li><strong>Platform independence</strong></li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>3. Your Expertise (Critical)</h4>
+                <ul>
+                    <li>Real PM trading experience</li>
+                    <li>Industry insider knowledge</li>
+                    <li>Content creation skills</li>
+                    <li><strong>Credibility and network</strong></li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>4. Spirit Protocol (Legitimacy)</h4>
+                <ul>
+                    <li>Professional token infrastructure</li>
+                    <li>Automatic $SPIRIT holder distribution</li>
+                    <li>Graduation path to autonomy</li>
+                    <li><strong>Regulatory-conscious design</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="section">
+            <h2>Frequently Asked Questions</h2>
+
+            <h3>What if I can't do it every day?</h3>
+            <p style="font-weight: normal; color: #ccc;">We can adjust the schedule. Every other day works fine, or we can coordinate coverage with the team during busy periods.</p>
+
+            <h3>What if my picks are wrong?</h3>
+            <p style="font-weight: normal; color: #ccc;">65%+ accuracy is the target — being right 2 out of 3 times is success. Miyomi tracks accuracy publicly and learns from both wins and losses.</p>
+
+            <h3>What if the token doesn't launch?</h3>
+            <p style="font-weight: normal; color: #ccc;">We validate the revenue model first (affiliates + subscriptions) before applying to Spirit Protocol. Economic viability comes before token launch.</p>
+
+            <h3>How much time commitment before launch?</h3>
+            <p style="font-weight: normal; color: #ccc;">Week 1: ~2 hours (setup, testing). Week 2-10: 15-30 min/day consistently. Front-loaded learning curve, then sustainable daily practice.</p>
+
+            <h3>What if I want to stop after 12 months?</h3>
+            <p style="font-weight: normal; color: #ccc;">Tokens unlock after 12 months. You can sell, re-pledge for higher multiplier (24×-36×), or hold unlocked. Your choice based on Miyomi's performance.</p>
+
+            <h3>Do I need to be on camera or use my real name?</h3>
+            <p style="font-weight: normal; color: #ccc;">No. You're the behind-the-scenes curator. Miyomi is the public face. Your role is private — curation, not performance.</p>
+        </div>
+
+        <!-- Application Questions -->
+        <div class="section">
+            <h2>Your Turn - What Do You Think?</h2>
+            <p style="margin-bottom: 24px; font-weight: normal; color: #ccc;">You know prediction markets way better than we do. What are we missing? What have you seen work (or totally fail)? Any other PM agents/tools we should be studying? Your honest take helps us build this right.</p>
+
+            <div class="highlight-box">
+                <h4>1. Distribution strategy - where would you focus first?</h4>
+                <p style="font-weight: normal; color: #888; margin-bottom: 16px;">We're open to TikTok, YouTube, X/Twitter, Instagram, Farcaster, miyomi.ai website, PM platform partnerships, influencer collabs, brand deals - whatever you think will work. What would you test first and why?</p>
+                <textarea id="question1" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Platform priorities, partnership ideas, content strategy..."></textarea>
+            </div>
+
+            <div class="highlight-box">
+                <h4>2. What contrarian market would you pick for Miyomi's first video?</h4>
+                <p style="font-weight: normal; color: #888; margin-bottom: 16px;">If you were starting tomorrow, what market on Polymarket/Kalshi has the best edge + virality potential? Why?</p>
+                <textarea id="question2" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Market + your reasoning..."></textarea>
+            </div>
+
+            <div class="highlight-box">
+                <h4>3. What are we getting wrong?</h4>
+                <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Real talk - what concerns do you have? What assumptions seem off? What have other PM agents/tools done that we should know about?</p>
+                <textarea id="question3" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Your honest take..."></textarea>
+            </div>
+
+            <div class="highlight-box">
+                <h4>4. What other PM stuff should we be studying? (Optional)</h4>
+                <p style="font-weight: normal; color: #888; margin-bottom: 16px;">Any bots, agents, content creators, or tools doing interesting things? What's working or failing out there?</p>
+                <textarea id="question4" style="width: 100%; min-height: 120px; background: #111; border: 1px solid #333; color: #fff; padding: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 1rem; resize: vertical;" placeholder="Examples from the space..."></textarea>
+            </div>
+
+            <button onclick="submitApplication()" style="width: 100%; padding: 16px; background: #0f0; color: #000; border: 1px solid #0f0; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; font-family: 'Helvetica Neue', Arial, sans-serif; transition: all 0.2s; margin-top: 24px;">
+                Submit & Schedule Call
+            </button>
+            <p id="submit-status" style="text-align: center; margin-top: 16px; color: #0f0; display: none;"></p>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2>Next Steps</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 32px; font-weight: bold;">After you submit your thoughts above:</p>
+
+            <div style="text-align: left; max-width: 600px; margin: 0 auto 32px; font-weight: normal;">
+                <h3 style="color: #000; font-size: 1rem; margin-bottom: 16px;">Here's what happens next:</h3>
+                <p style="margin-bottom: 8px;"><strong>1.</strong> We review your responses (usually within 24 hours)</p>
+                <p style="margin-bottom: 8px;"><strong>2.</strong> Schedule 30-minute call to walk through trainer dashboard demo</p>
+                <p style="margin-bottom: 8px;"><strong>3.</strong> Answer any questions about workflow, compensation, timeline</p>
+                <p style="margin-bottom: 8px;"><strong>4.</strong> If aligned, start Week 1 and begin building together</p>
+            </div>
+
+            <p style="font-size: 0.9rem; margin-top: 24px; font-weight: normal; color: #666;">
+                Questions before applying? Email seth@eden.art
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Password protection
+        const correctPassword = 'pastrami';
+
+        function checkPassword() {
+            const input = document.getElementById('password-input');
+            const error = document.getElementById('error-message');
+
+            if (input.value === correctPassword) {
+                document.getElementById('password-gate').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                window.scrollTo(0, 0);
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Allow Enter key to submit password
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Focus password input on load
+        window.addEventListener('load', function() {
+            document.getElementById('password-input').focus();
+            calculateRevenue(); // Initialize calculator
+        });
+
+        // Revenue Calculator
+        function formatNumber(num) {
+            return num.toLocaleString('en-US');
+        }
+
+        function formatCurrency(num) {
+            return '$' + Math.round(num).toLocaleString('en-US');
+        }
+
+        function calculateRevenue() {
+            // Get all input values
+            const followers = parseInt(document.getElementById('followers').value);
+            const avgViews = parseInt(document.getElementById('avgViews').value);
+            const affiliateCtr = parseFloat(document.getElementById('affiliateCtr').value) / 100;
+            const affiliateCpa = parseInt(document.getElementById('affiliateCpa').value);
+            const subConversion = parseFloat(document.getElementById('subConversion').value) / 100;
+            const subPrice = parseInt(document.getElementById('subPrice').value);
+            const sponsors = parseInt(document.getElementById('sponsors').value);
+            const sponsorRate = parseInt(document.getElementById('sponsorRate').value);
+            const videosPerWeek = parseInt(document.getElementById('videosPerWeek').value);
+
+            // Update display values
+            document.getElementById('followersValue').textContent = formatNumber(followers);
+            document.getElementById('avgViewsValue').textContent = formatNumber(avgViews);
+            document.getElementById('affiliateCtrValue').textContent = (affiliateCtr * 100).toFixed(1) + '%';
+            document.getElementById('affiliateCpaValue').textContent = '$' + affiliateCpa;
+            document.getElementById('subConversionValue').textContent = (subConversion * 100).toFixed(1) + '%';
+            document.getElementById('subPriceValue').textContent = '$' + subPrice + '/mo';
+            document.getElementById('sponsorsValue').textContent = sponsors;
+            document.getElementById('sponsorRateValue').textContent = formatCurrency(sponsorRate);
+            document.getElementById('videosPerWeekValue').textContent = videosPerWeek;
+
+            // Calculate monthly metrics
+            const videosPerMonth = videosPerWeek * 4;
+            const totalMonthlyViews = avgViews * videosPerMonth;
+            const affiliateClicks = totalMonthlyViews * affiliateCtr;
+            const affiliateSignups = affiliateClicks * 0.15; // 15% signup conversion
+
+            // Revenue calculations
+            const affiliateRevenue = affiliateSignups * affiliateCpa;
+            const premiumSubs = followers * subConversion;
+            const subRevenue = premiumSubs * subPrice;
+            const sponsorRevenue = sponsors * sponsorRate;
+            const soupRevenue = 1000; // Fixed for now
+
+            const totalRevenue = affiliateRevenue + subRevenue + sponsorRevenue + soupRevenue;
+
+            // Calculate trainer royalty (76% team share * 30% trainer allocation)
+            const trainerRoyalty = totalRevenue * 0.76 * 0.30;
+
+            // Update results display
+            document.getElementById('affiliateRevenue').textContent = formatCurrency(affiliateRevenue);
+            document.getElementById('subRevenue').textContent = formatCurrency(subRevenue);
+            document.getElementById('sponsorRevenue').textContent = formatCurrency(sponsorRevenue);
+            document.getElementById('soupRevenue').textContent = formatCurrency(soupRevenue);
+            document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
+            document.getElementById('yourRoyalty').textContent = formatCurrency(trainerRoyalty);
+        }
+
+        function loadScenario(scenario) {
+            const scenarios = {
+                conservative: {
+                    followers: 50000,
+                    avgViews: 25000,
+                    affiliateCtr: 3,
+                    affiliateCpa: 50,
+                    subConversion: 1,
+                    subPrice: 10,
+                    sponsors: 1,
+                    sponsorRate: 1500,
+                    videosPerWeek: 3
+                },
+                moderate: {
+                    followers: 100000,
+                    avgViews: 100000,
+                    affiliateCtr: 5,
+                    affiliateCpa: 75,
+                    subConversion: 2,
+                    subPrice: 10,
+                    sponsors: 2,
+                    sponsorRate: 2500,
+                    videosPerWeek: 3
+                },
+                aggressive: {
+                    followers: 150000,
+                    avgViews: 250000,
+                    affiliateCtr: 7,
+                    affiliateCpa: 100,
+                    subConversion: 3,
+                    subPrice: 15,
+                    sponsors: 3,
+                    sponsorRate: 4000,
+                    videosPerWeek: 4
+                }
+            };
+
+            const values = scenarios[scenario];
+            document.getElementById('followers').value = values.followers;
+            document.getElementById('avgViews').value = values.avgViews;
+            document.getElementById('affiliateCtr').value = values.affiliateCtr;
+            document.getElementById('affiliateCpa').value = values.affiliateCpa;
+            document.getElementById('subConversion').value = values.subConversion;
+            document.getElementById('subPrice').value = values.subPrice;
+            document.getElementById('sponsors').value = values.sponsors;
+            document.getElementById('sponsorRate').value = values.sponsorRate;
+            document.getElementById('videosPerWeek').value = values.videosPerWeek;
+
+            calculateRevenue();
+        }
+
+        // Auto-save responses to localStorage as user types
+        function autoSaveResponses() {
+            const responses = {
+                q1: document.getElementById('question1').value,
+                q2: document.getElementById('question2').value,
+                q3: document.getElementById('question3').value,
+                q4: document.getElementById('question4').value,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('miyomi_trainer_responses', JSON.stringify(responses));
+        }
+
+        // Restore saved responses on page load
+        function restoreResponses() {
+            const saved = localStorage.getItem('miyomi_trainer_responses');
+            if (saved) {
+                const responses = JSON.parse(saved);
+                document.getElementById('question1').value = responses.q1 || '';
+                document.getElementById('question2').value = responses.q2 || '';
+                document.getElementById('question3').value = responses.q3 || '';
+                document.getElementById('question4').value = responses.q4 || '';
+            }
+        }
+
+        // Add auto-save listeners
+        window.addEventListener('load', function() {
+            restoreResponses();
+            ['question1', 'question2', 'question3', 'question4'].forEach(id => {
+                document.getElementById(id).addEventListener('input', autoSaveResponses);
+            });
+        });
+
+        // Application submission
+        function submitApplication() {
+            const q1 = document.getElementById('question1').value.trim();
+            const q2 = document.getElementById('question2').value.trim();
+            const q3 = document.getElementById('question3').value.trim();
+            const q4 = document.getElementById('question4').value.trim();
+            const status = document.getElementById('submit-status');
+
+            if (!q1 && !q2 && !q3 && !q4) {
+                status.style.display = 'block';
+                status.style.color = '#f00';
+                status.textContent = 'Please answer at least one question to show us your thinking.';
+                return;
+            }
+
+            // Save to localStorage as backup
+            const responses = {
+                q1, q2, q3, q4,
+                submitted: true,
+                timestamp: new Date().toISOString()
+            };
+            localStorage.setItem('miyomi_trainer_submission', JSON.stringify(responses));
+
+            // Also log to console for backup
+            console.log('MIYOMI TRAINER RESPONSES SAVED:', responses);
+
+            // Construct email body
+            const subject = 'Miyomi Trainer - Feedback from Jacob Goldy';
+            const body = encodeURIComponent(
+                `MIYOMI TRAINER - FEEDBACK\n\n` +
+                `From: Jacob Goldy (@goldytalks)\n\n` +
+                `---\n\n` +
+                `1. What's Miyomi's biggest opportunity in the next 6 months?\n\n${q1 || '(Not answered)'}\n\n` +
+                `---\n\n` +
+                `2. What contrarian market would you pick for Miyomi's first video?\n\n${q2 || '(Not answered)'}\n\n` +
+                `---\n\n` +
+                `3. What are we getting wrong?\n\n${q3 || '(Not answered)'}\n\n` +
+                `---\n\n` +
+                `4. What other PM stuff should we be studying?\n\n${q4 || '(Not answered)'}\n\n` +
+                `---\n\n` +
+                `Submitted: ${new Date().toISOString()}`
+            );
+
+            // Open email client
+            window.location.href = `mailto:seth@eden.art?subject=${subject}&body=${body}`;
+
+            // Show success message
+            status.style.display = 'block';
+            status.style.color = '#0f0';
+            status.textContent = '✓ Opening your email... Your responses are also saved locally as backup!';
+        }
+    </script>
+</body>
+</html>
