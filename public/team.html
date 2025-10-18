@@ -366,6 +366,7 @@
       <button class="tab-btn active" onclick="showTab('priorities')">🎯 Week 1 Priorities</button>
       <button class="tab-btn" onclick="showTab('questions')">❓ Key Questions</button>
       <button class="tab-btn" onclick="showTab('schedule')">📅 Daily Plan</button>
+      <button class="tab-btn" onclick="showTab('apis')">🔌 API References</button>
       <button class="tab-btn" onclick="showTab('links')">🔗 Quick Links</button>
     </div>
 
@@ -545,7 +546,159 @@
       </div>
     </div>
 
-    <!-- Tab 4: Quick Links -->
+    <!-- Tab 4: API References -->
+    <div id="apis-tab" class="tab-content">
+      <h2 style="margin-bottom: 20px; color: #0f0;">🔌 API REFERENCES</h2>
+
+      <div style="background: #111; border-left: 4px solid #0f0; padding: 20px; margin-bottom: 30px;">
+        <p style="color: #ccc; margin-bottom: 15px;">
+          <strong>Full docs</strong>: <a href="https://github.com/brightseth/miyomi-vercel/blob/main/MIYOMI_HQ/API_REFERENCES.md" target="_blank" style="color: #0f0;">MIYOMI_HQ/API_REFERENCES.md</a>
+        </p>
+      </div>
+
+      <div class="priority-grid">
+        <!-- Dome API -->
+        <div class="priority-card" style="border-color: #0f0;">
+          <h3>Dome API ⭐</h3>
+          <p class="owner">Status: Integrated (P&L working)</p>
+          <p style="margin-bottom: 15px; color: #ccc;">
+            Unified API for prediction markets (Polymarket + Kalshi)
+          </p>
+          <ul class="task-list" style="list-style: none;">
+            <li style="border: none;">📊 Real-time market prices</li>
+            <li style="border: none;">📈 Historical candlestick data</li>
+            <li style="border: none;">💰 Wallet P&L tracking ✅</li>
+            <li style="border: none;">🔄 Cross-platform matching</li>
+          </ul>
+          <div style="margin-top: 15px;">
+            <a href="https://docs.domeapi.io" target="_blank" style="color: #0f0;">docs.domeapi.io</a><br>
+            <span style="font-size: 0.8rem; color: #888;">Y Combinator F25</span>
+          </div>
+        </div>
+
+        <!-- Polymarket -->
+        <div class="priority-card">
+          <h3>Polymarket</h3>
+          <p class="owner">Status: Read-only, affiliate pending</p>
+          <p style="margin-bottom: 15px; color: #ccc;">
+            Largest crypto prediction market (USDC/Polygon)
+          </p>
+          <ul class="task-list" style="list-style: none;">
+            <li style="border: none;">🎯 Primary revenue source</li>
+            <li style="border: none;">📊 Public API (no auth)</li>
+            <li style="border: none;">💰 Affiliate deals (Week 1)</li>
+          </ul>
+          <div style="margin-top: 15px;">
+            <a href="https://docs.polymarket.com" target="_blank" style="color: #0f0;">docs.polymarket.com</a>
+          </div>
+        </div>
+
+        <!-- Kalshi -->
+        <div class="priority-card">
+          <h3>Kalshi</h3>
+          <p class="owner">Status: Not integrated yet</p>
+          <p style="margin-bottom: 15px; color: #ccc;">
+            CFTC-regulated prediction market (USD)
+          </p>
+          <ul class="task-list" style="list-style: none;">
+            <li style="border: none;">🏛️ Regulated, US-friendly</li>
+            <li style="border: none;">📊 REST API + Python SDK</li>
+            <li style="border: none;">💰 Secondary affiliate source</li>
+          </ul>
+          <div style="margin-top: 15px;">
+            <a href="https://docs.kalshi.com" target="_blank" style="color: #0f0;">docs.kalshi.com</a><br>
+            <code style="font-size: 0.75rem; color: #888;">pip install kalshi-python</code>
+          </div>
+        </div>
+
+        <!-- Eden API -->
+        <div class="priority-card" style="border-color: #0f0;">
+          <h3>Eden API ⭐</h3>
+          <p class="owner">Status: Active (Agent deployed)</p>
+          <p style="margin-bottom: 15px; color: #ccc;">
+            Video generation for Miyomi character
+          </p>
+          <ul class="task-list" style="list-style: none;">
+            <li style="border: none;">🎥 Agent ID: 68aae13174876e833d9ae73b</li>
+            <li style="border: none;">🎨 LoRA: 67ef2bba6e91dc8e0efc2f1c</li>
+            <li style="border: none;">⏱️ Max 10 seconds per video</li>
+            <li style="border: none;">📱 Aspect ratio: 9:16</li>
+          </ul>
+          <div style="margin-top: 15px;">
+            <a href="https://docs.eden.art/api" target="_blank" style="color: #0f0;">docs.eden.art</a><br>
+            <a href="https://app.eden.art/agents/68aae13174876e833d9ae73b" target="_blank" style="font-size: 0.8rem; color: #888;">View Miyomi Agent</a>
+          </div>
+        </div>
+
+        <!-- Soup Protocol -->
+        <div class="priority-card">
+          <h3>Soup Protocol 🔒</h3>
+          <p class="owner">Status: Phase 2 (Future)</p>
+          <p style="margin-bottom: 15px; color: #ccc;">
+            DeFi protocol for prediction market liquidity
+          </p>
+          <ul class="task-list" style="list-style: none;">
+            <li style="border: none;">💧 Market making infrastructure</li>
+            <li style="border: none;">💰 LP fee revenue stream</li>
+            <li style="border: none;">🔐 Password: chickennoodle</li>
+          </ul>
+          <div style="margin-top: 15px;">
+            <a href="https://docs.soup.xyz" target="_blank" style="color: #0f0;">docs.soup.xyz</a><br>
+            <span style="font-size: 0.8rem; color: #888;">Phase 2 integration</span>
+          </div>
+        </div>
+
+        <!-- Social APIs -->
+        <div class="priority-card">
+          <h3>Social APIs</h3>
+          <p class="owner">Status: Manual (Phase 2 automation)</p>
+          <p style="margin-bottom: 15px; color: #ccc;">
+            Twitter + Telegram distribution
+          </p>
+          <ul class="task-list" style="list-style: none;">
+            <li style="border: none;">🐦 Twitter API (auto-posting)</li>
+            <li style="border: none;">💬 Telegram Bot API (3 channels)</li>
+            <li style="border: none;">📊 Bitly/UTM tracking</li>
+          </ul>
+          <div style="margin-top: 15px;">
+            <span style="font-size: 0.8rem; color: #888;">Week 1: Manual posting</span><br>
+            <span style="font-size: 0.8rem; color: #888;">Phase 2: Full automation</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #111; border: 1px solid #333; padding: 20px; margin-top: 30px;">
+        <h3 style="color: #0f0; margin-bottom: 15px;">📈 Integration Status</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+          <div>
+            <strong style="color: #0f0;">✅ Working</strong><br>
+            <span style="font-size: 0.85rem; color: #ccc;">
+              • Eden (video gen)<br>
+              • Dome (P&L only)<br>
+              • Polymarket (read)
+            </span>
+          </div>
+          <div>
+            <strong style="color: #ff0;">⚠️ Partial</strong><br>
+            <span style="font-size: 0.85rem; color: #ccc;">
+              • Dome (need full API)<br>
+              • Polymarket (need affiliate)<br>
+              • Social (manual)
+            </span>
+          </div>
+          <div>
+            <strong style="color: #f00;">❌ Not Started</strong><br>
+            <span style="font-size: 0.85rem; color: #ccc;">
+              • Kalshi<br>
+              • Soup (Phase 2)<br>
+              • Auto-posting
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 5: Quick Links -->
     <div id="links-tab" class="tab-content">
       <h2 style="margin-bottom: 20px; color: #0f0;">🔗 QUICK LINKS</h2>
 
