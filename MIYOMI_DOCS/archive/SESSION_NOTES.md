@@ -161,7 +161,7 @@ npx serve pages -l 5173 && open http://localhost:5173
 
 ### Environment Variables (.env.local)
 ```bash
-EDEN_API_KEY=db10962875d98d2a2dafa8599a89c850766f39647095c002
+EDEN_API_KEY=[REDACTED]
 EDEN_AGENT_ID=68aae13174876e833d9ae73b
 SUPABASE_URL=https://aeflqgydcrlszgbpduyk.supabase.co
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...

@@ -124,7 +124,7 @@ const finalVideo = await combineVideoAudio(
 ### Generate Complete Video
 ```bash
 # Set API key
-export EDEN_API_KEY=db2a5c37b8b98ee6ec5ae282790835ac3c6e2237f1b93af1
+export EDEN_API_KEY=[REDACTED]
 
 # Generate video + audio
 node test-full-audio-pipeline.js
@@ -206,7 +206,7 @@ Test different voices by changing the `voice` parameter in the code.
 
 ```bash
 # .env.local
-EDEN_API_KEY=db2a5c37b8b98ee6ec5ae282790835ac3c6e2237f1b93af1
+EDEN_API_KEY=[REDACTED]
 EDEN_AGENT_ID=68aae13174876e833d9ae73b
 ```
 

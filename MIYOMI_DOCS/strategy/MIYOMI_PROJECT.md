@@ -98,7 +98,7 @@ System uses mock responses to demonstrate full database integration while awaiti
 ```bash
 SUPABASE_URL=https://aeflqgydcrlszgbpduyk.supabase.co
 SUPABASE_ANON_KEY=[configured in Vercel]
-EDEN_API_KEY=db10962875d98d2a2dafa8599a89c850766f39647095c002
+EDEN_API_KEY=[REDACTED]
 ```
 
 ## 🔄 Next Steps

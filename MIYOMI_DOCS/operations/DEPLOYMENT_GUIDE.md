@@ -34,7 +34,7 @@ TRAINER_API_KEY=your_secure_random_string_here # For market creation
 ORACLE_API_KEY=your_secure_random_string_here # For market resolution
 
 # Eden (optional)
-EDEN_API_KEY=db10962875d98d2a2dafa8599a89c850766f39647095c002
+EDEN_API_KEY=[REDACTED]
 
 # Social (optional for MVP)
 NEYNAR_API_KEY=... # Farcaster posting

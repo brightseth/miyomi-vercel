@@ -21,22 +21,20 @@
 
 ---
 
-## 🔐 CREDENTIALS (Quick Access)
+## 🔐 CREDENTIALS
 
-```env
-# Eden API (Video Generation) ✅
-EDEN_API_KEY=db10962875d98d2a2dafa8599a89c850766f39647095c002
-EDEN_AGENT_ID=68aae13174876e833d9ae73b
-EDEN_API_BASE=https://api.eden.art
+**IMPORTANT**: All API keys are in `.env.local` (NOT committed to git)
 
-# Database ✅
-SUPABASE_URL=https://aeflqgydcrlszgbpduyk.supabase.co
-SUPABASE_ANON_KEY=[in .env.local]
-SUPABASE_SERVICE_KEY=[in .env.local]
+**What you need**:
+- Eden API key (video generation)
+- Supabase URL + keys (database)
+- Dome API key (performance tracking)
+- Twitter API credentials
+- Telegram bot token
 
-# Dome API (Partial) ⚠️
-DOME_API_KEY=[in .env.local - only orders/pnl working]
-```
+**Where to find them**:
+- Check `.env.local` on your local machine
+- Or ask Seth for credentials
 
 ---
 

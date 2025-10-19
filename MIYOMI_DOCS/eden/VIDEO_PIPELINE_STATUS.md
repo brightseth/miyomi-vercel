@@ -267,7 +267,7 @@ The video should convey expertise, confidence, and market intelligence - like a 
 # .env.local
 
 # Eden API (Video Generation) - ✅ WORKING
-EDEN_API_KEY=db2a5c37b8b98ee6ec5ae282790835ac3c6e2237f1b93af1
+EDEN_API_KEY=[REDACTED]
 EDEN_AGENT_ID=68aae13174876e833d9ae73b
 
 # Dome API (Trade Tracking) - ✅ WORKING

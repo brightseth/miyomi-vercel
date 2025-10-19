@@ -384,7 +384,7 @@ async function fetchRealDomeData(retries = 3) {
 
 Already configured in `.env.local`:
 ```
-EDEN_API_KEY=db10962875d98d2a2dafa8599a89c850766f39647095c002
+EDEN_API_KEY=[REDACTED]
 EDEN_AGENT_ID=68aae13174876e833d9ae73b
 SUPABASE_URL=https://aeflqgydcrlszgbpduyk.supabase.co
 SUPABASE_ANON_KEY=[configured]
