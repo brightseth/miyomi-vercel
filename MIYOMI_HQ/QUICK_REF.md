@@ -145,16 +145,37 @@ vercel --prod
 
 ---
 
+## 📱 SOCIAL HANDLES (JMill: Update this section!)
+
+**Twitter**:
+- Handle: @miyomi____ (or update if different)
+- URL: https://twitter.com/miyomi____
+- Status: ⚠️ NEEDS UPDATE
+
+**Telegram** (3 channels):
+1. **Announcements** (read-only):
+   - Link: [JMill add link here]
+   - Status: ⚠️ NEEDS UPDATE
+
+2. **Degen** (open chat):
+   - Link: [JMill add link here]
+   - Status: ⚠️ NEEDS UPDATE
+
+3. **Signals Pro** (private/gated):
+   - Link: [JMill add link here]
+   - Status: ⚠️ NEEDS UPDATE
+
+**Farcaster**:
+- Handle: @miyomi
+- Status: ⚠️ NEEDS UPDATE
+
+---
+
 ## ⚠️ KNOWN GAPS
 
-1. **Eden Agent System Prompt** - Need actual prompt for agent 68aae13174876e833d9ae73b
-2. **Real Wallet Address** - Currently using placeholder: `0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb`
-3. **Social Handles** - Not claimed yet:
-   - Twitter: @miyomi____
-   - Telegram: 3 channels (Announcements, Degen, Signals Pro)
-   - Farcaster: @miyomi
-4. **Polymarket Affiliate** - Agreement not secured yet
-5. **Character Lock** - Need to finalize exact visual model + voice
+1. **Real Wallet Address** - Currently using placeholder: `0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb`
+2. **Polymarket Affiliate** - Agreement not secured yet
+3. **Character Lock** - Need to finalize exact visual model + voice
 
 ---
 
