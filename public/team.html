@@ -355,10 +355,16 @@
   <div id="dashboard">
     <header>
       <div>
-        <h1>MIYOMI - Team Dashboard</h1>
+        <h1>MIYOMI - Production Hub</h1>
         <p style="color: #888; font-size: 0.9rem;">6-Week Build: Oct 20 - Dec 1, 2025 • Launch before Spirit Protocol (Dec 10)</p>
       </div>
-      <button class="logout-btn" onclick="logout()">Logout</button>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="https://github.com/brightseth/miyomi-vercel/blob/main/MIYOMI_HQ/MIYOMI_SYSTEM_PROMPT.md" target="_blank"
+           style="padding: 8px 16px; background: #0f0; color: #000; text-decoration: none; font-weight: bold; font-size: 0.85rem; border-radius: 3px;">
+          🤖 MIYOMI'S BRAIN
+        </a>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
     </header>
 
     <!-- Navigation Tabs -->
@@ -372,6 +378,15 @@
 
     <!-- Tab 1: Priorities -->
     <div id="priorities-tab" class="tab-content active">
+      <div style="background: #0f0; color: #000; padding: 20px; margin-bottom: 30px; text-align: center;">
+        <h3 style="margin-bottom: 10px;">🤖 READ MIYOMI'S BRAIN FIRST</h3>
+        <p style="margin-bottom: 15px; font-size: 0.9rem;">16k-word personality • Decision framework • Communication style</p>
+        <a href="https://github.com/brightseth/miyomi-vercel/blob/main/MIYOMI_HQ/MIYOMI_SYSTEM_PROMPT.md" target="_blank"
+           style="display: inline-block; padding: 12px 24px; background: #000; color: #0f0; text-decoration: none; font-weight: bold; border-radius: 3px;">
+          VIEW SYSTEM PROMPT →
+        </a>
+      </div>
+
       <h2 style="margin-bottom: 20px; color: #0f0;">🚨 PHASE 1: FOUNDATION (Weeks 1-2)</h2>
       <p style="color: #888; margin-bottom: 30px;">Take time to get it right. Launch Dec 1 (6 weeks out)</p>
 
@@ -775,7 +790,7 @@
       const password = document.getElementById('password').value;
       const error = document.getElementById('error');
 
-      if (password === 'miyomi2025') {
+      if (password === 'degen') {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
         localStorage.setItem('miyomi-team-auth', 'true');

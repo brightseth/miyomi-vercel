@@ -125,8 +125,8 @@ Think: Emma Chamberlain meets prediction markets
 - Patience (training an AI takes iteration)
 
 **Everyone has access to**:
-- Team dashboard: https://miyomi-federation-9zojk6suw-edenprojects.vercel.app/team.html
-- Password: `miyomi2025`
+- Production Hub: https://miyomi-federation-9zojk6suw-edenprojects.vercel.app/team.html
+- Password: `degen`
 
 ---
 
@@ -181,7 +181,10 @@ A: Group chat (Seth/JMill/Goldy). Or check team dashboard.
 
 **Production Site**: https://miyomi-federation-9zojk6suw-edenprojects.vercel.app
 
-**Team Dashboard**: https://miyomi-federation-9zojk6suw-edenprojects.vercel.app/team.html (password: miyomi2025)
+**Production Hub** (Team Dashboard): https://miyomi-federation-9zojk6suw-edenprojects.vercel.app/team.html
+**Password**: `degen`
+
+**Miyomi's System Prompt** (read this first!): https://github.com/brightseth/miyomi-vercel/blob/main/MIYOMI_HQ/MIYOMI_SYSTEM_PROMPT.md
 
 **Full Docs** (if you want to go deep):
 - README: https://github.com/brightseth/miyomi-vercel/blob/main/README.md
